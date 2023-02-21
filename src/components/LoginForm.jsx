@@ -12,8 +12,8 @@ const LoginForm = () => {
               src={FTLifePartnerPlus_Logo}
             />
             <h1 class="mt-4 text-center text-title mb-5">
-                <span class="text-2xl">Partner+ FTL </span>
-                <span class="text-2xl">Admin</span>
+                <span class="text-2xl font-semibold">Partner+ FTL </span>
+                <span class="text-2xl font-semibold">Admin</span>
             </h1>
             <div className="user-box h-10 mb-5">
                 <input type="text" required="requried" className="focus:ring-transparent focus:ring-offset-transparent focus:border-ft"/>
