@@ -14,8 +14,8 @@ module.exports = {
     },
     extend: {
       colors: {
-        ft: "#ef4123",
-        "ft-dark":"#dc2e10",
+        ft: "#004846",
+        "ft-light":"#009188",
         title: "#4f575e",
       },
     },
