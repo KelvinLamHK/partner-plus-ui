@@ -18,7 +18,7 @@ const LoginForm = () => {
     setIsLoading(true);
       try {
         const deviceId = await getCurrentBrowserFingerPrint();
-        const response = await axios.post("http://springboot:8081/login", {
+        const response = await axios.post("http://kayu.life:8081/login", {
           username,
           password,
           deviceId
@@ -48,7 +48,7 @@ const LoginForm = () => {
           const token = Cookies.get("PLUSID");
           if (token) {
             try {
-              const response = axios.post('http://springboot:8081/protected', null, {
+              const response = axios.post('http://kayu.life:8081/protected', null, {
                 headers: {
                     Authorization: 'plus ' + token,
                     DeviceId: deviceId
@@ -79,30 +79,61 @@ const LoginForm = () => {
           Cookies.remove('PLUSID');
           window.location.href = "/login";
         };
-return(
-        <div id="defaultModal" tabindex="-1" className="w-full overflow-x-hidden overflow-y-auto h-modal flex items-center justify-center">
-            <div className="relative w-full max-w-2xl md:h-auto">
-                <div className="relative bg-white rounded-lg shadow dark:bg-gray-700">
-                    <div className="flex items-start justify-between p-4 border-b rounded-t dark:border-gray-600">
-                        <h3 className="text-xl font-semibold text-gray-900 dark:text-white">
-                            Terms of Service
-                        </h3>
-                    </div>
-                    <div className="p-6 space-y-6">
-                        <p className="text-base leading-relaxed text-gray-500 dark:text-gray-400">
-                            With less than a month to go before the European Union enacts new consumer privacy laws for its citizens, companies around the world are updating their terms of service agreements to comply.
-                        </p>
-                        <p className="text-base leading-relaxed text-gray-500 dark:text-gray-400">
-                            The European Union’s General Data Protection Regulation (G.D.P.R.) goes into effect on May 25 and is meant to ensure a common set of data rights in the European Union. It requires organizations to notify users as soon as possible of high-risk data breaches that could personally affect them.
-                        </p>
-                    </div>
-                    <div className="flex items-center p-6 space-x-2 border-t border-gray-200 rounded-b dark:border-gray-600">
-                        <button onClick={handleAccept}  type="button" className="text-white bg-ft hover:bg-ft-light focus:ring-4 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center" >I accept</button>
-                        <button onClick={handleDecline}  type="button" className="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600">Decline</button>
-                    </div>
-                </div>
-            </div>
-        </div>    
+return(<div className="w-1/2 h-1/2 overflow-y-hidden">
+  <div class="" aria-labelledby="exampleModalScrollableTitle" role="dialog" aria-modal="true">
+  <div class="flex items-center justify-center">
+    <div class="bg-white rounded-lg shadow-lg ">
+      <div class="px-6 py-4">
+        <div class="flex items-center justify-between mb-4">
+          <h5 class="text-lg font-semibold text-gray-900" id="exampleModalScrollableTitle">Modal title</h5>
+        </div>
+        <div class="modal-body h-36 overflow-y-auto">
+          <p class="text-base leading-relaxed text-gray-500 dark:text-gray-400">
+                    With less than a month to go before the European Union enacts new consumer privacy laws for its citizens, companies around the world are updating their terms of service agreements to comply.
+                </p>
+                <p class="text-base leading-relaxed text-gray-500 dark:text-gray-400">
+                    The European Union’s General Data Protection Regulation (G.D.P.R.) goes into effect on May 25 and is meant to ensure a common set of data rights in the European Union. It requires organizations to notify users as soon as possible of high-risk data breaches that could personally affect them.
+                </p>
+                <p class="text-base leading-relaxed text-gray-500 dark:text-gray-400">
+                    The European Union’s General Data Protection Regulation (G.D.P.R.) goes into effect on May 25 and is meant to ensure a common set of data rights in the European Union. It requires organizations to notify users as soon as possible of high-risk data breaches that could personally affect them.
+                </p>
+                <p class="text-base leading-relaxed text-gray-500 dark:text-gray-400">
+                    The European Union’s General Data Protection Regulation (G.D.P.R.) goes into effect on May 25 and is meant to ensure a common set of data rights in the European Union. It requires organizations to notify users as soon as possible of high-risk data breaches that could personally affect them.
+                </p>
+                <p class="text-base leading-relaxed text-gray-500 dark:text-gray-400">
+                    The European Union’s General Data Protection Regulation (G.D.P.R.) goes into effect on May 25 and is meant to ensure a common set of data rights in the European Union. It requires organizations to notify users as soon as possible of high-risk data breaches that could personally affect them.
+                </p>
+                <p class="text-base leading-relaxed text-gray-500 dark:text-gray-400">
+                    The European Union’s General Data Protection Regulation (G.D.P.R.) goes into effect on May 25 and is meant to ensure a common set of data rights in the European Union. It requires organizations to notify users as soon as possible of high-risk data breaches that could personally affect them.
+                </p>
+                <p class="text-base leading-relaxed text-gray-500 dark:text-gray-400">
+                    The European Union’s General Data Protection Regulation (G.D.P.R.) goes into effect on May 25 and is meant to ensure a common set of data rights in the European Union. It requires organizations to notify users as soon as possible of high-risk data breaches that could personally affect them.
+                </p>
+                <p class="text-base leading-relaxed text-gray-500 dark:text-gray-400">
+                    The European Union’s General Data Protection Regulation (G.D.P.R.) goes into effect on May 25 and is meant to ensure a common set of data rights in the European Union. It requires organizations to notify users as soon as possible of high-risk data breaches that could personally affect them.
+                </p>
+                <p class="text-base leading-relaxed text-gray-500 dark:text-gray-400">
+                    The European Union’s General Data Protection Regulation (G.D.P.R.) goes into effect on May 25 and is meant to ensure a common set of data rights in the European Union. It requires organizations to notify users as soon as possible of high-risk data breaches that could personally affect them.
+                </p>
+                <p class="text-base leading-relaxed text-gray-500 dark:text-gray-400">
+                    The European Union’s General Data Protection Regulation (G.D.P.R.) goes into effect on May 25 and is meant to ensure a common set of data rights in the European Union. It requires organizations to notify users as soon as possible of high-risk data breaches that could personally affect them.
+                </p>
+                <p class="text-base leading-relaxed text-gray-500 dark:text-gray-400">
+                    The European Union’s General Data Protection Regulation (G.D.P.R.) goes into effect on May 25 and is meant to ensure a common set of data rights in the European Union. It requires organizations to notify users as soon as possible of high-risk data breaches that could personally affect them.
+                </p>
+                <p class="text-base leading-relaxed text-gray-500 dark:text-gray-400">
+                    The European Union’s General Data Protection Regulation (G.D.P.R.) goes into effect on May 25 and is meant to ensure a common set of data rights in the European Union. It requires organizations to notify users as soon as possible of high-risk data breaches that could personally affect them.
+                </p>
+        </div>
+      </div>
+      <div class="px-6 py-4 bg-gray-100 flex justify-end">
+        <button type="button" class="text-white bg-blue-500 hover:bg-blue-600 rounded-md px-4 py-2 mr-2" data-dismiss="modal">Close</button>
+        <button type="button" class="text-white bg-green-500 hover:bg-green-600 rounded-md px-4 py-2">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
       )
     }
 
