@@ -18,7 +18,7 @@ const LoginForm = () => {
     setIsLoading(true);
       try {
         const deviceId = await getCurrentBrowserFingerPrint();
-        const response = await axios.post("http://be.kayu.life/login", {
+        const response = await axios.post("http://springboot:8081/login", {
           username,
           password,
           deviceId
@@ -48,7 +48,7 @@ const LoginForm = () => {
           const token = Cookies.get("PLUSID");
           if (token) {
             try {
-              const response = axios.post('http://be.kayu.life/protected', null, {
+              const response = axios.post('http://springboot:8081/protected', null, {
                 headers: {
                     Authorization: 'plus ' + token,
                     DeviceId: deviceId
