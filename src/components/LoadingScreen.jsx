@@ -1,7 +1,7 @@
 import React from "react";
-import '../css/LoadingSpinnerCss.css'
+import '../css/LoadingScreencss.css'
 
-const LoadingSpinner = () => {
+const LoadingScreen = () => {
   return (
     <div className="loading-screen">
       <div className="lds-ellipsis"><div></div><div></div><div></div><div></div></div>
@@ -9,4 +9,4 @@ const LoadingSpinner = () => {
   );
 };
 
-export default LoadingSpinner;
+export default LoadingScreen;
