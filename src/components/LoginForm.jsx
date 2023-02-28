@@ -5,6 +5,7 @@ import Cookies from "js-cookie";
 import { getCurrentBrowserFingerPrint } from "@rajesh896/broprint.js";
 import FTLifePartnerPlus_Logo from "../img/FTLifePartnerPlus_Logo.png"
 import "../css/LoginFormCss.css"
+import {API_BASE_URL} from "../api.config.js"
 
 const LoginForm = () => {
     const [username, setUsername] = useState("");
@@ -18,7 +19,7 @@ const LoginForm = () => {
     setIsLoading(true);
       try {
         const deviceId = await getCurrentBrowserFingerPrint();
-        const response = await axios.post("http://kayu.life:8081/login", {
+        const response = await axios.post(`${API_BASE_URL}/login`, {
           username,
           password,
           deviceId

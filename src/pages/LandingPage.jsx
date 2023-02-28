@@ -8,6 +8,7 @@ import Calendar from "../components/Calendar"
 import Searchbar from "../components/Searchbar"
 import NoItem from "../components/NoItem";
 import { getCurrentBrowserFingerPrint } from "@rajesh896/broprint.js";
+import {API_BASE_URL} from '../api.config.js';
 
 function LandingPage() {
   const [username, setUsername] = useState("");
@@ -21,7 +22,7 @@ function LandingPage() {
         window.location.href = "/login";
       } else {
         try {
-          const response = await fetch("http://kayu.life:8081/protected", {
+          const response = await fetch(`${API_BASE_URL}/protected`, {
             method: "POST",
             headers: {
               Authorization: 'plus ' + token,
