@@ -34,11 +34,6 @@ function Calendar() {
     );
   }
 
-  const dayHeaderClassNames = {
-    'fc-day-header': {
-      color: "#004846 !important", // Change the color of the weekday labels here
-    }
-  };
 
   return (
     <div id="calendar-container" className="mt-12 w-5/6 mb-5 " ref={divRef}>
@@ -53,8 +48,6 @@ function Calendar() {
         ]}
         eventBackgroundColor="#004846"
         eventBorderColor="#004846"
-        dayHeaderClassNames={dayHeaderClassNames}
-        color="#004846"
         height="md:auto"
       />
     </div>

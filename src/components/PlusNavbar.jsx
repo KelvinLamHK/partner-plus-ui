@@ -13,9 +13,9 @@ const PlusNavbar = (props) => {
 
   const trigger = useRef(null);
   const dropdown = useRef(null);
-
   // close on click outside
   useEffect(() => {
+ 
     const clickHandler = ({ target }) => {
       if (
         !dropdownOpen ||
@@ -41,18 +41,9 @@ const PlusNavbar = (props) => {
 
   const location = useLocation();
   const [isOpen, setIsOpen] = useState(false);
+  const divRef = useRef()
 
-  function handleToggle() {
-    setIsOpen(!isOpen);
-  }
 
-  function handleMouseEnter() {
-    setIsOpen(true);
-  }
-
-  function handleMouseLeave() {
-    setIsOpen(false);
-  }
   return (
     <div>
       <nav className="shadow ">
@@ -71,77 +62,47 @@ const PlusNavbar = (props) => {
               </div>
               <div className="hidden md:block">
                 <div className="ml-10 flex items-center space-x-4 ">
-                  <div
-                    style={{ position: "relative", display: "inline-block" }}
-                  >
-                    <Dropdown
-                      onMouseEnter={handleMouseEnter}
-                      onMouseLeave={handleMouseLeave}
-                      show={isOpen}
-                    >
-                      <Dropdown.Toggle
-                        onMouseEnter={handleToggle}
-                        id={
-                          location.pathname === "/BrokerCom"
-                            ? "dropdown-basic "
-                            : "dropdown-basic-unactive"
-                        }
-                        className=""
-                      >
-                        CMS
-                      </Dropdown.Toggle>
+                <Dropdown>
+                  <Dropdown.Toggle variant="success" id="dropdown-basic">
+                    CMS
+                  </Dropdown.Toggle>
 
-                      <Dropdown.Menu show style={{ marginTop: "-0.5rem" }}>
-                        <Dropdown.Item
-                          href="/BrokerCom"
-                          className={
-                            location.pathname === "/BrokerCom"
-                              ? "active"
-                              : "inactive"
-                          }
-                        >
-                          Brokers Communications
-                        </Dropdown.Item>
-                        <Dropdown.Item
-                          href="/Categories"
-                          className={
-                            location.pathname === "/Categories"
-                              ? "active"
-                              : "inactive"
-                          }
-                        >
-                          Categories
-                        </Dropdown.Item>
-                        <Dropdown.Item
-                          href="/EventCalendar"
-                          className={
-                            location.pathname === "/EventCalendar"
-                              ? "active"
-                              : "inactive"
-                          }
-                        >
-                          Event Calendar
-                        </Dropdown.Item>
-                        <Dropdown.Item
-                          href="/QuickLinks"
-                          className={
-                            location.pathname === "/QuickLinks"
-                              ? "active"
-                              : "inactive"
-                          }
-                        >
-                          Quick Links
-                        </Dropdown.Item>
-                      </Dropdown.Menu>
-                    </Dropdown>
-                  </div>
+                  <Dropdown.Menu>
+                    <Dropdown.Item
+                      href="/BrokerCom"
+                      className={
+                        location.pathname === "/BrokerCom" ? "active text-center text-ft bg-white cursor-default font-semibold pointer-events-none" : "inactive text-center hover:bg-ft-light hover:text-white active:bg-ft"
+                      }
+                    >
+                      Brokers Communications
+                    </Dropdown.Item>
+                    <Dropdown.Item
+                      style={{ textAlign: "center" }}
+                      className={
+                        location.pathname === "/simp" ? "active text-center" : "inactive text-center hover:bg-ft-light hover:text-white active:bg-ft"
+                      }
+                      href="/"
+                    >
+                      Event Calendar
+                    </Dropdown.Item>
+                    <Dropdown.Item
+                      style={{ textAlign: "center" }}
+                      className={
+                        location.pathname === "/simp" ? "active text-center" : "inactive text-center hover:bg-ft-light hover:text-white active:bg-ft"
+                      }
+                      href="/"
+                    >
+                      Quick Links
+                    </Dropdown.Item>
+                  </Dropdown.Menu>
+                </Dropdown>
                   <a className="m-16 relative group " href="/Campaign">
                     <span
                       className={
                         location.pathname === "/Campaign"
                           ? "text-ft hover:text-ft "
-                          : "text-gray-900  "
-                      }
+                          : "text-gray-900"
+                      } 
                     >
                       Campaign
                     </span>
@@ -168,33 +129,30 @@ const PlusNavbar = (props) => {
             <div className="hidden md:block">
               <div className="flex justify-end items-center h-16">
                 <Dropdown>
-                  <Dropdown.Toggle variant="success" id="dropdown-basic">
+                  <Dropdown.Toggle id="dropdown-basic">
                     中IEN
                   </Dropdown.Toggle>
 
                   <Dropdown.Menu>
                     <Dropdown.Item
-                      style={{ textAlign: "center" }}
                       href="/"
                       className={
-                        location.pathname === "/eng" ? "active " : "inactive"
+                        location.pathname === "/simp" ? "active text-center" : "inactive text-center hover:bg-ft-light hover:text-white active:bg-ft"
                       }
                     >
                       EN
                     </Dropdown.Item>
                     <Dropdown.Item
-                      style={{ textAlign: "center" }}
                       className={
-                        location.pathname === "/trad" ? "active " : "inactive"
+                        location.pathname === "/simp" ? "active text-center" : "inactive text-center hover:bg-ft-light hover:text-white active:bg-ft"
                       }
                       href="/"
                     >
                       繁
                     </Dropdown.Item>
                     <Dropdown.Item
-                      style={{ textAlign: "center" }}
                       className={
-                        location.pathname === "/simp" ? "active " : "inactive"
+                        location.pathname === "/simp" ? "active text-center" : "inactive text-center hover:bg-ft-light hover:text-white active:bg-ft"
                       }
                       href="/"
                     >
@@ -223,9 +181,8 @@ const PlusNavbar = (props) => {
 
                   <Dropdown.Menu>
                     <Dropdown.Item
-                      style={{ textAlign: "center" }}
                       href="/login"
-                      className="hover:bg-ft hover:text-white"
+                      className="hover:bg-ft-light hover:text-white active:bg-ft"
                       onClick={() => {Cookies.remove('PLUSID')}}>
                       Logout
                     </Dropdown.Item>
@@ -291,97 +248,75 @@ const PlusNavbar = (props) => {
         >
           {(ref) => (
             <div className="md:hidden" id="mobile-menu">
-            <div ref={ref} className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-              <Dropdown>
-                <Dropdown.Toggle
-                  id={
-                    location.pathname === "/BrokerCom"
-                      ? "dropdown-basic "
-                      : "dropdown-basic-unactive"
-                  }
-                  className="text-ft hover:bg-ft hover:text-white block px-3 py-2 rounded-md text-base font-medium"
-                >
-                  CMS
-                </Dropdown.Toggle>
-          
-                <Dropdown.Menu className="fixed">
-                  <Dropdown.Item
-                    href="/BrokerCom"
-                    className={
-                      location.pathname === "/BrokerCom"
-                        ? "active"
-                        : "inactive"
-                    }
-                  >
-                    Brokers Communications
-                  </Dropdown.Item>
-                  <Dropdown.Item
-                    href="/Categories"
-                    className={
-                      location.pathname === "/Categories"
-                        ? "active"
-                        : "inactive"
-                    }
-                  >
-                    Categories
-                  </Dropdown.Item>
-                  <Dropdown.Item
-                    href="/EventCalendar"
-                    className={
-                      location.pathname === "/EventCalendar"
-                        ? "active"
-                        : "inactive"
-                    }
-                  >
-                    Event Calendar
-                  </Dropdown.Item>
-                  <Dropdown.Item
-                    href="/QuickLinks"
-                    className={
-                      location.pathname === "/QuickLinks"
-                        ? "active"
-                        : "inactive"
-                    }
-                  >
-                    Quick Links
-                  </Dropdown.Item>
-                </Dropdown.Menu>
-              </Dropdown>
-          
+            <div ref={divRef} className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+           
               <a
-                href="/Campagin"
-                className="text-ft hover:bg-ft hover:text-white block px-3 py-2 rounded-md text-base font-medium"
+                href="/Campaign"
+                className="text-ft hover:bg-ft-light hover:text-white block px-3 py-2 rounded-md text-base font-medium"
               >
                 Campaign
               </a>
-          
               <a
                 href="/DocCenter"
-                className="text-ft hover:bg-ft hover:text-white block px-3 py-2 rounded-md text-base font-medium"
+                className="text-ft hover:bg-ft-light hover:text-white block px-3 py-2 rounded-md text-base font-medium"
               >
                 Document Center
               </a>
-          
-              <Dropdown>
-                <Dropdown.Toggle
-                  id="dropdown-basic"
-                  className="text-ft hover:bg-ft hover:text-white block px-3 py-2 rounded-md text-base font-medium"
-                >
-                  中IEN
-                </Dropdown.Toggle>
-                <Dropdown.Menu className="fixed">
-                  <Dropdown.Item href="#/action-1">EN</Dropdown.Item>
-                  <Dropdown.Item href="#/action-2">繁</Dropdown.Item>
-                  <Dropdown.Item href="#/action-3">簡</Dropdown.Item>
-                </Dropdown.Menu>
-              </Dropdown>
-          
+              <p className="text-f block px-3 py-2 rounded-md text-base font-medium -mb-3">
+              CMS
+            </p>
+            <a
+                href="/Campagin"
+                className="text-ft hover:bg-ft-light hover:text-white block px-3 py-2 rounded-md text-base font-medium ml-3"
+              >
+                Brokers Communications
+            </a>
+            <a
+                href="/Campagin"
+                className="text-ft hover:bg-ft-light hover:text-white block px-3 py-2 rounded-md text-base font-medium ml-3"
+              >
+                Event Calendar
+            </a>
+            <a
+                href="/Campagin"
+                className="text-ft hover:bg-ft-light hover:text-white block px-3 py-2 rounded-md text-base font-medium ml-3"
+              >
+                Quick Links
+            </a>
               <a
                 href="/DocCenter"
-                className="text-ft hover:bg-ft hover:text-white block px-3 py-2 rounded-md text-base font-medium"
+                className="text-ft hover:bg-ft-light hover:text-white block px-3 py-2 rounded-md text-base font-medium"
               >
                 Logout
               </a>
+              <div className="flex px-3 py-2 rounded-md text-base font-medium ">
+              <div className="flex justify-center w-1/3 text-center">
+                <p
+                className="w-16 mb-0 text-white bg-ft hover:text-white block px-3 py-2 rounded-md text-base font-medium"
+                >
+                EN
+              </p>
+              
+                </div>
+                <div className="flex justify-center w-1/3 text-center">
+                <p
+                className="w-16 mb-0 text-ft bg-white block px-3 py-2 rounded-md text-base font-medium"
+                >
+                繁
+              </p>
+              
+                </div>
+                <div className="flex justify-center w-1/3 text-center">
+                <p
+                className="w-16 mb-0 text-ft bg-white block px-3 py-2 rounded-md text-base font-medium"
+                >
+                简
+              </p>
+              
+                </div>
+                
+              </div>
+        
             </div>
           </div>
           

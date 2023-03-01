@@ -32,6 +32,7 @@ function LandingPage() {
   
           const data = await response.text();
           if (data === "Invalid") { // check if response is "Invalid"
+            Cookies.remove('PLUSID');
             window.location.href = "/login";
           } else {
             const jsonData = JSON.parse(data); // parse response as JSON
@@ -39,6 +40,7 @@ function LandingPage() {
             setIsLoading(false);
           }
         } catch (error) {
+          Cookies.remove('PLUSID');
           console.error(error);
           setIsLoading(false);
         }
@@ -61,51 +63,51 @@ function LandingPage() {
               <div className="md:h-screen md:flex md:flex-col">
                 <div className="h-96 md:h-3/5 relative flex justify-center">
                   <div className="titlebar h-12 absolute ">
-                    <span class="bold h4 text-white">Brokers Communications</span>
+                    <span className="bold h4 text-white">Brokers Communications</span>
                   </div>
                   <div className="bg rounded shadow-lg w-full mt-3 flex justify-center items-center">
                     <NoItem />
                   </div>
                 </div>
-                <div class="h-96 md:h-2/5 relative flex justify-center">
+                <div className="h-96 md:h-2/5 relative flex justify-center">
                 <div className="margin titlebar h-12 absolute ">
-                    <span class="bold h4 text-white">Latest Promo</span>
+                    <span className="bold h4 text-white">Latest Promo</span>
                   </div>
                   <div className="bg rounded shadow-lg w-full mt-3 flex justify-center items-center">
                     <NoItem />
                   </div>
                 </div>
               </div>
-              <div class="md:h-screen md:flex md:flex-row md:space-x-2 ">
-                <div class="md:w-1/2 md:h-fit  relative flex justify-center">
-                <div className="titlebar h-12 absolute ">
-                    <span class="bold h4 text-white">Event Calendar</span>
+              <div className="md:h-screen md:flex md:flex-row md:space-x-2 ">
+                <div className="md:w-1/2 md:h-fit  relative flex justify-center">
+                <div className="titlebar h-12 absolute">
+                    <span className="bold h4 text-white">Event Calendar</span>
                   </div>
                   <div className="bg rounded shadow-lg w-full mt-3 flex justify-center">
                     <Calendar />
                   </div>
                 </div>
-                <div class="margin md:w-1/2 md:h-full h-96 relative flex justify-center ">
+                <div className="margin md:w-1/2 md:h-full h-96 relative flex justify-center ">
                   <div className="titlebar h-12 absolute ">
-                    <span class="bold h4 text-white">Qucik Links</span>
+                    <span className="bold h4 text-white">Quick Links</span>
                   </div>
                   <div className="bg rounded shadow-lg w-full mt-3 ">
                   </div>
                 </div>
               </div>
             </div>
-            <div class="md:h-full md:w-1/4 md:flex md:flex-col md:items-center space-y-2">
-              <div class="margin w-full h-36 md:h-36 relative flex justify-center">
+            <div className="md:h-full md:w-1/4 md:flex md:flex-col md:items-center space-y-2">
+              <div className="margin w-full h-36 md:h-36 relative flex justify-center">
                   <div className="titlebar h-12 absolute truncate ">
-                    <span class="bold h4 text-white">Policy Inquiry</span>
+                    <span className="bold h4 text-white">Policy Inquiry</span>
                   </div>
                   <div className="bg rounded shadow-lg w-full mt-3 flex justify-center p-2">                      
                     <Searchbar />
                   </div>
                 </div>
-              <div class="mt-4 w-full h-96 md:h-screen relative flex justify-center">
+              <div className="mt-4 w-full h-96 md:h-screen relative flex justify-center">
                 <div className="margin titlebar h-12 absolute truncate mt-3">
-                    <span class="bold h4 text-white">Document Centre</span>
+                    <span className="bold h4 text-white">Document Centre</span>
                   </div>
                   <div className="bg rounded shadow-lg w-full mt-3 ">
                       

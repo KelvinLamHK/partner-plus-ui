@@ -16,14 +16,6 @@ a {
   border-color: transparent !important;
 }
 
-.active {
-  background-color: transparent !important;
-  color: #f04124 !important;
-}
-
-.inactive:active {
-  background-color: #f04124 !important;
-}
 
 .pointer:hover {
   cursor: pointer;
