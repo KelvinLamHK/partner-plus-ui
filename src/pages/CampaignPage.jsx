@@ -5,6 +5,7 @@ import LoadingScreen from "../components/LoadingScreen";
 import "bootstrap/dist/css/bootstrap.css";
 import { getCurrentBrowserFingerPrint } from "@rajesh896/broprint.js";
 import {API_BASE_URL} from '../api.config.js';
+import CampaignList from "../components/CampaignList";
 
 
 function CampaignPage() {
@@ -53,8 +54,11 @@ function CampaignPage() {
       ) : (
         <>
           <PlusNavbar username={username}/>
-          <h1>Current User: {username}</h1>
-          <h1>Current Page: CampaignPage</h1>
+          <div className="md:flex md:justify-center">
+          <div className="p-3 md:flex md:flex-row md:w-2/3">
+          <CampaignList />
+          </div>
+          </div>
         </>
       )}
     </>

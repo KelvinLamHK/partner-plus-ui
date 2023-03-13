@@ -20,7 +20,7 @@
     "react-bootstrap": "^2.7.2",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.8.1",
-    "react-scripts": "5.0.1",
+    "react-scripts": "^5.0.1",
     "sweetalert2": "^11.7.2",
     "web-vitals": "^2.1.4"
   },
@@ -31,7 +31,6 @@
     "eject": "react-scripts eject",
     "build:css": "tailwindcss build src/index.css -o src/tailwind.css"
   },
-  "proxy":"http://localhost:8081",
   "eslintConfig": {
     "extends": [
       "react-app",

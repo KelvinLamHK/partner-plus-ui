@@ -20,7 +20,7 @@ function CampaignList() {
     },
     pageableParameter: {
       pageNumber: 1,
-      pageSize: 10,
+      pageSize: 50,
       orderBy: "campaignNameEng",
       orderSequence: "desc"
     },
@@ -31,7 +31,7 @@ function CampaignList() {
 
   useEffect(() => {
     // Fetch campaign data using POST request
-    fetch('http://localhost:8081/campaign', {
+    fetch('http://localhost:8081/v1/campaign/headers', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -55,31 +55,37 @@ function CampaignList() {
 
   return (
     <div>
-      {campaigns.map((campaign) => (
-        <form key={campaign.campaignHeaderId}>
-          <div>Created Date: {campaign.createdDate}</div>
-          <div>Updated Date: {campaign.updatedDate}</div>
-          <div>Created By: {campaign.createdBy}</div>
-          <div>Updated By: {campaign.updatedBy}</div>
-          <div>Campaign Code: {campaign.campaignCode}</div>
-          <div>Campaign Name (English): {campaign.campaignNameEng}</div>
-          <div>Campaign Name (Traditional Chinese): {campaign.campaignNameZHTW}</div>
-          <div>Campaign Name (Simplified Chinese): {campaign.campaignNameZHCN}</div>
-          <div>IFA/CA Indicator: {campaign.ifaCaIndicator}</div>
-          <div>Remark: {campaign.remark}</div>
-          <div>Campaign Start Date: {campaign.campaignStartDate}</div>
-          <div>Campaign End Date: {campaign.campaignEndDate}</div>
-          <div>Thumbnail Doc ID: {campaign.thumbnailDocID}</div>
-          <div>Campaign Header ID: {campaign.campaignHeaderId}</div>
-        </form>
-      ))}
-      <div>
-        <button disabled={pagination.pageNumber === 1} onClick={() => handlePageChange(pagination.pageNumber - 1)}>Previous Page</button>
-        <span>Page {pagination.pageNumber} of {pagination.totalPages}</span>
-        <button disabled={!pagination.hasNext} onClick={() => handlePageChange(pagination.pageNumber + 1)}>Next Page</button>
-      </div>
-    </div>
-  );
-}
+      <table className="table-auto border-collapse border border-slate-400 ">
+        <thead >
+          <tr className="border border-slate-300 ">
+            <th >Campaign Name</th>
+            <th >Campaign Code</th>
+            <th >Start Date</th>
+            <th>End Date</th>
+            <th>Latest Update</th>
+            <th>IFA/CA</th>
+            <th>Remarks</th>
+            <th>Poster</th>
+          </tr>
+        </thead>
+        <tbody>
+          {campaigns.map((campaign) => (
+            <tr className="border border-slate-300 text-ft" key={campaign.campaignHeaderId}>
+              <td ><a href="/Campaign">{campaign.campaignNameEng}</a></td>
+              <td border border-slate-300>{campaign.campaignCode}</td>
+              <td border border-slate-300>{campaign.campaignStartDate}</td>
+              <td border border-slate-300>{campaign.campaignEndDate}</td>
+              <td border border-slate-300>{campaign.updatedDate}</td>
+              <td border border-slate-300>{campaign.ifaCaIndicator}</td>
+              <td border border-slate-300>{campaign.thumbnailDocID}</td>
+              <td border border-slate-300>{campaign.remark}</td>
+            </tr>
+          ))}
+          
+          </tbody>
+          
+          </table>
+          </div>
+  )}
 
 export default CampaignList;
