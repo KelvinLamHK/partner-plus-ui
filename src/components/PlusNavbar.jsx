@@ -100,13 +100,13 @@ const PlusNavbar = (props) => {
                     <span
                       className={
                         location.pathname === "/Campaign"
-                          ? "text-ft hover:text-ft font-bold"
+                          ? "text-ft-light hover:text-ft-light font-bold"
                           : "text-gray-900"
                       } 
                     >
                       Campaign
                     </span>
-                    <span className="absolute -bottom-1 left-0 w-0 h-1 bg-ft transition-all group-hover:w-full">
+                    <span className="absolute -bottom-1 left-0 w-0 h-1 bg-ft-light transition-all group-hover:w-full">
                       {" "}
                     </span>
                   </a>
