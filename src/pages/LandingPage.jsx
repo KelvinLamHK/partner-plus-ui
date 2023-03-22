@@ -58,7 +58,7 @@ function LandingPage() {
         <>
           <PlusNavbar username={username} />
           <div className="md:flex md:justify-center">
-          <div className="p-3 md:flex md:flex-row md:w-2/3">
+          <div className="p-3 md:flex md:flex-row md:w-deflaut">
             <div className="space-y-2 md:h-auto md:w-3/4 md:flex md:flex-col md:mr-4">
               <div className="md:h-screen md:flex md:flex-col">
                 <div className="h-96 md:h-3/5 relative flex justify-center">

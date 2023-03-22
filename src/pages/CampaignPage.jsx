@@ -55,7 +55,7 @@ function CampaignPage() {
         <>
           <PlusNavbar username={username}/>
           <div className="md:flex md:justify-center">
-          <div className="p-3 md:flex md:flex-row md:w-2/3">
+          <div className="p-3 md:flex md:flex-row">
           <CampaignList />
           </div>
           </div>

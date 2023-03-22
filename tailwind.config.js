@@ -7,7 +7,8 @@ module.exports = {
   ],
   theme: {
     screens: {
-      md: "1204px",
+      md: "1250px",
+      sm:"705px",
     }, fontFamily: {
       sans: ['Graphik', 'sans-serif'],
       serif: ['Merriweather', 'serif'],
@@ -18,6 +19,10 @@ module.exports = {
         "ft-light":"#009188",
         title: "#4f575e",
       },
+      width: {
+        'deflaut':'1250px',
+        'table': '1225px',
+      }
     },
   },
   plugins: [require("flowbite/plugin")],

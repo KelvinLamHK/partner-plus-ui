@@ -47,8 +47,10 @@ const PlusNavbar = (props) => {
   return (
     <div>
       <nav className="shadow ">
-        <div className=" mx-auto px-4 sm:px-6 lg:px-8 md:flex md:justify-center">
-          <div className="flex items-center justify-between h-16 md:w-2/3">
+        <div className=" mx-auto px-4 sm:px-6 lg:px-8 md:flex md:justify-center md:w-deflaut">
+       
+          <div className="flex items-center justify-between w-full h-16">
+             <div className="w-auto">
             <div className="flex items-center ">
               <div className="flex-shrink-0">
                 <img
@@ -126,8 +128,10 @@ const PlusNavbar = (props) => {
                 </div>
               </div>
             </div>
+            </div>
+            <div>
             <div className="hidden md:block">
-              <div className="flex justify-end items-center h-16">
+              <div className="flex  items-center h-16">
                 <Dropdown>
                   <Dropdown.Toggle id="dropdown-basic">
                     中IEN
@@ -234,6 +238,7 @@ const PlusNavbar = (props) => {
                 )}
               </button>
             </div>
+          </div>
           </div>
         </div>
 
