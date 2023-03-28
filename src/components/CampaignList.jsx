@@ -286,7 +286,7 @@ function CampaignList() {
             <h1>Campaign</h1>
           </div>
           <div className='mt-4 flex'>
-            <a className='bg-ft-light text-center w-full text-white py-3 rounded hover:bg-ft active:bg-white active:text-ft active:ring-1 active:ring-ft' href='/Campaign'>
+            <a className='bg-ft-light text-center w-full text-white py-3 rounded hover:bg-ft active:bg-white active:text-ft active:ring-1 active:ring-ft' href='/CreateCampaign'>
               Create
             </a>
           </div>
@@ -457,7 +457,7 @@ function CampaignList() {
             <h1>Campaign</h1>
           </div>
           <div className=''>
-            <a className='bg-ft-light text-white px-3 py-2 rounded hover:bg-ft active:bg-white active:text-ft active:ring-1 active:ring-ft' href='/Campaign'>
+            <a className='bg-ft-light text-white px-3 py-2 rounded hover:bg-ft active:bg-white active:text-ft active:ring-1 active:ring-ft' href='/CreateCampaign'>
               Create
             </a>
           </div>
@@ -538,43 +538,43 @@ function CampaignList() {
                   <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 15L12 18.75 15.75 15m-7.5-6L12 5.25 15.75 9"></path>
                 </svg>
               </th>
-            <th className=' hover:text-ft-light cursor-pointer '>
+            <th className=' hover:text-ft-light cursor-pointer ' onClick={()=> handleOrder("campaignCode")}>
               Campaign Code
               <svg fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" className="inline-block w-4 h-4 ml-1">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 15L12 18.75 15.75 15m-7.5-6L12 5.25 15.75 9"></path>
               </svg>
             </th>
-            <th className=' hover:text-ft-light cursor-pointer'>
+            <th className=' hover:text-ft-light cursor-pointer' onClick={()=> handleOrder("campaignStartDate")}>
               Start Date
               <svg fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" className="inline-block w-4 h-4 ml-1">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 15L12 18.75 15.75 15m-7.5-6L12 5.25 15.75 9"></path>
               </svg>
             </th>
-            <th className=' hover:text-ft-light cursor-pointer'>
+            <th className=' hover:text-ft-light cursor-pointer' onClick={()=> handleOrder("campaignEndDate")}>
               End Date
               <svg fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" className="inline-block w-4 h-4 ml-1">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 15L12 18.75 15.75 15m-7.5-6L12 5.25 15.75 9"></path>
               </svg>
             </th>
-            <th className=' hover:text-ft-light cursor-pointer'>
+            <th className=' hover:text-ft-light cursor-pointer' onClick={()=> handleOrder("updatedDate")}>
               Latest Update
               <svg fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" className="inline-block w-4 h-4 ml-1">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 15L12 18.75 15.75 15m-7.5-6L12 5.25 15.75 9"></path>
               </svg>
             </th>
-            <th className=' hover:text-ft-light cursor-pointer'>
+            <th className=' hover:text-ft-light cursor-pointer' onClick={()=> handleOrder("ifaCaIndicator")}>
               IFA/CA
               <svg fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" className="inline-block w-4 h-4 ml-1">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 15L12 18.75 15.75 15m-7.5-6L12 5.25 15.75 9"></path>
               </svg>
             </th>
-            <th className=' hover:text-ft-light cursor-pointer'>
+            <th className=' hover:text-ft-light cursor-pointer' onClick={()=> handleOrder("remark")}>
               Remarks
               <svg fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" className="inline-block w-4 h-4 ml-1">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 15L12 18.75 15.75 15m-7.5-6L12 5.25 15.75 9"></path>
               </svg>
             </th>
-            <th className=' hover:text-ft-light cursor-pointer'>
+            <th className=' hover:text-ft-light cursor-pointer' onClick={()=> handleOrder("thumbnailDocID")}>
               Poster
               <svg fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" className="inline-block w-4 h-4 ml-1">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 15L12 18.75 15.75 15m-7.5-6L12 5.25 15.75 9"></path>

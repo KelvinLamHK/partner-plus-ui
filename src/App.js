@@ -7,6 +7,7 @@ import BrokerComPage from "../src/pages/CMS/BrokerComPage.jsx"
 import CategoriesPage from "../src/pages/CMS/CategoriesPage.jsx"
 import EventCalendarPage from "../src/pages/CMS/EventCalendarPage.jsx"
 import QuickLinksPage from "../src/pages/CMS/QuickLinksPage.jsx"
+import CreateCampaignPage from "../src/pages/CreateCampaignPage.jsx"
 
 
 
@@ -24,6 +25,7 @@ function App() {
         <Route path="/Categories" element={<CategoriesPage />} />
         <Route path="/EventCalendar" element={<EventCalendarPage />} />
         <Route path="/QuickLinks" element={<QuickLinksPage />} />
+        <Route path="/CreateCampaign" element={<CreateCampaignPage />} />
       </Routes>
     </Router>
   );
