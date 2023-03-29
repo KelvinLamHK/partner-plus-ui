@@ -4,6 +4,7 @@ import {API_BASE_URL} from '../api.config.js';
 import Pagination from '@mui/material/Pagination';
 import Stack from '@mui/material/Stack';
 import ScrollToTopButton from './ScrollToTopButton';
+import { useNavigate} from 'react-router-dom';
 
 function CampaignList() {
   const inputRefCamName = useRef(null);
@@ -179,7 +180,6 @@ function CampaignList() {
 
 
   useEffect(() => {
-    console.log(postData);
     fetch(`${API_BASE_URL}/v1/campaign/headers`, {
       method: 'POST',
       headers: {
@@ -229,54 +229,81 @@ function CampaignList() {
     };
   }, []);
 
-  useEffect(() => {
-    // action on update of movies
-  }, []);
-
 
   const handleOrder = (event) =>{
-    handleOrderSequence();
     handleOrderBy(event);
-    setPostData({
-      userParameter: {
-        loginName: "IFA-0413518-00012",
-        name: "XXXXXXXX Wong",
-        companyID: "IFA",
-        email: "xxxxxxxxxxxx@iamlegacy.com",
-        brokerCode: "0413518;0419214",
-        ifaIdentity: "ADMIN",
-        pibaNumber: "PIBA-0433-022049",
-        ifaCaNameEng: "XXXX Ip Wun",
-        ifaCaNameOther: "IA9205",
-        companyName: null,
-        ifaCaLicenseNumber: "TR1234",
-        role: "internal-admin"
-      },
-      pageableParameter: {
-        pageNumber: 0,
-        pageSize: pagination.pageSize,
-        orderBy: Orderby,
-        orderSequence: OrderSequence
-      },
-      campaignListParameter: {
-        campaignCode: inputRefCamCode.current.value,
-        campaignName: inputRefCamName.current.value
-      }
-    });
-  }
-
-  const handleOrderSequence = () =>{
-    if(OrderSequence==="desc"){
-      setOrderSequence("asc")
-    }else{
-      setOrderSequence("desc")
-    }
-    console.log(OrderSequence);
+    handlePostData(event);
   }
 
   const handleOrderBy = (event) =>{
     setOrderby(event)
-    console.log(Orderby);
+  }
+
+  const handlePostData = (event) =>{
+    if(OrderSequence==="desc"){
+      setOrderSequence("asc")
+      setPostData({
+        userParameter: {
+          loginName: "IFA-0413518-00012",
+          name: "XXXXXXXX Wong",
+          companyID: "IFA",
+          email: "xxxxxxxxxxxx@iamlegacy.com",
+          brokerCode: "0413518;0419214",
+          ifaIdentity: "ADMIN",
+          pibaNumber: "PIBA-0433-022049",
+          ifaCaNameEng: "XXXX Ip Wun",
+          ifaCaNameOther: "IA9205",
+          companyName: null,
+          ifaCaLicenseNumber: "TR1234",
+          role: "internal-admin"
+        },
+        pageableParameter: {
+          pageNumber: pagination.pageNumber,
+          pageSize: pagination.pageSize,
+          orderBy: event,
+          orderSequence: "asc"
+        },
+        campaignListParameter: {
+          campaignCode: CampaignCode,
+          campaignName: CampaignName
+        }
+      })
+    }else{
+      setOrderSequence("desc")
+      setPostData({
+        userParameter: {
+          loginName: "IFA-0413518-00012",
+          name: "XXXXXXXX Wong",
+          companyID: "IFA",
+          email: "xxxxxxxxxxxx@iamlegacy.com",
+          brokerCode: "0413518;0419214",
+          ifaIdentity: "ADMIN",
+          pibaNumber: "PIBA-0433-022049",
+          ifaCaNameEng: "XXXX Ip Wun",
+          ifaCaNameOther: "IA9205",
+          companyName: null,
+          ifaCaLicenseNumber: "TR1234",
+          role: "internal-admin"
+        },
+        pageableParameter: {
+          pageNumber: pagination.pageNumber,
+          pageSize: pagination.pageSize,
+          orderBy: event,
+          orderSequence: "desc"
+        },
+        campaignListParameter: {
+          campaignCode: CampaignCode,
+          campaignName: CampaignName
+        }
+      })
+    }
+    
+  }
+
+  const navigate = useNavigate();
+
+  const EditCampaign = (event) => {
+    navigate('/CreateCampaign',{state:{event}});
   }
 
   return (
@@ -580,15 +607,12 @@ function CampaignList() {
                 <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 15L12 18.75 15.75 15m-7.5-6L12 5.25 15.75 9"></path>
               </svg>
             </th>
-            <th className=' hover:text-ft-light cursor-pointer w-20'>
+            <th className=' w-16'>
               Edit
-              <svg fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" className="inline-block w-4 h-4 ml-1">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 15L12 18.75 15.75 15m-7.5-6L12 5.25 15.75 9"></path>
-              </svg>
             </th>
             </tr>
             </thead>
-            <tbody className='text-left'>
+            <tbody className='text-left trancate'>
             {campaigns.map((campaign) => {
                 const startDate = new Date(campaign.campaignStartDate);
                 const endDate = new Date(campaign.campaignEndDate);
@@ -616,7 +640,7 @@ function CampaignList() {
                     <td className=''>{campaign.remark}</td>
                     <td className=''>{campaign.thumbnailDocID}</td>
                     <td className=''>
-                      <a href='/Campaign'>
+                      <a href='/CreateCampaign' onClick={()=> EditCampaign(campaign)}>
                         <svg className='campaign h-8' fill="none"  viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                           <path  d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10"></path>
                         </svg>

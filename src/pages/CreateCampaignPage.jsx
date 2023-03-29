@@ -5,13 +5,16 @@ import LoadingScreen from "../components/LoadingScreen";
 import "bootstrap/dist/css/bootstrap.css";
 import { getCurrentBrowserFingerPrint } from "@rajesh896/broprint.js";
 import {API_BASE_URL} from '../api.config.js';
-import CreateCampaignFrom from "../components/CreateCampaignFrom";
+import CreateCampaignForm from "../components/CreateCampaignForm";
+import {useLocation} from 'react-router-dom';
+
 
 
 function CreateCampaignPage() {
   const [username, setUsername] = useState("");
   const [isLoading, setIsLoading] = useState(true);
   const token = Cookies.get("PLUSID");
+  const location = useLocation();
 
   useEffect(() => {
     async function fetchData() {
@@ -47,6 +50,7 @@ function CreateCampaignPage() {
     fetchData();
   }, [token]);
 
+
   return (
     <>
       {isLoading ? (
@@ -57,8 +61,9 @@ function CreateCampaignPage() {
           <div className="md:flex md:justify-center">
             <div className="p-3 md:w-deflaut md:flex">
                 <div className="w-full">
-                    <a href="/Campaign"><h1 className="text-ft-light hover:text-ft hover:underline">New Campaign</h1></a>
-                    <CreateCampaignFrom />
+                    <a href="/Campaign"><h1 className="my-4 text-ft-light hover:text-ft hover:underline">New Campaign</h1></a>
+                    <CreateCampaignForm campaign={(location.state!==null)?location.state.event:""}/>
+
                 </div>
             </div>
         </div>
