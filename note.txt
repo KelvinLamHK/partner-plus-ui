@@ -1,0 +1,14 @@
+(✓)campaignpage not auto change to mobile ver. bug
+(✓)campaigndetailpage (horizontal scroll bar of the table, table cols have fix width,select dropdownbar and show input box)
+(✓)create campaign (fixed bug)
+(✓)edit campaign (format)
+(✓)campaign table structure rewrite both mobile & web version (fixed table width of each col, text will go to next line if too long, text will truncate after two lines)
+(✓)create campaign mobile version
+(✓)campaignpage connected create campaign and edit campaign function 
+(✓)fixed page number bug(end with 0)
+(X)when hover a line, show the full text
+(X)campaigndetailpage (no mobile ver. yet)
+
+
+*Campaigndetail page: 我地DB唔夠資料，call API冇意思，我用住header資料扮住個樣先
+*Chrome scroll bar 有bug，用edge會好睇啲

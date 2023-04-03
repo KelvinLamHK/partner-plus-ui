@@ -2,18 +2,18 @@ import React, { useState, useEffect} from 'react';
 import {API_BASE_URL} from "../api.config.js"
 import Swal from "sweetalert2";
 
-const CreateCampaignForm = () =>  {
-  const [isMobileScreen, setIsMobileScreen] = useState((window.innerWidth <= 1250?true:false));
+const EditCampaignForm = (props) =>  {
+const [isMobileScreen, setIsMobileScreen] = useState((window.innerWidth <= 1250?true:false));
   const [IFACA, setIFACA] = useState("IFA/CA");
   const [values, setValues] = useState({
-    campaignNameEng: '',
-    campaignCode: '',
-    campaignNameZHTW: '',
-    campaignStartDate: '',
-    campaignNameZHCN: '',
-    campaignEndDate: '',
-    remark:'',
-    file:'',
+    campaignNameEng:props.campaign.campaignNameEng,
+    campaignCode: props.campaign.campaignCode,
+    campaignNameZHTW: props.campaign.campaignNameZHTW,
+    campaignStartDate: props.campaign.campaignStartDate.slice(0, 10),
+    campaignNameZHCN: props.campaign.campaignNameZHCN,
+    campaignEndDate: props.campaign.campaignEndDate.slice(0, 10),
+    remark:props.campaign.remark,
+    file:props.campaign.file,
   });
   const [postImage, setPostImage] = useState({
     myFile: "",
@@ -111,7 +111,7 @@ const CreateCampaignForm = () =>  {
       if (isNaN(+data)) {
         Swal.fire({
             icon: 'success',
-            title: ('Created Campaign'),
+            title: (props===""?'Created Campaign':'Updated Campaign'),
             showConfirmButton: false,
             timer: 1700
         }).then(function() {
@@ -431,4 +431,4 @@ const CreateCampaignForm = () =>  {
   </>
 )}
 
-export default CreateCampaignForm;
+export default EditCampaignForm;

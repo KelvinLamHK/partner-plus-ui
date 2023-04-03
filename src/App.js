@@ -8,8 +8,8 @@ import CategoriesPage from "../src/pages/CMS/CategoriesPage.jsx"
 import EventCalendarPage from "../src/pages/CMS/EventCalendarPage.jsx"
 import QuickLinksPage from "../src/pages/CMS/QuickLinksPage.jsx"
 import CreateCampaignPage from "../src/pages/CreateCampaignPage.jsx"
-
-
+import EditCampaignPage from "../src/pages/EditCampaignPage.jsx"
+import CampaignDetailPage from "../src/pages/CampaignDetailPage.jsx"
 
 function App() {
   return (
@@ -26,6 +26,8 @@ function App() {
         <Route path="/EventCalendar" element={<EventCalendarPage />} />
         <Route path="/QuickLinks" element={<QuickLinksPage />} />
         <Route path="/CreateCampaign" element={<CreateCampaignPage />} />
+        <Route path="/EditCampaign" element={<EditCampaignPage />} />
+        <Route path="/CampaignDetail" element={<CampaignDetailPage />} />
       </Routes>
     </Router>
   );

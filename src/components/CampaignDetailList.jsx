@@ -5,9 +5,11 @@ import {API_BASE_URL} from '../api.config.js';
 import Pagination from '@mui/material/Pagination';
 import Stack from '@mui/material/Stack';
 import ScrollToTopButton from './ScrollToTopButton';
+import Selection from './Selection';
 import { useNavigate} from 'react-router-dom';
 
-function CampaignList() {
+const CampaignDetailList = (props) => {
+  
   const inputRefCamName = useRef(null);
   const inputRefCamCode = useRef(null);
   const [selectedValue, setSelectedValue] = useState();
@@ -307,15 +309,11 @@ function CampaignList() {
     navigate('/EditCampaign',{state:{event}});
   }
 
-  const ViewDetail = (event) => {
-    navigate('/CampaignDetail',{state:{event}});
-  }
-
   return (
     <>
     {isMobileScreen ? ( <div className='w-full '>
           <div className=''>
-            <h1>Campaign</h1>
+            <h1>cD</h1>
           </div>
           <div className='mt-4 flex'>
             <a className='bg-ft-light text-center w-full text-white py-3 rounded hover:bg-ft active:bg-white active:text-ft active:ring-1 active:ring-ft' href='/CreateCampaign'>
@@ -489,54 +487,24 @@ function CampaignList() {
         <ScrollToTopButton />
   </div>
   
+  
   )
   :   
   (
       <div className='w-deflaut px-2'>
         <div className='flex justify-content-between align-items-center my-3'>
           <div className=''>
-            <h1>Campaign</h1>
+          <h1><a href='/Campaign' className='text-ft-light hover:text-ft'>Campaign Detail</a></h1>
           </div>
-          <div className=''>
-            <a className='bg-ft-light text-white px-3 py-2 rounded hover:bg-ft active:bg-white active:text-ft active:ring-1 active:ring-ft' href='/CreateCampaign'>
-              Create
-            </a>
-          </div>
+         
         </div>
+   
         <div className='w-full flex justify-center mb-4'>
-        <div className="w-1/3 mr-5">
-          <span>Campaign Name</span>
-          <span className="input-search">
-            <input
-              data-input=""
-              className="form-control"
-              type="search"
-              placeholder="Campaign Name"
-              maxLength="500"
-              id="Input_SearchCampaignName"
-              ref={inputRefCamName}
-              style={{ userSelect: "auto" }}
-            />
-          </span>
+        <div className="w-2/3 mr-5">
+        <Selection />
         </div>
-        <div className="w-1/3 mr-5">
-          <span>Campaign Code</span>
-          <span className="input-search">
-            <input
-              data-input=""
-              className="form-control"
-              type="search"
-              placeholder="Campaign Code"
-              maxLength="500"
-              ref={inputRefCamCode}
-              id="Input_SearchCampaignCode"
-              style={{ userSelect: "auto" }}
-            />
-          </span>
-        </div>
-        <div className="w-1/3 flex flex-col justify-between">
-          <div className='h-1/2'>
-          </div>
+        <div className="w-1/3 flex flex-col justify-between mt-2">
+        
           <div className='h-1/2 flex'> 
           <div className='mr-5'>
             <a href="#PleaseEnableJavascript.html" onClick={() => handleCampaignChange()} className="bg-ft-light text-white px-3 py-2 rounded hover:bg-ft active:bg-white active:text-ft active:ring-1 active:ring-ft">
@@ -551,6 +519,7 @@ function CampaignList() {
           </div>
         </div>
         </div>
+        <div className='mt-5 flex justify-between'>
         <div className='mr-5'>
           <p>Show
           <select
@@ -560,6 +529,7 @@ function CampaignList() {
       value={selectedValue}
       onChange={handleChange}
     >
+      
               <option value="10">10</option>
               <option value="20">20</option>
               <option value="50">50</option>
@@ -567,66 +537,91 @@ function CampaignList() {
             </select> 
             records per page.
           </p>
-
+          </div>
+          <div>
+            <a href="/Campagin" className='mr-2 px-3 py-2 bg-white text-ft-light ring-1 ring-ft-light rounded'>Import</a>
+            <a href="/Campagin" className='mr-2 px-3 py-2 text-white bg-ft-light  rounded'>Export</a>
+            <a href="/Campagin" className='mr-2 px-3 py-2 text-white bg-ft-light  rounded'>Export All</a>
+          </div>
         </div>
-        <div className='overflow-y-hidden' >
-          <table className="rounded-md border-collapse border border-slate-800 w-table " >
-          <thead className=''>
-            <tr className="border border-slate-300 " >
-              <th className=' hover:text-ft-light cursor-pointer pl-5 w-56 ' onClick={()=> handleOrder("campaignNameEng")}>
-                Campaign Name
+        <div class='w-table flex '>
+        <div class='overflow-x w-full '>
+        <table class='table-fixed overflow-scroll w-full block'>
+            <thead>
+                <tr class='border border-slate-300 '>
+                <th className=' hover:text-ft-light cursor-pointer pl-5 h-8' onClick={()=> handleOrder("campaignNameEng")}>
+                <div className='inline-block h-6 w-56'>
+                Client Name(Eng)
                 <svg fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" className="inline-block w-4 h-4 ml-1">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 15L12 18.75 15.75 15m-7.5-6L12 5.25 15.75 9"></path>
                 </svg>
+                </div>
               </th>
-            <th className=' hover:text-ft-light cursor-pointer w-48 ' onClick={()=> handleOrder("campaignCode")}>
-              Campaign Code
+            <th className=' hover:text-ft-light cursor-pointer h-8 ' onClick={()=> handleOrder("campaignCode")}>
+            <div className='inline-block h-6 w-52'>Client Name(Chi)
               <svg fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" className="inline-block w-4 h-4 ml-1">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 15L12 18.75 15.75 15m-7.5-6L12 5.25 15.75 9"></path>
               </svg>
+              </div>
             </th>
-            <th className=' hover:text-ft-light cursor-pointer w-32 ' onClick={()=> handleOrder("campaignStartDate")}>
-              Start Date
+            <th className=' hover:text-ft-light cursor-pointer h-8 ' onClick={()=> handleOrder("campaignStartDate")}>
+            <div className='inline-block h-6 w-48'>
+            Date of Birth
               <svg fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" className="inline-block w-4 h-4 ml-1">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 15L12 18.75 15.75 15m-7.5-6L12 5.25 15.75 9"></path>
               </svg>
+              </div>
             </th>
-            <th className=' hover:text-ft-light cursor-pointer w-32' onClick={()=> handleOrder("campaignEndDate")}>
-              End Date
+            <th className=' hover:text-ft-light cursor-pointer h-8' onClick={()=> handleOrder("campaignEndDate")}>
+            <div className='inline-block h-6 w-56'>
+            First Policy Issue Date
               <svg fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" className="inline-block w-4 h-4 ml-1">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 15L12 18.75 15.75 15m-7.5-6L12 5.25 15.75 9"></path>
               </svg>
+              </div>
             </th>
-            <th className=' hover:text-ft-light cursor-pointer w-36' onClick={()=> handleOrder("updatedDate")}>
-              Latest Update
+            <th className=' hover:text-ft-light cursor-pointer h-8' onClick={()=> handleOrder("updatedDate")}>
+            <div className='inline-block h-6 w-56'>
+            Latest Issued Policy
               <svg fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" className="inline-block w-4 h-4 ml-1">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 15L12 18.75 15.75 15m-7.5-6L12 5.25 15.75 9"></path>
               </svg>
+              </div>
             </th>
-            <th className=' hover:text-ft-light cursor-pointer' onClick={()=> handleOrder("ifaCaIndicator")}>
-              IFA/CA
+            <th className=' hover:text-ft-light cursor-pointer h-8' onClick={()=> handleOrder("ifaCaIndicator")}>
+            <div className='inline-block h-6 w-48'>
+            Broker / Agent Code
               <svg fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" className="inline-block w-4 h-4 ml-1">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 15L12 18.75 15.75 15m-7.5-6L12 5.25 15.75 9"></path>
               </svg>
+              </div>
             </th>
-            <th className=' hover:text-ft-light cursor-pointer w-36' onClick={()=> handleOrder("remark")}>
-              Remarks
+            <th className=' hover:text-ft-light cursor-pointer h-8' onClick={()=> handleOrder("remark")}>
+            <div className='inline-block h-6 w-44'>
+              Company Name
               <svg fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" className="inline-block w-4 h-4 ml-1">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 15L12 18.75 15.75 15m-7.5-6L12 5.25 15.75 9"></path>
               </svg>
+              </div>
             </th>
-            <th className=' hover:text-ft-light cursor-pointer' onClick={()=> handleOrder("thumbnailDocID")}>
-              Poster
+            <th className=' hover:text-ft-light cursor-pointer h-8' onClick={()=> handleOrder("thumbnailDocID")}>
+            <div className='inline-block h-6 w-44'>
+            Agent Name
               <svg fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" className="inline-block w-4 h-4 ml-1">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 15L12 18.75 15.75 15m-7.5-6L12 5.25 15.75 9"></path>
               </svg>
+              </div>
             </th>
-            <th className=' w-16'>
-              Edit
+            
+            <th className=' h-8'>
+              <div className='inline-block h-6 w-16'>
+                Edit
+                 </div>
             </th>
-            </tr>
+           
+                </tr>
             </thead>
-            <tbody className='text-left'>
+            <tbody className='text-left '>
             {campaigns.map((campaign) => {
                 const startDate = new Date(campaign.campaignStartDate);
                 const endDate = new Date(campaign.campaignEndDate);
@@ -645,7 +640,7 @@ function CampaignList() {
 
                 return (
                   <tr className="border border-slate-300 " key={campaign.campaignHeaderId}>
-                    <td className=''><div className='w-52 lineclamp2 pl-5'><a onClick={()=> ViewDetail(campaign.campaignNameEng)} className='text-ft-light hover:text-ft ' href="/CampaignDetail">{campaign.campaignNameEng}</a></div></td>
+                    <td className=''><div className='w-52 lineclamp2 pl-5'>{campaign.campaignNameEng}</div></td>
                     <td className=''><div className='w-44 break-all'>{campaign.campaignCode}</div></td>
                     <td className='w-32'>{formattedStartDate}</td>
                     <td className='w-32 '>{formattedEndDate}</td>
@@ -654,7 +649,7 @@ function CampaignList() {
                     <td className=''><div data-tooltip-target="tooltip-default" className='w-32 lineclamp2'>{campaign.remark}</div></td>
                     <td className=''>{campaign.thumbnailDocID}</td>
                     <td className=''>
-                      <a onClick={()=> EditCampaign(campaign)} href='/EditCampaign'>
+                      <a href='/EditCampaign' onClick={()=> EditCampaign(campaign)}>
                         <svg className='campaign h-8' fill="none"  viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                           <path  d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10"></path>
                         </svg>
@@ -665,9 +660,10 @@ function CampaignList() {
               })}
               
               </tbody>
-              
-              </table>
-              </div>
+        </table>
+    </div>
+    </div>
+       
               <div className="flex items-center justify-between px-4 py-3 md:px-6">
       <div className="hidden md:flex md:flex-1 md:items-center md:justify-between">
         <div>
@@ -699,4 +695,4 @@ function CampaignList() {
             </>
   )}
 
-export default CampaignList;
+export default CampaignDetailList;
