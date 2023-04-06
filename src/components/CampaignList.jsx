@@ -432,9 +432,9 @@ function CampaignList() {
                 return (
                   <tr className="flex flex-col border border-slate-300 mb-2" key={campaignMobileBody.campaignHeaderId}>
                     {((isXsMobileScreen)||(campaignMobileBody.campaignNameEng.split(" ")[0].length<20))?
-                    <td className='pl-3 pr-3 h-12 lineclamp2'><a className='text-ft-light hover:text-ft' href="/Campaign">{campaignMobileBody.campaignNameEng}</a></td>
+                    <td className='pl-3 pr-3 h-12 lineclamp2'><a className='text-ft-light hover:text-ft' href="/CampaignDetail">{campaignMobileBody.campaignNameEng}</a></td>
                     :
-                    <td className='pl-3 pr-3 h-6 truncate'><a className='text-ft-light hover:text-ft' href="/Campaign">{campaignMobileBody.campaignNameEng}</a></td>}
+                    <td className='pl-3 pr-3 h-6 truncate'><a className='text-ft-light hover:text-ft' href="/CampaignDetail">{campaignMobileBody.campaignNameEng}</a></td>}
                     
                     {((isXsMobileScreen)||(campaignMobileBody.campaignCode.split(" ")[0].length<20))?
                     <td className='pl-3 pr-3 h-12 break-all'>{campaignMobileBody.campaignCode}</td>

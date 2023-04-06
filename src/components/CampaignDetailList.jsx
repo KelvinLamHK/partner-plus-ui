@@ -639,12 +639,12 @@ const CampaignDetailList = (props) => {
                 }
 
                 return (
-                  <tr className="border border-slate-300 " key={campaign.campaignHeaderId}>
-                    <td className=''><div className='w-52 lineclamp2 pl-5'>{campaign.campaignNameEng}</div></td>
-                    <td className=''><div className='w-44 break-all'>{campaign.campaignCode}</div></td>
-                    <td className='w-32'>{formattedStartDate}</td>
-                    <td className='w-32 '>{formattedEndDate}</td>
-                    <td className='w-36'>{formattedUpdatedDate}</td>
+                  <tr className="border border-slate-300 h-16" key={campaign.campaignHeaderId}>
+                    <td className=''><div className='w-52 lineclamp2 pl-5 items-center'>{campaign.campaignNameEng}</div></td>
+                    <td className=''><div className='w-48 break-all  items-center align-middle' >{campaign.campaignCode}</div></td>
+                    <td className=''>{formattedStartDate}</td>
+                    <td className=''>{formattedEndDate}</td>
+                    <td className=''>{formattedUpdatedDate}</td>
                     <td className=''>{campaign.ifaCaIndicator}</td>
                     <td className=''><div data-tooltip-target="tooltip-default" className='w-32 lineclamp2'>{campaign.remark}</div></td>
                     <td className=''>{campaign.thumbnailDocID}</td>
