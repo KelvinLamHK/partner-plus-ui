@@ -5,11 +5,13 @@ import {API_BASE_URL} from '../api.config.js';
 import Pagination from '@mui/material/Pagination';
 import Stack from '@mui/material/Stack';
 import ScrollToTopButton from './ScrollToTopButton';
-import Selection from './Selection';
 import { useNavigate} from 'react-router-dom';
+import Visibility from './Visibility';
+import Category from './Category';
 
-const CampaignDetailList = (props) => {
-  
+
+
+function DocCenter() {
   const inputRefCamName = useRef(null);
   const inputRefCamCode = useRef(null);
   const [selectedValue, setSelectedValue] = useState();
@@ -23,7 +25,7 @@ const CampaignDetailList = (props) => {
   const [nextResult, setNextResult] = useState();
   const [pagination, setPagination] = useState({});
   const [isMobileScreen, setIsMobileScreen] = useState(((window.innerWidth <= 1250)?true:false));
-  const [isXsMobileScreen, setXsIsMobileScreen] = useState(((window.screen.width<= 500)||(window.innerWidth<=500)?true:false));
+  const [isXsMobileScreen, setXsIsMobileScreen] = useState(((window.screen.width<= 385)?true:false));
   const [postData, setPostData] = useState({
     userParameter: {
       loginName: "IFA-0413518-00012",
@@ -218,7 +220,7 @@ const CampaignDetailList = (props) => {
   useEffect(() => {
     function handleResize() {
       setIsMobileScreen(window.innerWidth <= 1250);
-      setXsIsMobileScreen((window.screen.width<= 500)||(window.innerWidth<=500));
+      setXsIsMobileScreen(window.screen.width<= 385);
     }
   
     handleResize();
@@ -309,18 +311,53 @@ const CampaignDetailList = (props) => {
     navigate('/EditCampaign',{state:{event}});
   }
 
+  const ViewDetail = (event) => {
+    navigate('/CampaignDetail',{state:{event}});
+  }
+
   return (
     <>
     {isMobileScreen ? ( <div className='w-full '>
           <div className=''>
-            <h1>Campaign Detail Mobile</h1>
+            <h1>Campaign</h1>
           </div>
-          <div className='mt-5 flex'>
-            <div className='w-full'> 
-              <Selection />
-            </div>
+          <div className='mt-4 flex'>
+            <a className='bg-ft-light text-center w-full text-white py-3 rounded hover:bg-ft active:bg-white active:text-ft active:ring-1 active:ring-ft' href='/CreateCampaign'>
+              Create
+            </a>
           </div>
-       
+        <div className="mt-4">
+          <span>Campaign Name</span>
+          <span className="input-search">
+            <input
+              data-input=""
+              className="form-control py-3"
+              type="search"
+              placeholder="Campaign Name"
+              maxLength="500"
+              id="Input_SearchCampaignName"
+              ref={inputRefCamName}
+              style={{ userSelect: "auto" }}
+            />
+          </span>
+        </div>
+        <div className="mt-3">
+          <span>Campaign Code</span>
+          <span className="input-search">
+            <input
+              data-input=""
+              className="form-control py-3"
+              type="search"
+              placeholder="Campaign Code"
+              maxLength="500"
+              ref={inputRefCamCode}
+              id="Input_SearchCampaignCode"
+              style={{ userSelect: "auto" }}
+            />
+          </span>
+        </div>
+
+
           <div className='flex mt-4'>
             <a href="#PleaseEnableJavascript.html" onClick={() => handleCampaignChange()} className="text-center w-full bg-ft-light text-white py-3 rounded hover:bg-ft active:bg-white active:text-ft active:ring-1 active:ring-ft">
               Search
@@ -331,11 +368,7 @@ const CampaignDetailList = (props) => {
               Reset
             </a>
           </div>
-          <div className='flex mt-5'>
-            <a href="/Campagin" className='w-1/3 mr-2 px-3 py-2 text-center bg-white text-ft-light ring-1 ring-ft-light rounded'>Import</a>
-            <a href="/Campagin" className='w-1/3 mr-2 px-3 py-2 text-center text-white bg-ft-light  rounded'>Export</a>
-            <a href="/Campagin" className='w-1/3 mr-2 px-3 py-2 text-center text-white bg-ft-light  rounded'>Export All</a>
-          </div>
+
         <div className='mt-4'>
           <p>Show
           <select
@@ -357,43 +390,33 @@ const CampaignDetailList = (props) => {
 
         <div className="flex">
 		      <table className=" flex w-full bg-white">
-			      <thead className="sm:w-2/5 w-2/5 text-white">
+			      <thead className="sm:w-1/5 w-2/5 text-white">
             {campaigns.map((campaignMobileHead) => {
               return (
 				      <tr className="pl-1 bg-ft-light flex flex-col mb-2 border border-slate-300" key={campaignMobileHead.campaignHeaderId}>
-                    {isXsMobileScreen?
-                    <><th className='font-normal h-12'>Client Name(Eng)</th></>
+                    {((isXsMobileScreen)||(campaignMobileHead.campaignNameEng.split(" ")[0].length<20))?
+                    <><th className='font-normal h-12'>campaigns Name</th></>
                     :
-                    <th className='h-6 font-normal'>Client Name(Eng)</th>}
-                     {isXsMobileScreen?
-                    <><th className='h-12 font-normal'>Client Name(Chi)</th></>
+                    <th className='h-6 font-normal'>campaigns Name</th>}
+                     {((isXsMobileScreen)||(campaignMobileHead.campaignCode.split(" ")[0].length<20))?
+                    <><th className='h-12 font-normal'>campaigns Code</th></>
                     :
-                    <th className='h-6 font-normal'>Client Name(Chi)</th>}
+                    <th className='h-6 font-normal'>campaigns Code</th>}
                 
-                <th className='h-6 font-normal'>Date of Birth</th>
-                {isXsMobileScreen?
-                    <><th className='h-12 font-normal'>First Policy Issue Date</th></>
+                <th className='h-6 font-normal'>Start Date</th>
+                <th className='h-6 font-normal'>End Date</th>
+                <th className='h-6 font-normal'>Latest Update</th>
+                <th className='h-6 font-normal'>IFA/CA</th>
+                {(!campaignMobileHead.remark===null)&&((campaignMobileHead.remark.length>22)&&(isXsMobileScreen))?
+                    <th className='h-12 truncate font-normal'>Remarks</th>
                     :
-                    <th className='h-6 font-normal'>First Policy Issue Date</th>}
-                      {isXsMobileScreen?
-                    <><th className='h-12 font-normal'>Latest Issued Policy</th></>
-                    :
-                    <th className='h-6 font-normal'>Latest Issued Policy</th>}
-                      {isXsMobileScreen?
-                    <><th className='h-12 font-normal'>Broker / Agent Code</th></>
-                    :
-                    <th className='h-6 font-normal'>Broker / Agent Code</th>}
-
-                {isXsMobileScreen?
-                    <th className='h-12 truncate font-normal'>Company Name</th>
-                    :
-                    <th className='h-6 font-normal'>Company Name</th>}
-                <th className='h-6 font-normal'>Agent Name</th>
+                    <th className='h-6 font-normal'>Remarks</th>}
+                <th className='h-6 font-normal'>Poster</th>
                 <th className='h-6 font-normal mb-1'>Edit</th>
 				      </tr>
               );})}
 			      </thead>
-			      <tbody className="sm:w-3/5 w-3/5 ">
+			      <tbody className="sm:w-4/5 w-3/5 ">
             {campaigns.map((campaignMobileBody) => {
                 const startDate = new Date(campaignMobileBody.campaignStartDate);
                 const endDate = new Date(campaignMobileBody.campaignEndDate);
@@ -412,30 +435,21 @@ const CampaignDetailList = (props) => {
 
                 return (
                   <tr className="flex flex-col border border-slate-300 mb-2" key={campaignMobileBody.campaignHeaderId}>
-                    {isXsMobileScreen?
-                    <td className='pl-3 pr-3 h-12 lineclamp2'><a className='text-ft-light hover:text-ft' href="/Campaign">{campaignMobileBody.campaignNameEng}</a></td>
+                    {((isXsMobileScreen)||(campaignMobileBody.campaignNameEng.split(" ")[0].length<20))?
+                    <td className='pl-3 pr-3 h-12 lineclamp2'><a className='text-ft-light hover:text-ft' href="/CampaignDetail">{campaignMobileBody.campaignNameEng}</a></td>
                     :
-                    <td className='pl-3 pr-3 h-6 truncate'><a className='text-ft-light hover:text-ft' href="/Campaign">{campaignMobileBody.campaignNameEng}</a></td>}
+                    <td className='pl-3 pr-3 h-6 truncate'><a className='text-ft-light hover:text-ft' href="/CampaignDetail">{campaignMobileBody.campaignNameEng}</a></td>}
                     
-                    {isXsMobileScreen?
+                    {((isXsMobileScreen)||(campaignMobileBody.campaignCode.split(" ")[0].length<20))?
                     <td className='pl-3 pr-3 h-12 break-all'>{campaignMobileBody.campaignCode}</td>
                     :
                     <td className='pl-3 pr-3 h-6 truncate'>{campaignMobileBody.campaignCode}</td>}
                     
                     <td className='pl-3 pr-3 h-6'>{formattedStartDate}</td>
-                    {isXsMobileScreen?
-                    <td className='pl-3 pr-3 h-12 break-all'>{formattedEndDate}</td>
-                    :
-                    <td className='pl-3 pr-3 h-6 truncate'>{formattedEndDate}</td>}
-                    {isXsMobileScreen?
-                    <td className='pl-3 pr-3 h-12 break-all'>{formattedUpdatedDate}</td>
-                    :
-                    <td className='pl-3 pr-3 h-6 truncate'>{formattedUpdatedDate}</td>}
-                                        {isXsMobileScreen?
-                    <td className='pl-3 pr-3 h-12 break-all'>{campaignMobileBody.ifaCaIndicator}</td>
-                    :
-                    <td className='pl-3 pr-3 h-6 truncate'>{campaignMobileBody.ifaCaIndicator}</td>}
-                    {isXsMobileScreen?
+                    <td className='pl-3 pr-3 h-6'>{formattedEndDate}</td>
+                    <td className='pl-3 pr-3 h-6'>{formattedUpdatedDate}</td>
+                    <td className='pl-3 pr-3 h-6'>{campaignMobileBody.ifaCaIndicator}</td>
+                    {(!campaignMobileBody.remark===null)&&(isXsMobileScreen)?
                     <td className='pl-3 pr-3 h-12'><div className='lineclamp2 '>{campaignMobileBody.remark}</div></td>
                     :
                     <td className='pl-3 pr-3 h-6 truncate'>{campaignMobileBody.remark}</td>}
@@ -479,40 +493,75 @@ const CampaignDetailList = (props) => {
         <ScrollToTopButton />
   </div>
   
-  
   )
   :   
   (
       <div className='w-deflaut px-2'>
         <div className='flex justify-content-between align-items-center my-3'>
           <div className=''>
-          <h1><a href='/Campaign' className='text-ft-light hover:text-ft'>Campaign Detail</a></h1>
-          </div>
-         
-        </div>
-   
-        <div className='w-full flex justify-center mb-4'>
-        <div className="w-2/3 mr-5">
-        <Selection />
-        </div>
-        <div className="w-1/3 flex flex-col justify-between mt-2">
-        
-          <div className='h-1/2 flex'> 
-          <div className='mr-5'>
-            <a href="#PleaseEnableJavascript.html" onClick={() => handleCampaignChange()} className="bg-ft-light text-white px-3 py-2 rounded hover:bg-ft active:bg-white active:text-ft active:ring-1 active:ring-ft">
-              Search
-            </a>
+            <h1>Document Center</h1>
           </div>
           <div className=''>
+            <a className='bg-ft-light text-white px-3 py-2 rounded hover:bg-ft active:bg-white active:text-ft active:ring-1 active:ring-ft' href='/CreateCampaign'>
+            Upload
+            </a>
+          </div>
+        </div>
+        <div className='border border-red-300 py-3 px-3 rounded-md '>
+            <Visibility />
+            <Category />
+            <div className='border border-red-300 py-3 px-3 rounded-md mt-3'>
+                <div className='font-semibold'>
+                More Filters:
+                </div>
+                <div className='flex mt-3'>
+                    <div className='w-1/2 mr-4'>
+                    <span>Title</span>
+                    <span className="input-search">
+                        <input
+                        data-input=""
+                        className="form-control"
+                        type="search"
+                        placeholder="Title"
+                        maxLength="500"
+                        id="Input_SearchCampaignName"
+                        ref={inputRefCamName}
+                        style={{ userSelect: "auto" }}
+                        />
+                    </span>
+                    </div>
+                    <div className='w-1/2'>
+                    <span>Effective Period</span>
+                    <span className="input-search">
+                        <input
+                        type="date"
+                        className="form-control"
+                        
+                        placeholder="Effective Period"
+                        maxLength="500"
+                        ref={inputRefCamCode}
+                        id="Input_SearchCampaignCode"
+                        style={{ userSelect: "auto" }}
+                        />
+                    </span>
+                    </div>
+                </div>
+            </div>
+            <div className='flex mt-3 justify-end'> 
+          <div className='mr-5'>
             <a href='#PleaseEnableJavascript.html' onClick={()=>handleResetChange()} className="bg-white text-ft-light ring-ft-light ring-1 px-3 py-2 rounded hover:bg-ft hover:text-white active:bg-ft-light active:ring-1 active:ring-ft">
               Reset
             </a>
           </div>
+          <div className=''>
+          <a href="#PleaseEnableJavascript.html" onClick={() => handleCampaignChange()} className="bg-ft-light text-white px-3 py-2 rounded hover:bg-ft active:bg-white active:text-ft active:ring-1 active:ring-ft">
+              Search
+            </a>
+          </div>
           </div>
         </div>
-        </div>
-        <div className='mt-5 flex justify-between'>
-        <div className='mr-5'>
+       
+        <div className='mr-5 mt-4'>
           <p>Show
           <select
       id="countries"
@@ -521,7 +570,6 @@ const CampaignDetailList = (props) => {
       value={selectedValue}
       onChange={handleChange}
     >
-      
               <option value="10">10</option>
               <option value="20">20</option>
               <option value="50">50</option>
@@ -529,12 +577,7 @@ const CampaignDetailList = (props) => {
             </select> 
             records per page.
           </p>
-          </div>
-          <div>
-            <a href="/Campagin" className='mr-2 px-3 py-2 bg-white text-ft-light ring-1 ring-ft-light rounded'>Import</a>
-            <a href="/Campagin" className='mr-2 px-3 py-2 text-white bg-ft-light  rounded'>Export</a>
-            <a href="/Campagin" className='mr-2 px-3 py-2 text-white bg-ft-light  rounded'>Export All</a>
-          </div>
+
         </div>
         <div class='w-table flex '>
         <div class='overflow-x w-full '>
@@ -543,22 +586,15 @@ const CampaignDetailList = (props) => {
                 <tr class='border border-slate-300 '>
                 <th className=' hover:text-ft-light cursor-pointer pl-5 h-8' onClick={()=> handleOrder("campaignNameEng")}>
                 <div className='inline-block h-6 w-56'>
-                Client Name(Eng)
+                Title
                 <svg fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" className="inline-block w-4 h-4 ml-1">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 15L12 18.75 15.75 15m-7.5-6L12 5.25 15.75 9"></path>
                 </svg>
                 </div>
               </th>
-            <th className=' hover:text-ft-light cursor-pointer h-8 ' onClick={()=> handleOrder("campaignCode")}>
-            <div className='inline-block h-6 w-52'>Client Name(Chi)
-              <svg fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" className="inline-block w-4 h-4 ml-1">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 15L12 18.75 15.75 15m-7.5-6L12 5.25 15.75 9"></path>
-              </svg>
-              </div>
-            </th>
             <th className=' hover:text-ft-light cursor-pointer h-8 ' onClick={()=> handleOrder("campaignStartDate")}>
             <div className='inline-block h-6 w-48'>
-            Date of Birth
+            Main Category
               <svg fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" className="inline-block w-4 h-4 ml-1">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 15L12 18.75 15.75 15m-7.5-6L12 5.25 15.75 9"></path>
               </svg>
@@ -566,7 +602,7 @@ const CampaignDetailList = (props) => {
             </th>
             <th className=' hover:text-ft-light cursor-pointer h-8' onClick={()=> handleOrder("campaignEndDate")}>
             <div className='inline-block h-6 w-56'>
-            First Policy Issue Date
+            Sub-Category
               <svg fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" className="inline-block w-4 h-4 ml-1">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 15L12 18.75 15.75 15m-7.5-6L12 5.25 15.75 9"></path>
               </svg>
@@ -574,7 +610,7 @@ const CampaignDetailList = (props) => {
             </th>
             <th className=' hover:text-ft-light cursor-pointer h-8' onClick={()=> handleOrder("updatedDate")}>
             <div className='inline-block h-6 w-56'>
-            Latest Issued Policy
+            Publish Date
               <svg fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" className="inline-block w-4 h-4 ml-1">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 15L12 18.75 15.75 15m-7.5-6L12 5.25 15.75 9"></path>
               </svg>
@@ -582,7 +618,7 @@ const CampaignDetailList = (props) => {
             </th>
             <th className=' hover:text-ft-light cursor-pointer h-8' onClick={()=> handleOrder("ifaCaIndicator")}>
             <div className='inline-block h-6 w-48'>
-            Broker / Agent Code
+            Expiry Date
               <svg fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" className="inline-block w-4 h-4 ml-1">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 15L12 18.75 15.75 15m-7.5-6L12 5.25 15.75 9"></path>
               </svg>
@@ -590,7 +626,7 @@ const CampaignDetailList = (props) => {
             </th>
             <th className=' hover:text-ft-light cursor-pointer h-8' onClick={()=> handleOrder("remark")}>
             <div className='inline-block h-6 w-44'>
-              Company Name
+            File(1)
               <svg fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" className="inline-block w-4 h-4 ml-1">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 15L12 18.75 15.75 15m-7.5-6L12 5.25 15.75 9"></path>
               </svg>
@@ -598,13 +634,19 @@ const CampaignDetailList = (props) => {
             </th>
             <th className=' hover:text-ft-light cursor-pointer h-8' onClick={()=> handleOrder("thumbnailDocID")}>
             <div className='inline-block h-6 w-44'>
-            Agent Name
+            File(2)
               <svg fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" className="inline-block w-4 h-4 ml-1">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 15L12 18.75 15.75 15m-7.5-6L12 5.25 15.75 9"></path>
               </svg>
               </div>
             </th>
-            
+            <th className=' hover:text-ft-light cursor-pointer h-8 ' onClick={()=> handleOrder("campaignCode")}>
+            <div className='inline-block h-6 w-52'>File(3)
+              <svg fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" className="inline-block w-4 h-4 ml-1">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 15L12 18.75 15.75 15m-7.5-6L12 5.25 15.75 9"></path>
+              </svg>
+              </div>
+            </th>
             <th className=' h-8'>
               <div className='inline-block h-6 w-16'>
                 Edit
@@ -655,7 +697,6 @@ const CampaignDetailList = (props) => {
         </table>
     </div>
     </div>
-       
               <div className="flex items-center justify-between px-4 py-3 md:px-6">
       <div className="hidden md:flex md:flex-1 md:items-center md:justify-between">
         <div>
@@ -687,4 +728,4 @@ const CampaignDetailList = (props) => {
             </>
   )}
 
-export default CampaignDetailList;
+export default DocCenter;

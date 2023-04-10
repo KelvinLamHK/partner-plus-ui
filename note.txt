@@ -1,3 +1,4 @@
+30/3 - 4/4
 (✓)campaignpage not auto change to mobile ver. bug
 (✓)campaigndetailpage (horizontal scroll bar of the table, table cols have fix width,select dropdownbar and show input box)
 (✓)create campaign (fixed bug)
@@ -12,3 +13,11 @@
 
 *Campaigndetail page: 我地DB唔夠資料，call API冇意思，我用住header資料扮住個樣先
 *Chrome scroll bar 有bug，用edge會好睇啲
+
+6/4
+(✓) Campaign Detail Page both version
+(✓) Document Center Page computer version
+(X) Campaign Detail Page API Connection
+(X) Change partner+ backend api download upload file from SFTP to SMB
+
+*Need to add more demo data to db, TDocument,TDocumentCenter, TDocumentCenterCategory, TDocumentCenterVisbility (**TCampaignDetail)

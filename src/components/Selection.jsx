@@ -34,7 +34,7 @@ function Selection() {
         isCreatable={true}
       />
       {selected.map((option) => (
-        <div className="mt-2" key={option.value}>
+        <div className="mt-2 " key={option.value}>
           <label>{option.label}:</label>
           <div className="flex">
             <input
