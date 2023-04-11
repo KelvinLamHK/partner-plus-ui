@@ -311,9 +311,9 @@ function DocCenter() {
     navigate('/EditCampaign',{state:{event}});
   }
 
-  const ViewDetail = (event) => {
-    navigate('/CampaignDetail',{state:{event}});
-  }
+  // const ViewDetail = (event) => {
+  //   navigate('/CampaignDetail',{state:{event}});
+  // }
 
   return (
     <>
@@ -509,7 +509,11 @@ function DocCenter() {
         </div>
         <div className='border border-red-300 py-3 px-3 rounded-md '>
             <Visibility />
+            <div className='flex'>
+           
             <Category />
+            </div>
+          
             <div className='border border-red-300 py-3 px-3 rounded-md mt-3'>
                 <div className='font-semibold'>
                 More Filters:
@@ -579,11 +583,11 @@ function DocCenter() {
           </p>
 
         </div>
-        <div class='w-table flex '>
-        <div class='overflow-x w-full '>
-        <table class='table-fixed overflow-scroll w-full block'>
+        <div className='w-table flex '>
+        <div className='overflow-x w-full '>
+        <table className='table-fixed overflow-scroll w-full block'>
             <thead>
-                <tr class='border border-slate-300 '>
+                <tr className='border border-slate-300 '>
                 <th className=' hover:text-ft-light cursor-pointer pl-5 h-8' onClick={()=> handleOrder("campaignNameEng")}>
                 <div className='inline-block h-6 w-56'>
                 Title

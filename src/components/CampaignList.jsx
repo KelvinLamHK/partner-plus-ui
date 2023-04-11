@@ -644,7 +644,7 @@ function CampaignList() {
                 }
 
                 return (
-                  <tr className="border border-slate-300 " key={campaign.campaignHeaderId}>
+                  <tr className="border border-slate-300 h-16" key={campaign.campaignHeaderId}>
                     <td className=''><div className='w-52 lineclamp2 pl-5'><a onClick={()=> ViewDetail(campaign.campaignNameEng)} className='text-ft-light hover:text-ft ' href="/CampaignDetail">{campaign.campaignNameEng}</a></div></td>
                     <td className=''><div className='w-44 break-all'>{campaign.campaignCode}</div></td>
                     <td className='w-32'>{formattedStartDate}</td>
