@@ -502,23 +502,20 @@ function DocCenter() {
             <h1>Document Center</h1>
           </div>
           <div className=''>
-            <a className='bg-ft-light text-white px-3 py-2 rounded hover:bg-ft active:bg-white active:text-ft active:ring-1 active:ring-ft' href='/CreateCampaign'>
+            <a className='bg-ft-light text-white px-3 py-2 rounded hover:bg-ft active:bg-white active:text-ft active:ring-1 active:ring-ft' href='/CreateDoc'>
             Upload
             </a>
           </div>
         </div>
         <div className='border border-red-300 py-3 px-3 rounded-md '>
             <Visibility />
-            <div className='flex'>
+            <div className='flex mt-4'>
            
             <Category />
             </div>
           
-            <div className='border border-red-300 py-3 px-3 rounded-md mt-3'>
-                <div className='font-semibold'>
-                More Filters:
-                </div>
-                <div className='flex mt-3'>
+  
+                <div className='flex mt-4'>
                     <div className='w-1/2 mr-4'>
                     <span>Title</span>
                     <span className="input-search">
@@ -550,7 +547,6 @@ function DocCenter() {
                     </span>
                     </div>
                 </div>
-            </div>
             <div className='flex mt-3 justify-end'> 
           <div className='mr-5'>
             <a href='#PleaseEnableJavascript.html' onClick={()=>handleResetChange()} className="bg-white text-ft-light ring-ft-light ring-1 px-3 py-2 rounded hover:bg-ft hover:text-white active:bg-ft-light active:ring-1 active:ring-ft">
@@ -597,7 +593,7 @@ function DocCenter() {
                 </div>
               </th>
             <th className=' hover:text-ft-light cursor-pointer h-8 ' onClick={()=> handleOrder("campaignStartDate")}>
-            <div className='inline-block h-6 w-48'>
+            <div className='inline-block h-6 w-44'>
             Main Category
               <svg fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" className="inline-block w-4 h-4 ml-1">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 15L12 18.75 15.75 15m-7.5-6L12 5.25 15.75 9"></path>
@@ -605,7 +601,7 @@ function DocCenter() {
               </div>
             </th>
             <th className=' hover:text-ft-light cursor-pointer h-8' onClick={()=> handleOrder("campaignEndDate")}>
-            <div className='inline-block h-6 w-56'>
+            <div className='inline-block h-6 w-44'>
             Sub-Category
               <svg fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" className="inline-block w-4 h-4 ml-1">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 15L12 18.75 15.75 15m-7.5-6L12 5.25 15.75 9"></path>
@@ -613,7 +609,7 @@ function DocCenter() {
               </div>
             </th>
             <th className=' hover:text-ft-light cursor-pointer h-8' onClick={()=> handleOrder("updatedDate")}>
-            <div className='inline-block h-6 w-56'>
+            <div className='inline-block h-6 w-44'>
             Publish Date
               <svg fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" className="inline-block w-4 h-4 ml-1">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 15L12 18.75 15.75 15m-7.5-6L12 5.25 15.75 9"></path>
@@ -621,7 +617,7 @@ function DocCenter() {
               </div>
             </th>
             <th className=' hover:text-ft-light cursor-pointer h-8' onClick={()=> handleOrder("ifaCaIndicator")}>
-            <div className='inline-block h-6 w-48'>
+            <div className='inline-block h-6 w-44'>
             Expiry Date
               <svg fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" className="inline-block w-4 h-4 ml-1">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 15L12 18.75 15.75 15m-7.5-6L12 5.25 15.75 9"></path>
@@ -645,7 +641,7 @@ function DocCenter() {
               </div>
             </th>
             <th className=' hover:text-ft-light cursor-pointer h-8 ' onClick={()=> handleOrder("campaignCode")}>
-            <div className='inline-block h-6 w-52'>File(3)
+            <div className='inline-block h-6 w-44'>File(3)
               <svg fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" className="inline-block w-4 h-4 ml-1">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 15L12 18.75 15.75 15m-7.5-6L12 5.25 15.75 9"></path>
               </svg>
@@ -679,12 +675,12 @@ function DocCenter() {
                 return (
                   <tr className="border border-slate-300 h-16" key={campaign.campaignHeaderId}>
                     <td className=''><div className='w-52 lineclamp2 pl-5 items-center'>{campaign.campaignNameEng}</div></td>
-                    <td className=''><div className='w-48 break-all  items-center align-middle' >{campaign.campaignCode}</div></td>
-                    <td className=''>{formattedStartDate}</td>
+                    <td className=''><div className='w-40 break-all  items-center align-middle' >{campaign.campaignCode}</div></td>
+                    <td className=''><div className='w-40 break-all  items-center align-middle' >{formattedStartDate}</div></td>
                     <td className=''>{formattedEndDate}</td>
                     <td className=''>{formattedUpdatedDate}</td>
                     <td className=''>{campaign.ifaCaIndicator}</td>
-                    <td className=''><div data-tooltip-target="tooltip-default" className='w-32 lineclamp2'>{campaign.remark}</div></td>
+                    <td className=''><div data-tooltip-target="tooltip-default" className='lineclamp2'>{campaign.remark}</div></td>
                     <td className=''>{campaign.thumbnailDocID}</td>
                     <td className=''>
                       <a href='/EditCampaign' onClick={()=> EditCampaign(campaign)}>

@@ -37,10 +37,10 @@ function Category() {
 
   return (
     <>
-      <div className="mt-2 w-1/2 mr-2">
-        <label>Category:</label>
-        <select value={selectedMainCategory} onChange={handleMainCategoryChange}>
-          <option value="">Select main category</option>
+      <div className="mt-2 w-1/2 mr-4">
+        <label>Category:</label><br></br>
+        <select value={selectedMainCategory} onChange={handleMainCategoryChange} className="rounded border  border-red-400 h-10 w-full">
+          <option value="" className="text-ft">Select main category</option>
           {mainCategories.map(category => (
             <option key={category.categoryId} value={category.categoryId}>
               {category.categoryEnglish}
@@ -51,8 +51,8 @@ function Category() {
 
       {subCategoryOptions && (
         <div className="mt-2 w-1/2">
-          <label>Subcategory:</label>
-          <select value={selectedSubCategory} onChange={handleSubCategoryChange}>
+          <label>Subcategory:</label><br></br>
+          <select value={selectedSubCategory} onChange={handleSubCategoryChange} className="rounded border  border-red-300 h-10 w-full">
             <option value="">Select subcategory</option>
             {subCategoryOptions.map(subCategory => (
               <option key={subCategory.categoryId} value={subCategory.categoryId}>
