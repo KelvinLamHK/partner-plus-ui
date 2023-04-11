@@ -433,6 +433,39 @@ const CreateDocForm = () =>  {
                     />
                 </div>
             </div>
+            <div className="form-row flex mx-3 my-5">
+            <div className="form-group w-1/2 flex justify-center">
+                <div className='w-11/12'>
+                    <label htmlFor="IFA/CA">Channel<span className='text-red-600'>*</span></label>
+                    <select
+                        id="IFACA"
+                        aria-label="Select IFA/CA"
+                        className="w-full bg-white-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-ft-light focus:border-ft-light p-2.5"
+                        value={IFACA}
+                        name="ifaCaIndicator"
+                        onChange={handleIFACAChange}
+                        >
+                        <option value="IFA/CA">IFA & CA</option>
+                        <option value="IFA">IFA</option>
+                        <option value="CA">CA</option>
+                    </select> 
+                </div>
+            </div>
+            <div className="form-group w-1/2 flex justify-center">
+                <div className='w-11/12'>
+                <label htmlFor="campaignNameEng">Effective Date<span className='text-red-600'>*</span></label>
+                    <input
+                        type="date"
+                        className="form-control ring-0 hover:border-ft-light active:border-ft-light focus:border-ft-light"
+                        id="campaignNameEng"
+                        name="campaignNameEng"
+                        value={values.campaignNameEng}
+                        onChange={handleChange}
+                        required
+                    />
+                </div>
+            </div>
+        </div>
             <div className="px-6 py-4 flex justify-end">
             <button onClick={goBack} type="button" className="text-ft-light ring-1 ring-ft-light bg-white hover:bg-ft hover:text-white rounded-md px-4 py-2 active:bg-white active:text-red-500 active:ring-1 active:ring-red-500 transition">Cancel</button>
             <button type="Submit" className="ml-4 text-white bg-ft-light hover:bg-ft rounded-md px-4 py-2 active:bg-white active:text-ft active:ring-1 active:ring-ft transition">Save</button>
