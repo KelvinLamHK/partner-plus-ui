@@ -307,8 +307,8 @@ function CampaignList() {
     navigate('/EditCampaign',{state:{event}});
   }
 
-  const ViewDetail = (event) => {
-    navigate('/CampaignDetail',{state:{event}});
+  const ViewDetail = (campaignHeaderId, campaignName) => {
+    navigate('/CampaignDetail',{state:{campaignHeaderId,campaignName}});
   }
 
   return (
@@ -432,9 +432,9 @@ function CampaignList() {
                 return (
                   <tr className="flex flex-col border border-slate-300 mb-2" key={campaignMobileBody.campaignHeaderId}>
                     {((isXsMobileScreen)||(campaignMobileBody.campaignNameEng.split(" ")[0].length<20))?
-                    <td className='pl-3 pr-3 h-12 lineclamp2'><a className='text-ft-light hover:text-ft' href="/CampaignDetail">{campaignMobileBody.campaignNameEng}</a></td>
+                    <td className='pl-3 pr-3 h-12 lineclamp2'><a className='text-ft-light hover:text-ft' onClick={()=> ViewDetail(campaigns.campaignHeaderId,campaigns.campaignNameEng)} href="/CampaignDetail">{campaignMobileBody.campaignNameEng}</a></td>
                     :
-                    <td className='pl-3 pr-3 h-6 truncate'><a className='text-ft-light hover:text-ft' href="/CampaignDetail">{campaignMobileBody.campaignNameEng}</a></td>}
+                    <td className='pl-3 pr-3 h-6 truncate'><a className='text-ft-light hover:text-ft' onClick={()=> ViewDetail(campaigns.campaignHeaderId,campaigns.campaignNameEng)} href="/CampaignDetail">{campaignMobileBody.campaignNameEng}</a></td>}
                     
                     {((isXsMobileScreen)||(campaignMobileBody.campaignCode.split(" ")[0].length<20))?
                     <td className='pl-3 pr-3 h-12 break-all'>{campaignMobileBody.campaignCode}</td>
@@ -634,7 +634,6 @@ function CampaignList() {
                 const formattedStartDate = startDate.toISOString().slice(0, 10);
                 const formattedEndDate = endDate.toISOString().slice(0, 10);
                 const formattedUpdatedDate = updatedDate.toISOString().slice(0, 10);
-
                 if(campaign.remark === "NULL"){
                   campaign.remark = '';
                 }
@@ -645,7 +644,7 @@ function CampaignList() {
 
                 return (
                   <tr className="border border-slate-300 h-16" key={campaign.campaignHeaderId}>
-                    <td className=''><div className='w-52 lineclamp2 pl-5'><a onClick={()=> ViewDetail(campaign.campaignNameEng)} className='text-ft-light hover:text-ft ' href="/CampaignDetail">{campaign.campaignNameEng}</a></div></td>
+                    <td className=''><div className='w-52 lineclamp2 pl-5'><a onClick={()=> ViewDetail(campaign.campaignHeaderId,campaign.campaignNameEng)} className='text-ft-light hover:text-ft ' href="/CampaignDetail">{campaign.campaignNameEng}</a></div></td>
                     <td className=''><div className='w-44 break-all'>{campaign.campaignCode}</div></td>
                     <td className='w-32'>{formattedStartDate}</td>
                     <td className='w-32 '>{formattedEndDate}</td>
