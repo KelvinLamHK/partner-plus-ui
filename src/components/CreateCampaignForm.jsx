@@ -13,33 +13,28 @@ const CreateCampaignForm = () =>  {
     campaignNameZHCN: '',
     campaignEndDate: '',
     remark:'',
-    file:'',
-  });
-  const [postImage, setPostImage] = useState({
-    myFile: "",
+    thumbnailDocID:'',
   });
 
 
-  const convertToBase64 = (file) => {
-    return new Promise((resolve, reject) => {
-      const fileReader = new FileReader();
-      fileReader.readAsDataURL(file);
-      fileReader.onload = () => {
-        resolve(fileReader.result);
-      };
-      fileReader.onerror = (error) => {
-        reject(error);
-      };
-    });
+  const [fileBase64, setFileBase64] = useState(null);
+
+  const handleFileInputChange = (event) => {
+      const file = event.target.files[0];
+      setValues((prevValues) => ({
+          ...prevValues,
+          thumbnailDocID: file ? file.name : '',
+      }));
+
+      if (file) {
+          const reader = new FileReader();
+          reader.readAsDataURL(file);
+          reader.onload = () => setFileBase64(reader.result);
+      } else {
+          setFileBase64(null);
+          console.log(fileBase64);
+      }
   };
-
-  const handleFileInputChange = async (e) => {
-    const file = e.target.files[0];
-    const base64 = await convertToBase64(file);
-    setPostImage({ ...postImage, myFile: base64 });
-  };
-
-
 
   const handleIFACAChange = (event) => {
     setIFACA(event.target.value);
@@ -101,7 +96,7 @@ const CreateCampaignForm = () =>  {
                 campaignNameZHCN:values.campaignNameZHCN,
                 ifaCaIndicator: IFACA,
                 remark: values.remark,
-                thumbnailDocID: null,
+                thumbnailDocID: 12345,
                 campaignStartDate: values.campaignStartDate,
                 campaignEndDate: values.campaignEndDate
             }
@@ -408,17 +403,18 @@ const CreateCampaignForm = () =>  {
                 </div>
             </div>
             <div className="form-row flex m-3">  
-                <div className='px-4 w-full'>
-                    <label htmlFor="file-upload" className="upload-label mr-3">
-                        Browse to upload
-                    </label>
-                    <input
-                        id="file-upload"
-                        type="file"
-                        accept="image/*"
-                        onChange={handleFileInputChange}
-                    />
-                </div>
+            <div className='px-4 w-full'>
+            <label htmlFor="file-upload" className="upload-label mr-3">
+                Browse to upload
+            </label>
+            <input
+                id="file-upload"
+                type="file"
+                accept="image/*"
+                onChange={handleFileInputChange}
+            />
+
+        </div>
             </div>
             <div className="px-6 py-4 flex justify-end">
             <button onClick={goBack} type="button" className="text-ft-light ring-1 ring-ft-light bg-white hover:bg-ft hover:text-white rounded-md px-4 py-2 active:bg-white active:text-red-500 active:ring-1 active:ring-red-500 transition">Cancel</button>
