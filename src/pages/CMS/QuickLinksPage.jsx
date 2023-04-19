@@ -4,7 +4,8 @@ import PlusNavbar from "../../components/PlusNavbar";
 import LoadingScreen from "../../components/LoadingScreen";
 import "bootstrap/dist/css/bootstrap.css";
 import { getCurrentBrowserFingerPrint } from "@rajesh896/broprint.js";
-
+import QuickLink from "../../components/QuickLink";
+import { API_BASE_URL } from "../../api.config";
 
 function QuickLinksPage() {
   const [username, setUsername] = useState("");
@@ -18,7 +19,7 @@ function QuickLinksPage() {
         window.location.href = "/login";
       } else {
         try {
-          const response = await fetch("http://kayu.life:8081/protected", {
+          const response = await fetch(`${API_BASE_URL}/protected`, {
             method: "POST",
             headers: {
               Authorization: 'plus ' + token,
@@ -28,6 +29,7 @@ function QuickLinksPage() {
   
           const data = await response.text();
           if (data === "Invalid") { // check if response is "Invalid"
+            Cookies.remove('PLUSID');
             window.location.href = "/login";
           } else {
             const jsonData = JSON.parse(data); // parse response as JSON
@@ -44,15 +46,20 @@ function QuickLinksPage() {
     fetchData();
   }, [token]);
 
+
   return (
     <>
       {isLoading ? (
         <LoadingScreen />
       ) : (
         <>
-          <PlusNavbar />
-          <h1>Current User: {username}</h1>
-          <h1>Current Page: QuickLinksPage</h1>
+          <PlusNavbar username={username}/>
+          <div className="md:flex md:justify-center">
+          <div className="p-3 md:flex md:flex-row">
+            <QuickLink />
+          </div>
+          </div>
+          
         </>
       )}
     </>

@@ -22,6 +22,8 @@ module.exports = {
       width: {
         'deflaut':'1250px',
         'table': '1225px',
+        'link':'550px',
+        'linkEdit':'50px',
       }
     },
   },

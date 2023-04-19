@@ -85,7 +85,7 @@ const PlusNavbar = (props) => {
                       }
                       href="/"
                     >
-                      Event Calendar
+                      Categories
                     </Dropdown.Item>
                     <Dropdown.Item
                       style={{ textAlign: "center" }}
@@ -93,6 +93,15 @@ const PlusNavbar = (props) => {
                         location.pathname === "/simp" ? "active text-center" : "inactive text-center hover:bg-ft-light hover:text-white active:bg-ft"
                       }
                       href="/"
+                    >
+                      Event Calendar
+                    </Dropdown.Item>
+                    <Dropdown.Item
+                      style={{ textAlign: "center" }}
+                      className={
+                        location.pathname === "/QuickLinks" ? "active text-center bg-ft-light" : "inactive text-center hover:bg-ft-light hover:text-white active:bg-ft"
+                      }
+                      href="/QuickLinks"
                     >
                       Quick Links
                     </Dropdown.Item>
@@ -280,10 +289,16 @@ const PlusNavbar = (props) => {
                 href="/Campagin"
                 className="text-ft hover:bg-ft-light hover:text-white block px-3 py-2 rounded-md text-base font-medium ml-3"
               >
-                Event Calendar
+                Categories
             </a>
             <a
                 href="/Campagin"
+                className="text-ft hover:bg-ft-light hover:text-white block px-3 py-2 rounded-md text-base font-medium ml-3"
+              >
+                Event Calendar
+            </a>
+            <a
+                href="/QuickLinks"
                 className="text-ft hover:bg-ft-light hover:text-white block px-3 py-2 rounded-md text-base font-medium ml-3"
               >
                 Quick Links
