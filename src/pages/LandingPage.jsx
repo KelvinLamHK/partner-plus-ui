@@ -14,6 +14,7 @@ function LandingPage() {
   const [username, setUsername] = useState("");
   const [isLoading, setIsLoading] = useState(true);
   const token = Cookies.get("PLUSID");
+  const [links, setLinks] = useState([]);
 
   useEffect(() => {
     async function fetchData() {
@@ -50,6 +51,19 @@ function LandingPage() {
     fetchData();
   }, [token]);
 
+  useEffect(() => {
+    fetch(`${API_BASE_URL}/cms/links`, {
+      method: 'POST',
+
+    })
+      .then(response => response.json())
+      .then(data => {
+        setLinks(data);
+      })
+      .catch(error => console.error(error));
+  }, []);
+
+
   return (
     <>
       {isLoading ? (
@@ -78,7 +92,7 @@ function LandingPage() {
                   </div>
                 </div>
               </div>
-              <div className="md:h-screen md:flex md:flex-row md:space-x-2 ">
+              <div className="md:flex md:flex-row md:space-x-2 ">
                 <div className="md:w-1/2 md:h-fit  relative flex justify-center">
                 <div className="titlebar h-12 absolute">
                     <span className="bold h4 text-white">Event Calendar</span>
@@ -87,11 +101,24 @@ function LandingPage() {
                     <Calendar />
                   </div>
                 </div>
-                <div className="margin md:w-1/2 md:h-full h-96 relative flex justify-center ">
+                <div className="margin md:w-1/2 h-fit relative flex justify-center ">
                   <div className="titlebar h-12 absolute ">
                     <span className="bold h4 text-white">Quick Links</span>
                   </div>
-                  <div className="bg rounded shadow-lg w-full mt-3 ">
+                  <div className="bg rounded shadow-lg w-full mt-3 p-3 flex">
+                      <div className="w-full my-2 mt-4">
+                        <div>
+                          <ul style={{ listStyleType: 'disc', paddingLeft: '20px' ,'list-style-type': 'circle'}}>
+                            {links.map((link, index) => (
+                              <li key={index}>
+                                <a href={link.url} target="_blank" rel="noopener noreferrer" className="text-ft hover:text-ft-light text-lg">
+                                  {link.linkEngName}
+                                </a>
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                        </div>
                   </div>
                 </div>
               </div>

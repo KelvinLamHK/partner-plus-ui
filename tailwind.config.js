@@ -23,9 +23,11 @@ module.exports = {
         'deflaut':'1250px',
         'table': '1225px',
         'link':'550px',
+        'linkRes':'525px',
         'linkEdit':'50px',
       }
     },
   },
-  plugins: [require("flowbite/plugin")],
+  plugins: [require("flowbite/plugin"),require('@tailwindcss/line-clamp')],
+  
 };
