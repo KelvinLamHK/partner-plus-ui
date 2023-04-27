@@ -93,7 +93,7 @@ function LandingPage() {
                 </div>
               </div>
               <div className="md:flex md:flex-row md:space-x-2 ">
-                <div className="md:w-1/2 md:h-fit  relative flex justify-center">
+                <div className="md:w-1/2  relative flex justify-center">
                 <div className="titlebar h-12 absolute">
                     <span className="bold h4 text-white">Event Calendar</span>
                   </div>
@@ -101,14 +101,14 @@ function LandingPage() {
                     <Calendar />
                   </div>
                 </div>
-                <div className="margin md:w-1/2 h-fit relative flex justify-center ">
+                <div className="margin md:w-1/2 h-auto relative flex justify-center ">
                   <div className="titlebar h-12 absolute ">
                     <span className="bold h4 text-white">Quick Links</span>
                   </div>
                   <div className="bg rounded shadow-lg w-full mt-3 p-3 flex">
                       <div className="w-full my-2 mt-4">
                         <div>
-                          <ul style={{ listStyleType: 'disc', paddingLeft: '20px' ,'list-style-type': 'circle'}}>
+                          <ul style={{ paddingLeft: '20px' ,listStyleType: 'circle'}}>
                             {links.map((link, index) => (
                               <li key={index}>
                                 <a href={link.url} target="_blank" rel="noopener noreferrer" className="text-ft hover:text-ft-light text-lg">

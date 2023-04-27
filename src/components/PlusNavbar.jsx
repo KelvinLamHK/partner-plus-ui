@@ -73,7 +73,7 @@ const PlusNavbar = (props) => {
                     <Dropdown.Item
                       href="/BrokerCom"
                       className={
-                        location.pathname === "/BrokerCom" ? "active text-center text-ft bg-white cursor-default font-semibold pointer-events-none" : "inactive text-center hover:bg-ft-light hover:text-white active:bg-ft"
+                        location.pathname === "/BrokerCom" ? " cursor-default pointer-events-none active text-center bg-ft" : "inactive text-center hover:bg-ft-light hover:text-white active:bg-ft"
                       }
                     >
                       Brokers Communications
@@ -81,7 +81,7 @@ const PlusNavbar = (props) => {
                     <Dropdown.Item
                       style={{ textAlign: "center" }}
                       className={
-                        location.pathname === "/simp" ? "active text-center" : "inactive text-center hover:bg-ft-light hover:text-white active:bg-ft"
+                        location.pathname === "/simp" ? " cursor-default pointer-events-none active text-center bg-ft" : "inactive text-center hover:bg-ft-light hover:text-white active:bg-ft"
                       }
                       href="/"
                     >
@@ -90,7 +90,7 @@ const PlusNavbar = (props) => {
                     <Dropdown.Item
                       style={{ textAlign: "center" }}
                       className={
-                        location.pathname === "/simp" ? "active text-center" : "inactive text-center hover:bg-ft-light hover:text-white active:bg-ft"
+                        location.pathname === "/simp" ? " cursor-default pointer-events-none active text-center bg-ft" : "inactive text-center hover:bg-ft-light hover:text-white active:bg-ft"
                       }
                       href="/"
                     >
@@ -99,7 +99,7 @@ const PlusNavbar = (props) => {
                     <Dropdown.Item
                       style={{ textAlign: "center" }}
                       className={
-                        location.pathname === "/QuickLinks" ? "active text-center bg-ft-light" : "inactive text-center hover:bg-ft-light hover:text-white active:bg-ft"
+                        location.pathname === "/QuickLinks" ? " cursor-default pointer-events-none active text-center bg-ft" : "inactive text-center hover:bg-ft-light hover:text-white active:bg-ft"
                       }
                       href="/QuickLinks"
                     >

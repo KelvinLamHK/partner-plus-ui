@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Cookies from "js-cookie";
 import PlusNavbar from "../../components/PlusNavbar";
-import CampaignList from "../../components/CampaignList";
+import Communication from "../../components/Communication";
 import LoadingScreen from "../../components/LoadingScreen";
 import "bootstrap/dist/css/bootstrap.css";
 import { getCurrentBrowserFingerPrint } from "@rajesh896/broprint.js";
@@ -54,10 +54,12 @@ function BrokerComPage() {
         <LoadingScreen />
       ) : (
         <>
-          <PlusNavbar username={username}/>
-          <h1>Current User: {username}</h1>
-          <h1>Current Page: BrokerComPage</h1>
-          <CampaignList />
+        <PlusNavbar username={username}/>
+          <div className="md:flex md:justify-center">
+            <div className="p-3 md:flex md:flex-row">
+              <Communication />
+            </div>
+          </div>
         </>
       )}
     </>

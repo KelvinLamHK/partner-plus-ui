@@ -1,3 +1,35 @@
+24/4 - 28/4
+(✓) Updated DB table of Links
+(✓) Updated CMS QuickLink Page UI & Function - Can create multi language, table will display sorted result 
+(✓) Create DB table of broker Communications
+(✓) Updated all local developed api and changes to company git repository
+(✓) Created two new apis for broker Communcations for create, edit, delete, and display data
+(✓) Created broker Communication UI 
+(✓) Wrote test cases for all new apis and original apis to pass the sonarQube in Jenkins pipeline
+(✓) Updated local developed backend apis to openshift
+(✓) Comuncaiton Backend API - add pagination function
+(*) Jenkins pipeline down (Thur)
+
+
+Openshift
+https://console-openshift-console.apps.ocpuat.interconnect.systems/add/ns/dev-plus-series
+SonarQube
+https://sonarqube-cicd.apps.ocpuat.interconnect.systems/projects
+Jenkins
+https://jenkins-cicd.apps.ocpuat.interconnect.systems/
+GitHub
+https://src.ftlife.com.hk/enterprises/ftlife
+
+
+
+
+
+
+
+
+
+
+
 30/3 - 4/4
 (✓)campaignpage not auto change to mobile ver. bug
 (✓)campaigndetailpage (horizontal scroll bar of the table, table cols have fix width,select dropdownbar and show input box)

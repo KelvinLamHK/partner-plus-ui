@@ -25,6 +25,8 @@ module.exports = {
         'link':'550px',
         'linkRes':'525px',
         'linkEdit':'50px',
+        'date':"200px",
+        'comAns':"175px"
       }
     },
   },
