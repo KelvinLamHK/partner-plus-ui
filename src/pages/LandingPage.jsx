@@ -15,6 +15,7 @@ function LandingPage() {
   const [isLoading, setIsLoading] = useState(true);
   const token = Cookies.get("PLUSID");
   const [links, setLinks] = useState([]);
+  const [communications, setCommunications] = useState([]);
 
   useEffect(() => {
     async function fetchData() {
@@ -63,7 +64,20 @@ function LandingPage() {
       .catch(error => console.error(error));
   }, []);
 
+  
+  useEffect(() => {
+    fetch(`${API_BASE_URL}/cms/communications`, {
+      method: 'POST',
 
+    })
+      .then(response => response.json())
+      .then(data => {
+        setCommunications(data);
+      })
+      .catch(error => console.error(error));
+  }, []);
+
+  
   return (
     <>
       {isLoading ? (
@@ -74,17 +88,47 @@ function LandingPage() {
           <div className="md:flex md:justify-center">
           <div className="p-3 md:flex md:flex-row md:w-deflaut">
             <div className="space-y-2 md:h-auto md:w-3/4 md:flex md:flex-col md:mr-4">
-              <div className="md:h-screen md:flex md:flex-col">
-                <div className="h-96 md:h-3/5 relative flex justify-center">
-                  <div className="titlebar h-12 absolute ">
-                    <span className="bold h4 text-white">Brokers Communications</span>
-                  </div>
-                  <div className="bg rounded shadow-lg w-full mt-3 flex justify-center items-center">
-                    <NoItem />
-                  </div>
-                </div>
-                <div className="h-96 md:h-2/5 relative flex justify-center">
-                <div className="margin titlebar h-12 absolute ">
+              <div className="">
+              <div className="h-tableCommunication relative flex justify-center">
+                    <div className="titlebar h-12 absolute ">
+                      <span className="bold h4 text-white">Brokers Communications</span>
+                    </div>
+
+                    {communications.length === 0 ? (
+                      <>
+                        <div className="bg rounded shadow-lg w-full mt-3 flex justify-center items-center">
+                            <NoItem />
+                        </div>
+                      </>
+                    ) : (
+                      <div className="bg rounded shadow-lg w-full mt-3 flex justify-center">
+  <ul className="mt-5 w-full mr-5 overflow-auto" style={{ paddingLeft: "20px", listStyleType: "circle" }}>
+    {communications
+      .sort((a, b) => (a.isPin === "Y" ? -1 : 1))
+      .filter(
+        (communication) =>
+          new Date(communication.startDate) <= new Date() &&
+          new Date(communication.endDate) >= new Date()
+      )
+      .map((communication, index) => (
+        <div className="border border-red-500 p-2 flex justify-between items-center" key={index}>
+          <div>
+            <p className="mb-0 font-bold">Publish Date: {new Date(communication.startDate).toISOString().split('T')[0]}</p>
+            <p className="mb-0">{communication.contentEngName}</p>
+          </div>
+          {communication.isPin === "Y" && (
+            <svg fill="none" stroke="#009188" strokeWidth="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" className="h-6">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M17.593 3.322c1.1.128 1.907 1.077 1.907 2.185V21L12 17.25 4.5 21V5.507c0-1.108.806-2.057 1.907-2.185a48.507 48.507 0 0111.186 0z"></path>
+            </svg>
+          )}
+        </div>
+      ))}
+  </ul>
+</div>
+                    )}
+                    </div>
+                <div className="h-96 relative flex justify-center">
+                <div className="margin titlebar h-12 absolute mt-2">
                     <span className="bold h4 text-white">Latest Promo</span>
                   </div>
                   <div className="bg rounded shadow-lg w-full mt-3 flex justify-center items-center">
@@ -108,6 +152,7 @@ function LandingPage() {
                   <div className="bg rounded shadow-lg w-full mt-3 p-3 flex">
                       <div className="w-full my-2 mt-4">
                         <div>
+                          {links.length===0?<><div className="flex mt-48"><NoItem /></div></>:
                           <ul style={{ paddingLeft: '20px' ,listStyleType: 'circle'}}>
                             {links.map((link, index) => (
                               <li key={index}>
@@ -116,7 +161,7 @@ function LandingPage() {
                                 </a>
                               </li>
                             ))}
-                          </ul>
+                          </ul>}
                         </div>
                         </div>
                   </div>

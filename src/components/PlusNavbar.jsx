@@ -81,18 +81,18 @@ const PlusNavbar = (props) => {
                     <Dropdown.Item
                       style={{ textAlign: "center" }}
                       className={
-                        location.pathname === "/simp" ? " cursor-default pointer-events-none active text-center bg-ft" : "inactive text-center hover:bg-ft-light hover:text-white active:bg-ft"
+                        location.pathname === "/Categories" ? " cursor-default pointer-events-none active text-center bg-ft" : "inactive text-center hover:bg-ft-light hover:text-white active:bg-ft"
                       }
-                      href="/"
+                      href="/Categories"
                     >
                       Categories
                     </Dropdown.Item>
                     <Dropdown.Item
                       style={{ textAlign: "center" }}
                       className={
-                        location.pathname === "/simp" ? " cursor-default pointer-events-none active text-center bg-ft" : "inactive text-center hover:bg-ft-light hover:text-white active:bg-ft"
+                        location.pathname === "/EventCalendar" ? " cursor-default pointer-events-none active text-center bg-ft" : "inactive text-center hover:bg-ft-light hover:text-white active:bg-ft"
                       }
-                      href="/"
+                      href="/EventCalendar"
                     >
                       Event Calendar
                     </Dropdown.Item>

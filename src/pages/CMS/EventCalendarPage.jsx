@@ -4,7 +4,8 @@ import PlusNavbar from "../../components/PlusNavbar";
 import LoadingScreen from "../../components/LoadingScreen";
 import "bootstrap/dist/css/bootstrap.css";
 import { getCurrentBrowserFingerPrint } from "@rajesh896/broprint.js";
-
+import {API_BASE_URL} from '../../api.config.js';
+import EventCalendar from "../../components/EventCalendar";
 
 
 function EventCalendarPage() {
@@ -19,7 +20,7 @@ function EventCalendarPage() {
         window.location.href = "/login";
       } else {
         try {
-          const response = await fetch("http://kayu.life:8081/protected", {
+          const response = await fetch(`${API_BASE_URL}/protected`, {
             method: "POST",
             headers: {
               Authorization: 'plus ' + token,
@@ -29,6 +30,7 @@ function EventCalendarPage() {
   
           const data = await response.text();
           if (data === "Invalid") { // check if response is "Invalid"
+            Cookies.remove('PLUSID');
             window.location.href = "/login";
           } else {
             const jsonData = JSON.parse(data); // parse response as JSON
@@ -36,6 +38,8 @@ function EventCalendarPage() {
             setIsLoading(false);
           }
         } catch (error) {
+          Cookies.remove('PLUSID');
+          window.location.href = "/login";
           console.error(error);
           setIsLoading(false);
         }
@@ -51,8 +55,12 @@ function EventCalendarPage() {
         <LoadingScreen />
       ) : (
         <>
-        <PlusNavbar />
-        <h1>{username}</h1>
+        <PlusNavbar username={username}/>
+        <div className="md:flex md:justify-center">
+            <div className="p-3 md:flex md:flex-row">
+              <EventCalendar />
+            </div>
+          </div>
         </>
       )}
     </>
