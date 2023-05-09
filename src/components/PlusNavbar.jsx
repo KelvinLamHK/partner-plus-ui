@@ -1,6 +1,6 @@
 import { Transition } from "@headlessui/react";
 import Dropdown from "react-bootstrap/Dropdown";
-import FTLifePartnerPlus_Logo from "../img/FTLifePartnerPlus_Logo.png";
+import NWL_bilingual from "../img/NWL_bilingual.png";
 import "../css/Navbarcss.css";
 import { useLocation } from "react-router-dom";
 import React, { useState, useRef, useEffect } from "react";
@@ -55,7 +55,7 @@ const PlusNavbar = (props) => {
               <div className="flex-shrink-0">
                 <img
                   className="h-12 pointer"
-                  src={FTLifePartnerPlus_Logo}
+                  src={NWL_bilingual}
                   alt="Workflow"
                   onClick={() => {
                     window.location = "/home";
@@ -123,16 +123,16 @@ const PlusNavbar = (props) => {
                   </a>
 
                   <a className="m-16 relative group" href="/DocCenter">
-                    <span
+                  <span
                       className={
                         location.pathname === "/DocCenter"
-                          ? "text-ft hover:text-ft "
-                          : "text-gray-900  "
-                      }
+                          ? "text-ft-light hover:text-ft-light font-bold"
+                          : "text-gray-900"
+                      } 
                     >
                       Document Center
                     </span>
-                    <span className="absolute -bottom-1 left-0 w-0 h-1 bg-ft transition-all group-hover:w-full"></span>
+                    <span className="absolute -bottom-1 left-0 w-0 h-1 bg-ft-light transition-all group-hover:w-full"></span>
                   </a>
                 </div>
               </div>

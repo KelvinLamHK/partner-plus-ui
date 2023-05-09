@@ -1,9 +1,10 @@
 import React, { useState,useEffect } from "react";
 import { MultiSelect } from "react-multi-select-component";
 import {API_BASE_URL} from '../api.config.js';
+import { useNavigate } from "react-router-dom";
 
-function Visibility() {
-
+function Visibility({reloadCounter}) {
+const navigate  = useNavigate();
 const [options, setOptions] = useState([]);
 
 useEffect(() => {
@@ -24,13 +25,20 @@ useEffect(() => {
     });
 }, []);
 
-  const [selected, setSelected] = useState([]);
-
-  const handleSelect = (selectedOption) => {
-    setSelected(selectedOption);
+  const handleNavigate = (selectedOption) => {
+    navigate("/DocCenter", { state:{selectedOption} });
   };
 
+  const [selected, setSelected] = useState([]);
 
+  const handleSelect = (selected) => {
+    setSelected(selected);
+    handleNavigate(selected);
+  };
+
+  useEffect(()=>{
+    handleSelect([]);
+  },[reloadCounter]);
 
   return (
     <div className="mt-3">

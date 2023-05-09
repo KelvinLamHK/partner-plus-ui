@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
 import { useState, useEffect } from 'react';
 import '../css/campaignListcss.css';
 import '../css/lineclamp2css.css';
@@ -294,7 +295,7 @@ function Categories() {
             {categories.map((cat) =>(
                    
                     <tr className="border border-slate-300 h-16" key={cat.categoryId}>
-                    <td className=''><div className='w-comAns truncate pl-5 items-center'><a onClick={()=> ViewSub(cat.categoryId,cat.categoryEnglish)} className='text-ft-light hover:text-ft ' href="#EnableJavascript">{cat.categoryEnglish}</a></div></td>
+                    <td className=''><div className='w-comAns truncate pl-5 items-center cursor-pointer'><a onClick={()=> ViewSub(cat.categoryId,cat.categoryEnglish)} className='text-ft-light hover:text-ft '>{cat.categoryEnglish}</a></div></td>
                     <td className=''><div className='w-comAns truncate items-center align-middle' >{cat.categoryZHTW}</div></td>
                     <td className=''><div className='w-linkres truncate items-center align-middle' >{cat.categoryZHCN}</div></td>
               

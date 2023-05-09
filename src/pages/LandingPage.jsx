@@ -65,17 +65,17 @@ function LandingPage() {
   }, []);
 
   
-  useEffect(() => {
-    fetch(`${API_BASE_URL}/cms/communications`, {
-      method: 'POST',
+  // useEffect(() => {
+  //   fetch(`${API_BASE_URL}/cms/communications`, {
+  //     method: 'POST',
 
-    })
-      .then(response => response.json())
-      .then(data => {
-        setCommunications(data);
-      })
-      .catch(error => console.error(error));
-  }, []);
+  //   })
+  //     .then(response => response.json())
+  //     .then(data => {
+  //       setCommunications(data);
+  //     })
+  //     .catch(error => console.error(error));
+  // }, []);
 
   
   return (
@@ -102,29 +102,29 @@ function LandingPage() {
                       </>
                     ) : (
                       <div className="bg rounded shadow-lg w-full mt-3 flex justify-center">
-  <ul className="mt-5 w-full mr-5 overflow-auto" style={{ paddingLeft: "20px", listStyleType: "circle" }}>
-    {communications
-      .sort((a, b) => (a.isPin === "Y" ? -1 : 1))
-      .filter(
-        (communication) =>
-          new Date(communication.startDate) <= new Date() &&
-          new Date(communication.endDate) >= new Date()
-      )
-      .map((communication, index) => (
-        <div className="border border-red-500 p-2 flex justify-between items-center" key={index}>
-          <div>
-            <p className="mb-0 font-bold">Publish Date: {new Date(communication.startDate).toISOString().split('T')[0]}</p>
-            <p className="mb-0">{communication.contentEngName}</p>
-          </div>
-          {communication.isPin === "Y" && (
-            <svg fill="none" stroke="#009188" strokeWidth="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" className="h-6">
-              <path strokeLinecap="round" strokeLinejoin="round" d="M17.593 3.322c1.1.128 1.907 1.077 1.907 2.185V21L12 17.25 4.5 21V5.507c0-1.108.806-2.057 1.907-2.185a48.507 48.507 0 0111.186 0z"></path>
-            </svg>
-          )}
-        </div>
-      ))}
-  </ul>
-</div>
+                        <ul className="mt-5 w-full mr-5 overflow-auto" style={{ paddingLeft: "20px", listStyleType: "circle" }}>
+                          {communications
+                            .sort((a, b) => (a.isPin === "Y" ? -1 : 1))
+                            .filter(
+                              (communication) =>
+                                new Date(communication.startDate) <= new Date() &&
+                                new Date(communication.endDate) >= new Date()
+                            )
+                            .map((communication, index) => (
+                              <div className="border border-red-500 p-2 flex justify-between items-center" key={index}>
+                                <div>
+                                  <p className="mb-0 font-bold">Publish Date: {new Date(communication.startDate).toISOString().split('T')[0]}</p>
+                                  <p className="mb-0">{communication.contentEngName}</p>
+                                </div>
+                                {communication.isPin === "Y" && (
+                                  <svg fill="#004846" stroke="#004846" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" className="h-6">
+                                    <path clip-rule="evenodd" fill-rule="evenodd" d="M10 2c-1.716 0-3.408.106-5.07.31C3.806 2.45 3 3.414 3 4.517V17.25a.75.75 0 001.075.676L10 15.082l5.925 2.844A.75.75 0 0017 17.25V4.517c0-1.103-.806-2.068-1.93-2.207A41.403 41.403 0 0010 2z"></path>
+                                  </svg>
+                                )}
+                              </div>
+                            ))}
+                        </ul>
+                      </div>
                     )}
                     </div>
                 <div className="h-96 relative flex justify-center">

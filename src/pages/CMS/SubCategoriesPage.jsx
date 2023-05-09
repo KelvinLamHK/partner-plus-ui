@@ -7,11 +7,11 @@ import { getCurrentBrowserFingerPrint } from "@rajesh896/broprint.js";
 import {API_BASE_URL} from '../../api.config.js';
 import SubCategories from "../../components/SubCategories";
 
-function SubCategoriesPage() {
+
+const SubCategoriesPage=()=> {
   const [username, setUsername] = useState("");
   const [isLoading, setIsLoading] = useState(true);
   const token = Cookies.get("PLUSID");
-
   
   useEffect(() => {
     async function fetchData() {

@@ -1,10 +1,20 @@
 import React, { useState, useEffect } from "react";
 import { API_BASE_URL } from '../api.config.js';
+import { useNavigate } from "react-router-dom";
 
-function Category() {
+function Category({reloadCounter}) {
   const [mainCategories, setMainCategories] = useState([]);
   const [selectedMainCategory, setSelectedMainCategory] = useState(null);
   const [selectedSubCategory, setSelectedSubCategory] = useState(null);
+  const navigate  = useNavigate();
+
+  const handleSubNavigate = (selectedSubCategory) => {
+    navigate("/DocCenter", { state:{selectedSubCategory} });
+  };
+
+  const handleNavigate = (selectedCategory) => {
+    navigate("/DocCenter", { state:{selectedCategory} });
+  };
 
   useEffect(() => {
     fetch(`${API_BASE_URL}/v1/document-center/category/list`, {
@@ -20,20 +30,33 @@ function Category() {
       });
   }, []);
 
+
+
+
+
   const handleMainCategoryChange = (event) => {
     const selectedMainCategoryId = event.target.value;
     setSelectedMainCategory(selectedMainCategoryId);
+    handleNavigate(selectedMainCategoryId);
     setSelectedSubCategory(null);
   };
 
   const handleSubCategoryChange = (event) => {
     const selectedSubCategoryId = event.target.value;
     setSelectedSubCategory(selectedSubCategoryId);
+    handleSubNavigate(selectedSubCategoryId);
   };
 
   const subCategoryOptions = selectedMainCategory
     ? mainCategories.find(category => category.categoryId === selectedMainCategory)?.secondLevelCategoryList
     : null;
+
+    useEffect(()=>{
+      setSelectedMainCategory(null);
+      handleNavigate(null);
+      setSelectedSubCategory(null);
+      handleSubNavigate(null);
+    },[reloadCounter]);
 
   return (
     <>

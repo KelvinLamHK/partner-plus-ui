@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import Swal from "sweetalert2";
 import Cookies from "js-cookie";
 import { getCurrentBrowserFingerPrint } from "@rajesh896/broprint.js";
-import FTLifePartnerPlus_Logo from "../img/FTLifePartnerPlus_Logo.png"
+import NWL_bilingual from "../img/NWL_bilingual.png";
 import "../css/LoginFormCss.css"
 import {API_BASE_URL} from "../api.config.js"
 
@@ -421,8 +421,8 @@ return(
     <div className="shadow-md rounded h-auto p-12 max-w-lg bg-white flex items-center justify-center">
         <form onSubmit={handleSubmit}>
             <img
-              alt="FTLifePartnerPlus_Logo"
-              src={FTLifePartnerPlus_Logo}
+              alt="NWL_bilingual"
+              src={NWL_bilingual}
             />
             <h1 className="mt-4 text-center text-title ">
                 <span className="text-2xl font-semibold">Partner+ FTL </span>
