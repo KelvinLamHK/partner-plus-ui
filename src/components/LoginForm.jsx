@@ -20,16 +20,37 @@ const LoginForm = () => {
 
   try {
     const deviceId = await getCurrentBrowserFingerPrint();
-    const response = await fetch(`${API_BASE_URL}/login`, {
+    const response = await fetch(`${API_BASE_URL}/authentication/login`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        username,
-        password,
-        deviceId
-      })
+        header: {
+          send_sysname: "CLNT",
+          sender: "ICBC",
+          recv_sysname: "ECIF",
+          receiver: "CCDC",
+          msg_type: "ecif.301",
+          msg_id: "20150514M3123213321421",
+          send_time: "2021-09-06T12:34:56.789",
+          checksum: "A1B2D3F4E5A6C7D8E9F0A1A2C3F4B5E6D7C8A9F0",
+          signature: "BASE64Text",
+          exts: {}
+        },
+        bodys: {
+          body: [
+            {
+              username: username,
+              password: password,
+              otp_code: "LLL",
+              login_type: "not-otp",
+              deviceId:deviceId
+            }
+          ]
+        } 
+      }
+    )
     });
     const data = await response.text();
     setCookies(data)
