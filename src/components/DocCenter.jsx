@@ -252,7 +252,6 @@ function DocCenter() {
 
 
   useEffect(() => {
-    console.log(postData)
     fetch(`${API_BASE_URL}/v1/document-center/list`, {
       method: 'POST',
       headers: {
@@ -395,6 +394,86 @@ function DocCenter() {
     }
     
   }
+
+  const downloadFile = (fileId,fileName) => {
+
+    fetch(`${API_BASE_URL}/v1/document/download`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        documentParameter: {
+          documentId: fileId
+        }
+      })
+    })
+      .then(response => response.json())
+      .then(data => {
+        const fileExtension = data.documentName.split('.').pop().toLowerCase();
+        let fileType = '';
+        switch (fileExtension) {
+          case "csv":
+            fileType = "text/csv";
+            break;
+          case "doc":
+            fileType = "application/msword";
+            break;
+          case "docx":
+            fileType =
+              "application/vnd.openxmlformats-officedocument.wordprocessingml.document";
+            break;
+          case "ppt":
+            fileType = "application/vnd.ms-powerpoint";
+            break;
+          case "pptx":
+            fileType =
+              "application/vnd.openxmlformats-officedocument.presentationml.presentation";
+            break;
+          case "xls":
+            fileType = "application/vnd.ms-excel";
+            break;
+          case "xlsx":
+            fileType =
+              "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+            break;
+          case "pdf":
+            fileType = "application/pdf";
+            break;
+          case "png":
+            fileType = "image/png";
+            break;
+          case "jpeg":
+          case "jpg":
+            fileType = "image/jpeg";
+            break;
+          case "gif":
+            fileType = "image/gif";
+            break;
+          default:
+            fileType = "application/octet-stream";
+            break;
+        }
+  
+        const decodedFile = window.atob(data.documentBase64String);
+        const byteArray = new Uint8Array(decodedFile.length);
+        for (let i = 0; i < decodedFile.length; ++i) {
+          byteArray[i] = decodedFile.charCodeAt(i);
+        }
+  
+        const blob = new Blob([byteArray], { type: fileType });
+        const link = document.createElement('a');
+        link.href = window.URL.createObjectURL(blob);
+        link.download = fileName;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+      })
+      .catch(error => console.error(error));
+  
+  };
+
+
 
   const navigate = useNavigate();
 
@@ -635,9 +714,9 @@ function DocCenter() {
                         </td>
                     <td className=''><div className='w-36 truncate items-center align-middle' >{formattedStartDate}</div></td>
                     <td className=''><div className='w-36 truncate items-center align-middle' >{formattedEndDate}</div></td>
-                    <td className=''><div className='w-36 truncate items-center align-middle' >{campaign.file1Name}</div></td>
-                    <td className=''><div className='w-36 truncate items-center align-middle' >{campaign.file2Name}</div></td>
-                    <td className=''><div className='w-36 truncate items-center align-middle' >{campaign.file3Name}</div></td>
+                    <td className=''><div className='w-36 truncate items-center align-middle' ><a className="cursor-pointer	 text-ft-light hover:text-ft" onClick={() => downloadFile(campaign.file1Id, campaign.file1Name)}> {campaign.file1Name}</a></div></td>
+                    <td className=''><div className='w-36 truncate items-center align-middle' ><a className="cursor-pointer	 text-ft-light hover:text-ft" onClick={() => downloadFile(campaign.file2Id, campaign.file2Name)}> {campaign.file2Name}</a></div></td>
+                    <td className=''><div className='w-36 truncate items-center align-middle' ><a className="cursor-pointer	 text-ft-light hover:text-ft" onClick={() => downloadFile(campaign.file3Id, campaign.file3Name)}> {campaign.file3Name}</a></div></td>
                     <td className=''>
                       <a href='/EditCampaign' onClick={()=> EditCampaign(campaign)}>
                         <svg className='campaign h-8' fill="none"  viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">

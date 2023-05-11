@@ -10,8 +10,8 @@ module.exports = {
       md: "1250px",
       sm:"705px",
     }, fontFamily: {
-      sans: ['Graphik', 'sans-serif'],
-      serif: ['Merriweather', 'serif'],
+      sans: ['Arial', 'sans-serif'],
+      serif: ['Arial', 'sans-serif'],
     },
     extend: {
       colors: {

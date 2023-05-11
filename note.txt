@@ -1,7 +1,13 @@
 2/5-5/5
-
-
-
+(✓) Created two new apis for Event Calendar for create, edit, delete, and display data
+(*) Jenkins downed few days so that can not test for the new api
+(✓) Create CMS - Categories Page UI
+(✓) Create CMS - Sub Categories Page UI
+(✓) Mapped Categories Page API, have create and edit categories function
+(✓) Mapped Sub Categories Page API, have create and edit sub categories function
+(✓) Brokers Communications data mapped to landing page and added date period filter logic and 'Pin' function
+(✓) Event Calendar Backend API - add pagination function
+(✓) Updated backend api searching function from exact date to date range
 
 24/4 - 28/4
 (✓) Updated DB table of Links

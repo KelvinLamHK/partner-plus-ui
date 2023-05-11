@@ -4,12 +4,14 @@ import '../css/lineclamp2css.css';
 import { API_BASE_URL } from '../api.config';
 import Modal from 'react-modal';
 import Swal from 'sweetalert2';
-
+import Pagination from '@mui/material/Pagination';
+import Stack from '@mui/material/Stack';
 
 function Communication() {
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [editIsOpen, setEditIsOpen] = useState(false);
   const [endDate, setEndDate] = useState('');
+  const [Page, setPage] = useState();
   const [startDate, setStartDate] = useState('');
   const [isPin, setIsPin] = useState('');
   const [contentEngName, setContentEngName] = useState('');
@@ -17,19 +19,47 @@ function Communication() {
   const [contentSimName, setContentSimName] = useState('');
   const [communication, setCommunication] = useState([]);
   const [communcationId, setCommuncationId] = useState('');
-
+  const [preResult, setPreResult] = useState();
+  const [nextResult, setNextResult] = useState();
+  const [pagination, setPagination] = useState({});
+  const [selectedValue, setSelectedValue] = useState("10");
+  const [postData, setPostData] = useState({
+    pageableParameter: {
+      pageNumber: 0,
+      pageSize: 10,
+      orderBy: "latestUpdate",
+      orderSequence: "desc"
+    }
+  });
 
   useEffect(() => {
     fetch(`${API_BASE_URL}/cms/communications`, {
       method: 'POST',
-
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(postData)
     })
       .then(response => response.json())
       .then(data => {
-        setCommunication(data);
+        setCommunication(data.tcommunicationEntityList);
+        setPagination(data.pagination);
+        if (data.pagination.pageNumber === 0) {
+          setPreResult(1);
+          setNextResult(data.pagination.pageSize);
+        }else{
+          setPreResult(data.pagination.pageNumber*data.pagination.pageSize+1);
+          setNextResult((data.pagination.pageNumber+1)*data.pagination.pageSize);
+        }
+
+  
+        if (!data.pagination.hasNext) {
+          setPreResult((data.pagination.totalPages - 1) * data.pagination.pageSize + 1);
+          setNextResult(data.pagination.totalNumberOfRecords - (data.pagination.totalPages - 1) * data.pagination.pageSize+data.pagination.pageNumber*data.pagination.pageSize)
+        }
       })
       .catch(error => console.error(error));
-  }, []);
+  }, [postData,selectedValue,Page]);
   
 
   const openModal = () => {
@@ -102,6 +132,32 @@ function Communication() {
     }
   }
 
+  const handleChange = (event) => {
+    setSelectedValue(event.target.value);
+    setPostData({
+      pageableParameter: {
+        pageNumber: 0,
+        pageSize: event.target.value,
+        orderBy: "latestUpdate",
+        orderSequence: "desc"
+      }
+    });
+  
+  };
+
+  const handlePageChange = (event) => {
+    setPage(event)
+    setPostData({
+      pageableParameter: {
+        pageNumber: event-1,
+        pageSize: pagination.pageSize,
+        orderBy: "latestUpdate",
+        orderSequence: "desc"
+      }
+    });
+  
+  };
+  
   const handleEdit = async (e) => {
     e.preventDefault();
     console.log(communcationId)
@@ -365,6 +421,24 @@ function Communication() {
         </form>
       </Modal>
         </div>
+        <div className='mr-5'>
+          <p>Show
+          <select
+      id="countries"
+      aria-label="Select page size"
+      className="mx-2 w-20 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-ft-light focus:border-ft-light p-2.5"
+      value={selectedValue}
+      onChange={handleChange}
+    >
+              <option value="10">10</option>
+              <option value="20">20</option>
+              <option value="50">50</option>
+              <option value="100">100</option>
+            </select> 
+            records per page.
+          </p>
+
+        </div>
         <div className='p-2 flex align-middle justify-center'>
           <div className=''>
         <table className='w-full block'>
@@ -445,6 +519,33 @@ function Communication() {
         </table>
         </div>
         </div>
+        <div className="flex items-center justify-between px-4 py-3 md:px-6">
+      <div className="hidden md:flex md:flex-1 md:items-center md:justify-between">
+        <div>
+          {pagination.totalNumberOfRecords===0?<p className="text-sm text-gray-700">
+          No items to show...</p>:<p className="text-sm text-gray-700">
+            Showing<span className="font-medium"> {preResult}</span> to <span className="font-medium">{nextResult}</span> of{' '}
+            <span className="font-medium">{(pagination.totalNumberOfRecords)}</span> results
+          </p>}
+        </div>
+          <div>
+          {pagination && pagination.totalNumberOfRecords > 0 && (
+            <Stack spacing={2}>
+              <Pagination
+                page={parseInt(pagination.pageNumber + 1)}
+                shape={'circular'}
+                count={
+                  pagination.totalNumberOfRecords && pagination.pageSize && !isNaN(pagination.totalNumberOfRecords) && !isNaN(pagination.pageSize)
+                    ? (pagination.totalNumberOfRecords % pagination.pageSize)===0?pagination.totalNumberOfRecords / pagination.pageSize: (parseInt(Math.trunc(pagination.totalNumberOfRecords / pagination.pageSize)+ 1))
+                    : 0
+                }
+                onChange={(e, value) => handlePageChange(value)}
+              />
+            </Stack>
+          )}
+        </div>
+      </div>
+    </div>
   </div>
             </>
   )}

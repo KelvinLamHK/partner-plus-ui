@@ -5,6 +5,7 @@ import Swal from "sweetalert2";
 const CreateCampaignForm = () =>  {
   const [isMobileScreen, setIsMobileScreen] = useState((window.innerWidth <= 1250?true:false));
   const [IFACA, setIFACA] = useState("IFA/CA");
+  const [thumbnailId, setThumbnailId] = useState("");
   const [values, setValues] = useState({
     campaignNameEng: '',
     campaignCode: '',
@@ -17,23 +18,50 @@ const CreateCampaignForm = () =>  {
   });
 
 
-  const [fileBase64, setFileBase64] = useState(null);
 
   const handleFileInputChange = (event) => {
       const file = event.target.files[0];
-      setValues((prevValues) => ({
-          ...prevValues,
-          thumbnailDocID: file ? file.name : '',
-      }));
 
       if (file) {
-          const reader = new FileReader();
-          reader.readAsDataURL(file);
-          reader.onload = () => setFileBase64(reader.result);
-      } else {
-          setFileBase64(null);
-          console.log(fileBase64);
-      }
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = () => {
+          const result = reader.result;
+          const base64String = result.split(",")[1];
+          fetch(`${API_BASE_URL}/v1/document/upload`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                userParameter: {
+                    loginName: "IFA-0413518-00012",
+                    name: "XXXXXXXX Wong",
+                    companyID: "IFA",
+                    email: "xxxxxxxxxxxx@iamlegacy.com",
+                    brokerCode: "0413518;0419214",
+                    ifaIdentity: "ADMIN",
+                    pibaNumber: "PIBA-0433-022049",
+                    ifaCaNameEng: "XXXX Ip Wun",
+                    ifaCaNameOther: "IA9205",
+                    companyName: null,
+                    ifaCaLicenseNumber: "TR1234",
+                    role: "internal-admin"
+                 },
+              documentParameter: {
+                documentName: file.name,
+                base64FileString: base64String,
+                documentCategory: "campaign",
+                documentType: "thumbnail"
+              }
+            })
+          }).then(response => response.json())
+            .then(data => {
+                setThumbnailId(data.referenceId)
+            })
+            .catch(error => console.error(error))
+        };
+      } 
   };
 
   const handleIFACAChange = (event) => {
@@ -96,7 +124,7 @@ const CreateCampaignForm = () =>  {
                 campaignNameZHCN:values.campaignNameZHCN,
                 ifaCaIndicator: IFACA,
                 remark: values.remark,
-                thumbnailDocID: 12345,
+                thumbnailDocID: thumbnailId,
                 campaignStartDate: values.campaignStartDate,
                 campaignEndDate: values.campaignEndDate
             }

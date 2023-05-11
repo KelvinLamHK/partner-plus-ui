@@ -450,7 +450,7 @@ return(
             </div>
             <div className="mb-4 full-width flex justify-center">
                 <button
-                    className="btn w-full p-2 btn-primary rounded text-white active:bg-white hover:bg-ft-light active:text-ft active:ring-1 border-0 active:ring-ft transition"
+                    className="btn w-full p-2 bg-ft-light rounded text-white active:bg-white hover:bg-ft-light active:text-ft active:ring-1 border-0 active:ring-ft transition "
                     type="submit"
                     disabled={isLoading}
             style={{
