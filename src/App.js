@@ -12,6 +12,7 @@ import EditCampaignPage from "../src/pages/EditCampaignPage.jsx"
 import CampaignDetailPage from "../src/pages/CampaignDetailPage.jsx"
 import CreateDocCenterPage from "../src/pages/CreateDocCenterPage.jsx"
 import SubCategoriesPage from "../src/pages/CMS/SubCategoriesPage.jsx"
+import TestPage from "../src/pages/TestPage.jsx"
 
 function App() {
   return (
@@ -32,6 +33,7 @@ function App() {
         <Route path="/CreateDoc" element={<CreateDocCenterPage />} />
         <Route path="/EditCampaign" element={<EditCampaignPage />} />
         <Route path="/CampaignDetail" element={<CampaignDetailPage />} />
+        <Route path="/Test" element={<TestPage />} />
       </Routes>
     </Router>
   );
