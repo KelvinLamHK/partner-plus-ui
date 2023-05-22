@@ -1,11 +1,23 @@
-import React, { useState } from "react";
+import React, { useState , useEffect } from "react";
 import Modal from "react-modal";
-
+import Cookies from 'js-cookie';
+import { useTranslation } from 'react-i18next';
+import PlusNavbar from "../components/PlusNavbar";
 
 function LoginPage() {
   const [editIsOpen, setEditIsOpen] = useState(false);
   const [uploadedFile, setUploadedFile] = useState(null);
   const [uploadedFileName, setUploadedFileName] = useState("");
+  const { t, i18n } = useTranslation();
+
+  useEffect(() => {
+    const savedLanguage = Cookies.get('language');
+    if (savedLanguage) {
+      i18n.changeLanguage(savedLanguage);
+    }
+  }, [i18n]);
+  
+
 
   const closeEdit = () => {
     setEditIsOpen(false);
@@ -66,8 +78,9 @@ function LoginPage() {
 
   return (
     <>
+    <PlusNavbar />
       <div className="bg-ft-light h-screen flex items-center justify-center">
-        <p>testing</p>
+      <p>{t('loginPage.username')}</p>
         <input type="file" onChange={handleFileUpload} />
         <button onClick={() => setEditIsOpen(true)}>Open Preview</button>
         <Modal isOpen={editIsOpen} onRequestClose={closeEdit} style={customStyles} ariaHideApp={false}>

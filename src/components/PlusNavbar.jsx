@@ -10,6 +10,7 @@ import Cookies from "js-cookie";
 
 const PlusNavbar = (props) => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [selectedLanguage, setSelectedLanguage] = useState('中IEN');
 
   const trigger = useRef(null);
   const dropdown = useRef(null);
@@ -43,6 +44,14 @@ const PlusNavbar = (props) => {
   const [isOpen, setIsOpen] = useState(false);
   const divRef = useRef()
 
+  const handleLanguageChange = (language) => {
+    Cookies.set('language', language); // Save selected language to cookie
+    setSelectedLanguage(language);
+    // Perform any additional logic or API calls for language change if needed
+    window.location.reload(); // Refresh the page
+
+  };
+  
 
   return (
     <div>
@@ -148,30 +157,25 @@ const PlusNavbar = (props) => {
 
                   <Dropdown.Menu>
                     <Dropdown.Item
-                      href="/"
-                      className={
-                        location.pathname === "/simp" ? "active text-center" : "inactive text-center hover:bg-ft-light hover:text-white active:bg-ft"
-                      }
+                      className={selectedLanguage === 'en' ? "active text-center" : "inactive text-center hover:bg-ft-light hover:text-white active:bg-ft"}
+                      onClick={() => handleLanguageChange('en')}
                     >
                       EN
                     </Dropdown.Item>
                     <Dropdown.Item
-                      className={
-                        location.pathname === "/simp" ? "active text-center" : "inactive text-center hover:bg-ft-light hover:text-white active:bg-ft"
-                      }
-                      href="/"
+                      className={selectedLanguage === 'zh' ? "active text-center" : "inactive text-center hover:bg-ft-light hover:text-white active:bg-ft"}
+                      onClick={() => handleLanguageChange('zh')}
                     >
                       繁
                     </Dropdown.Item>
                     <Dropdown.Item
-                      className={
-                        location.pathname === "/simp" ? "active text-center" : "inactive text-center hover:bg-ft-light hover:text-white active:bg-ft"
-                      }
-                      href="/"
+                      className={selectedLanguage === 'sim' ? "active text-center" : "inactive text-center hover:bg-ft-light hover:text-white active:bg-ft"}
+                      onClick={() => handleLanguageChange('sim')}
                     >
                       簡
                     </Dropdown.Item>
                   </Dropdown.Menu>
+
                 </Dropdown>
                 {/*  Divider */}
                 <hr className="w-px h-6 bg-slate-400 mx-3 " />
@@ -310,30 +314,32 @@ const PlusNavbar = (props) => {
                 Logout
               </a>
               <div className="flex px-3 py-2 rounded-md text-base font-medium ">
-              <div className="flex justify-center w-1/3 text-center">
-                <p
-                className="w-16 mb-0 text-white bg-ft hover:text-white block px-3 py-2 rounded-md text-base font-medium"
-                >
-                EN
-              </p>
-              
+              <div className="flex justify-center">
+                <div className="flex justify-center w-1/3 text-center">
+                  <p
+                    className={`w-16 mb-0 text-${selectedLanguage === 'EN' ? 'white bg-ft hover:text-white' : 'ft bg-white'} block px-3 py-2 rounded-md text-base font-medium`}
+                    onClick={() => handleLanguageChange('EN')}
+                  >
+                    EN
+                  </p>
                 </div>
                 <div className="flex justify-center w-1/3 text-center">
-                <p
-                className="w-16 mb-0 text-ft bg-white block px-3 py-2 rounded-md text-base font-medium"
-                >
-                繁
-              </p>
-              
+                  <p
+                    className={`w-16 mb-0 text-${selectedLanguage === '繁' ? 'ft bg-white' : 'ft bg-white'} block px-3 py-2 rounded-md text-base font-medium`}
+                    onClick={() => handleLanguageChange('繁')}
+                  >
+                    繁
+                  </p>
                 </div>
                 <div className="flex justify-center w-1/3 text-center">
-                <p
-                className="w-16 mb-0 text-ft bg-white block px-3 py-2 rounded-md text-base font-medium"
-                >
-                简
-              </p>
-              
+                  <p
+                    className={`w-16 mb-0 text-${selectedLanguage === '简' ? 'ft bg-white' : 'ft bg-white'} block px-3 py-2 rounded-md text-base font-medium`}
+                    onClick={() => handleLanguageChange('简')}
+                  >
+                    简
+                  </p>
                 </div>
+              </div>
                 
               </div>
         
