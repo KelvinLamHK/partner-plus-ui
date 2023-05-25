@@ -7,19 +7,16 @@ import Stack from '@mui/material/Stack';
 import ScrollToTopButton from './ScrollToTopButton';
 import { useNavigate} from 'react-router-dom';
 import Modal from 'react-modal';
-
+import "css-file-icons"
 
 function CampaignList() {
   const [editIsOpen, setEditIsOpen] = useState(false);
-  const [modalIsOpen, setModalIsOpen] = useState(false);
   const [uploadedFile, setUploadedFile] = useState(null);
   const [uploadedFileName, setUploadedFileName] = useState("");
   const inputRefCamName = useRef(null);
   const inputRefCamCode = useRef(null);
   const [selectedValue, setSelectedValue] = useState();
   const [Page, setPage] = useState();
-  const [base64, setBase64] = useState("");
-  const [fileName, setFileName] = useState("");
   const [Orderby, setOrderby] = useState("updatedDate");
   const [OrderSequence, setOrderSequence] = useState("desc");
   const [campaigns, setCampaigns] = useState([]);
@@ -323,8 +320,8 @@ function CampaignList() {
 const customStyles = {
   content: {
     width: 'auto',
-    maxWidth:'600px',
-    height: '450px',
+    maxWidth:'1200px',
+    height: 'auto',
     margin: 'auto',
     display: 'flex',
     flexDirection: 'column',
@@ -347,7 +344,6 @@ const closeEdit = () => {
 
 
 const handlePreview = (thumbnailDocID) => {
-  console.log(thumbnailDocID)
   fetch(`${API_BASE_URL}/v1/document/download`, {
     method: 'POST',
     headers: {
@@ -361,25 +357,10 @@ const handlePreview = (thumbnailDocID) => {
   })
   .then(response => response.json())
   .then(data => {
-    console.log(data)
     if(data.documentName){
       setUploadedFileName(data.documentName)
       setUploadedFile(data.documentBase64String)
-    const fileExtension = data.documentName.split(".").pop().toLowerCase();
-  if (fileExtension === "png" || fileExtension === "jpg" || fileExtension === "jpeg" || fileExtension === "gif") {
-    // Image preview
-    return <img src={`data:image/${fileExtension};base64,${data.documentBase64String}`} alt="Document Thumbnail" />;
-  } else {
-    // Download link for other file types
-    return (
-      <div>
-        <a href={`data:application/octet-stream;base64,${data.documentBase64String}`} download={data.documentName}>
-          Download File
-        </a>
-      </div>
-    );
-  }
-}
+    }
   })
   .catch(error => console.error(error));
 
@@ -394,17 +375,113 @@ const preview = () => {
   if (fileExtension === "png" || fileExtension === "jpg" || fileExtension === "jpeg" || fileExtension === "gif") {
     // Image preview
     return <img src={`data:image/${fileExtension};base64,${uploadedFile}`} alt="Document Thumbnail" />;
-  } else {
-    // Download link for other file types
+  } 
+};
+
+const download = () => {
+  const fileExtension = uploadedFileName.split(".").pop().toLowerCase();
+  let fileType = '';
+        switch (fileExtension) {
+          case "csv":
+            fileType = "text/csv";
+            break;
+          case "doc":
+            fileType = "application/msword";
+            break;
+          case "docx":
+            fileType =
+              "application/vnd.openxmlformats-officedocument.wordprocessingml.document";
+            break;
+          case "ppt":
+            fileType = "application/vnd.ms-powerpoint";
+            break;
+          case "pptx":
+            fileType =
+              "application/vnd.openxmlformats-officedocument.presentationml.presentation";
+            break;
+          case "xls":
+            fileType = "application/vnd.ms-excel";
+            break;
+          case "xlsx":
+            fileType =
+              "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+            break;
+          case "pdf":
+            fileType = "application/pdf";
+            break;
+          case "png":
+            fileType = "image/png";
+            break;
+          case "jpeg":
+          case "jpg":
+            fileType = "image/jpeg";
+            break;
+          case "gif":
+            fileType = "image/gif";
+            break;
+          default:
+            fileType = "application/octet-stream";
+            break;
+        }
+  if (fileExtension === "png" || fileExtension === "jpg" || fileExtension === "jpeg" || fileExtension === "gif") {
+    // Image preview
+    return (
+      <div> 
+        <div className='text-center'> 
+          <p>
+            {uploadedFileName} 
+          </p>
+        </div>
+      <div className='w-72 flex mt-5 justify-between'>
+
+          <div className=''>
+            <button className=" text-white bg-ft-light rounded px-3 py-2">
+              <a className="text-white" href={`data:${fileType};base64,${uploadedFile}`} download={uploadedFileName}>
+                Download
+              </a>
+            </button>
+          
+          </div>
+          <div className=''>
+            <button className=' bg-ft-light text-white px-3 py-2 rounded' onClick={closeEdit}>Close</button>
+          </div>
+      </div>
+    </div>
+    )
+  }else{
+    const reArrange = "fi fi-size-xl fi-"+fileExtension;
     return (
       <div>
-        <a href={`data:application/octet-stream;base64,${uploadedFile}`} download={uploadedFileName}>
-          Download File
-        </a>
+      <div className='mt-3'>
+        <div className={reArrange}>
+          <div className="fi-content">{fileExtension}</div>
+        </div>
+        <div className='text-center'> 
+          <p>
+            {uploadedFileName} 
+          </p>
+        </div>
       </div>
-    );
+       <div className='w-84 flex mt-5 justify-center'>
+
+          <div className='mr-10'>
+              <button className=" text-white bg-ft-light rounded px-3 py-2">
+                <a className="text-white" href={`data:application/octet-stream;base64,${uploadedFile}`} download={uploadedFileName}>
+                  Download
+                </a>
+              </button>
+            
+            </div>
+            <div className=''>
+              <button className=' bg-ft-light text-white px-3 py-2 rounded' onClick={closeEdit}>Close</button>
+            </div>
+      </div>
+   </div>
+   )
   }
-};
+
+  }
+
 
   return (
     <>
@@ -665,9 +742,9 @@ const preview = () => {
 
         </div>
       <Modal isOpen={editIsOpen} onRequestClose={closeEdit} style={customStyles} ariaHideApp={false}>
-          <p>Preview</p>
+          <h1 className='mb-4'>Preview</h1>
           {preview()}
-          <button onClick={closeEdit}>Close Preview</button>
+          {download()}
         </Modal>
         <div className='overflow-y-hidden' >
           <table className="rounded-md border-collapse border border-slate-800 w-table " >
@@ -752,9 +829,11 @@ const preview = () => {
                       <td className=''><div data-tooltip-target="tooltip-default" className='w-32 lineclamp2'>{campaign.remark}</div></td>
                       <td className=''>
                       <div className='flex w-16 align-middle justify-center'>
-                        {campaign.thumbnailDocID!==0?<a onClick={()=> openEdit(campaign.thumbnailDocID)}  className=''>
-                        <svg fill="none" className='campaign h-8 ' stroke="#009188" stroke-width="1" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                          <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m5.231 13.481L15 17.25m-4.5-15H5.625c-.621 0-1.125.504-1.125 1.125v16.5c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9zm3.75 11.625a2.625 2.625 0 11-5.25 0 2.625 2.625 0 015.25 0z"></path>
+                        {campaign.thumbnailDocID!==0?
+                        // eslint-disable-next-line jsx-a11y/anchor-is-valid
+                        <a onClick={()=> openEdit(campaign.thumbnailDocID)}  className=''>
+                        <svg fill="none" className='campaign h-8 ' stroke="#009188" strokeWidth="1" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m5.231 13.481L15 17.25m-4.5-15H5.625c-.621 0-1.125.504-1.125 1.125v16.5c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9zm3.75 11.625a2.625 2.625 0 11-5.25 0 2.625 2.625 0 015.25 0z"></path>
                         </svg>
                         </a>:<></>}
                       </div>

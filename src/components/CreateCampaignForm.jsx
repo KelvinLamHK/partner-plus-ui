@@ -5,6 +5,7 @@ import Swal from "sweetalert2";
 const CreateCampaignForm = () =>  {
   const [isMobileScreen, setIsMobileScreen] = useState((window.innerWidth <= 1250?true:false));
   const [IFACA, setIFACA] = useState("IFA/CA");
+  const [template, setTemplate] = useState("PDD");
   const [thumbnailId, setThumbnailId] = useState("");
   const [values, setValues] = useState({
     campaignNameEng: '',
@@ -68,6 +69,10 @@ const CreateCampaignForm = () =>  {
     setIFACA(event.target.value);
   };
 
+  const handleTemplateChange = (event) => {
+    setTemplate(event.target.value);
+  };
+  
   const handleChange = (event) => {
     const { name, value } = event.target;
     setValues({ ...values, [name]: value });
@@ -410,9 +415,21 @@ const CreateCampaignForm = () =>  {
                     </select> 
                 </div>
             </div>
+
             <div className="form-group w-1/2 flex justify-center">
                 <div className='w-11/12'>
-                
+                    <label htmlFor="IFA/CA">Template <span className='text-red-600'>*</span></label>
+                    <select
+                        id="template"
+                        aria-label="Select template"
+                        className="w-full bg-white-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-ft-light focus:border-ft-light p-2.5"
+                        value={template}
+                        name="template"
+                        onChange={handleTemplateChange}
+                        >
+                        <option value="CEE">CEE - K Dollar</option>
+                        <option value="PDD">PDD - CI Conversion Campaign</option>
+                    </select> 
                 </div>
             </div>
         </div>

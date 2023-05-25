@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { useState, useEffect } from "react";
 import "bootstrap/dist/css/bootstrap.css";
 import Cookies from "js-cookie";
@@ -9,6 +10,7 @@ import Searchbar from "../components/Searchbar"
 import NoItem from "../components/NoItem";
 import { getCurrentBrowserFingerPrint } from "@rajesh896/broprint.js";
 import {API_BASE_URL} from '../api.config.js';
+import { useNavigate} from 'react-router-dom';
 
 function LandingPage() {
   const [username, setUsername] = useState("");
@@ -16,6 +18,9 @@ function LandingPage() {
   const token = Cookies.get("PLUSID");
   const [links, setLinks] = useState([]);
   const [communications, setCommunications] = useState([]);
+  const [isPin, setIsPin] = useState([]);
+  const [isPromo, setIsPromo] = useState([]);
+
 
   useEffect(() => {
     async function fetchData() {
@@ -53,41 +58,201 @@ function LandingPage() {
   }, [token]);
 
   useEffect(() => {
-    fetch(`${API_BASE_URL}/cms/links`, {
-      method: 'POST',
-
-    })
-      .then(response => response.json())
-      .then(data => {
-        setLinks(data);
-      })
-      .catch(error => console.error(error));
-  }, []);
-
-  
-  useEffect(() => {
-    fetch(`${API_BASE_URL}/cms/communications`, {
+    fetch(`${API_BASE_URL}/v1/document-center/list`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
+        userParameter: {
+          loginName: "IFA-0413518-00012",
+          name: "XXXXXXXX Wong",
+          companyID: "IFA",
+          email: "xxxxxxxxxxxx@iamlegacy.com",
+          brokerCode: "0413518;0419214",
+          ifaIdentity: "ADMIN",
+          pibaNumber: "PIBA-0433-022049",
+          ifaCaNameEng: "XXXX Ip Wun",
+          ifaCaNameOther: "IA9205",
+          companyName: null,
+          ifaCaLicenseNumber: "TR1234",
+          role: "internal-admin"
+        },
         pageableParameter: {
           pageNumber: 0,
-          pageSize: 100,
-          orderBy: "latestUpdate",
+          pageSize: 100000,
+          orderBy: "updatedDate",
           orderSequence: "desc"
+        },
+        documentCenterParameter: {
+          isPin: "Y"
         }
       })
     })
       .then(response => response.json())
       .then(data => {
-        setCommunications(data.tcommunicationEntityList);
+          setIsPin(data.documentCenterList)
       })
-      .catch(error => console.error(error));
+
+      fetch(`${API_BASE_URL}/v1/document-center/list`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          userParameter: {
+            loginName: "IFA-0413518-00012",
+            name: "XXXXXXXX Wong",
+            companyID: "IFA",
+            email: "xxxxxxxxxxxx@iamlegacy.com",
+            brokerCode: "0413518;0419214",
+            ifaIdentity: "ADMIN",
+            pibaNumber: "PIBA-0433-022049",
+            ifaCaNameEng: "XXXX Ip Wun",
+            ifaCaNameOther: "IA9205",
+            companyName: null,
+            ifaCaLicenseNumber: "TR1234",
+            role: "internal-admin"
+          },
+          pageableParameter: {
+            pageNumber: 0,
+            pageSize: 100000,
+            orderBy: "updatedDate",
+            orderSequence: "desc"
+          },
+          documentCenterParameter: {
+            isPromo: "Y"
+          }
+        })
+      })
+        .then(response => response.json())
+        .then(data => {
+          const promo = data.documentCenterList
+          .filter(
+            (promoDate) =>
+              new Date(promoDate.effectiveDateFrom) <= new Date() &&
+              new Date(promoDate.effectiveDateTo) >= new Date()
+          )
+            setIsPromo(promo)
+        })
+
+      fetch(`${API_BASE_URL}/cms/links`, {
+        method: 'POST',
+
+      })
+        .then(response => response.json())
+        .then(data => {
+          setLinks(data);
+        })
+        .catch(error => console.error(error));
+
+      fetch(`${API_BASE_URL}/cms/communications`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          pageableParameter: {
+            pageNumber: 0,
+            pageSize: 10000,
+            orderBy: "latestUpdate",
+            orderSequence: "desc"
+          }
+        })
+      })
+        .then(response => response.json())
+        .then(data => {
+          setCommunications(data.tcommunicationEntityList);
+        })
+        .catch(error => console.error(error));
+
+
   }, []);
 
+  const downloadFile = (fileId,fileName) => {
+
+    fetch(`${API_BASE_URL}/v1/document/download`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        documentParameter: {
+          documentId: fileId
+        }
+      })
+    })
+      .then(response => response.json())
+      .then(data => {
+        const fileExtension = data.documentName.split('.').pop().toLowerCase();
+        let fileType = '';
+        switch (fileExtension) {
+          case "csv":
+            fileType = "text/csv";
+            break;
+          case "doc":
+            fileType = "application/msword";
+            break;
+          case "docx":
+            fileType =
+              "application/vnd.openxmlformats-officedocument.wordprocessingml.document";
+            break;
+          case "ppt":
+            fileType = "application/vnd.ms-powerpoint";
+            break;
+          case "pptx":
+            fileType =
+              "application/vnd.openxmlformats-officedocument.presentationml.presentation";
+            break;
+          case "xls":
+            fileType = "application/vnd.ms-excel";
+            break;
+          case "xlsx":
+            fileType =
+              "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+            break;
+          case "pdf":
+            fileType = "application/pdf";
+            break;
+          case "png":
+            fileType = "image/png";
+            break;
+          case "jpeg":
+          case "jpg":
+            fileType = "image/jpeg";
+            break;
+          case "gif":
+            fileType = "image/gif";
+            break;
+          default:
+            fileType = "application/octet-stream";
+            break;
+        }
   
+        const decodedFile = window.atob(data.documentBase64String);
+        const byteArray = new Uint8Array(decodedFile.length);
+        for (let i = 0; i < decodedFile.length; ++i) {
+          byteArray[i] = decodedFile.charCodeAt(i);
+        }
+  
+        const blob = new Blob([byteArray], { type: fileType });
+        const link = document.createElement('a');
+        link.href = window.URL.createObjectURL(blob);
+        link.download = fileName;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+      })
+      .catch(error => console.error(error));
+  
+  };
+ 
+  const navigate = useNavigate();
+
+  const EditDocument = (event) => {
+    navigate('/ViewDocument',{state:{event}});
+  }
+
   return (
     <>
       {isLoading ? (
@@ -145,9 +310,56 @@ function LandingPage() {
                 <div className="margin titlebar h-12 absolute mt-2">
                     <span className="bold h4 text-white">Latest Promo</span>
                   </div>
-                  <div className="bg rounded shadow-lg w-full mt-3 flex justify-center items-center">
-                    <NoItem />
-                  </div>
+                  {isPromo.length === 0 ? (
+                      <>
+                        <div className="bg rounded shadow-lg w-full mt-3 flex justify-center items-center">
+                            <NoItem />
+                        </div>
+                      </>
+                    ) : (
+                      <div className="bg rounded shadow-lg w-full mt-3 flex justify-center">
+                        <ul className="mt-5 w-full mr-5 overflow-auto" style={{ paddingLeft: "20px", listStyleType: "circle" }}>
+                        {isPromo
+                            .map((promo, index) => (
+                              <div className="border border-red-500 p-2 flex-col items-center" key={index}>
+                                <div className="flex">
+                                  <div className="w-2/5 pr-2">
+                                    <p className="mb-0 font-bold line-clamp-1"><a href='/ViewDocument' className="text-ft" onClick={()=> EditDocument(promo)}>{promo.titleEnglish}</a></p>
+                                  </div>
+                                  <div className="w-1/5 px-2">
+                                    <p className="mb-0 font-bold line-clamp-1">
+                                      <a className="cursor-pointer	 text-ft-light hover:text-ft" 
+                                        onClick={() => downloadFile(promo.file1Id, promo.file1Name)}> 
+                                          {promo.file1Name}
+                                      </a>
+                                    </p>
+                                  </div>
+                                  <div className="w-1/5 px-2">
+                                      <p className="mb-0 font-bold line-clamp-1">
+                                        <a className="cursor-pointer	 text-ft-light hover:text-ft" 
+                                          onClick={() => downloadFile(promo.file2Id, promo.file2Name)}> 
+                                            {promo.file2Name}
+                                        </a>
+                                      </p>                                  
+                                    </div>
+                                  <div className="w-1/5 px-2">
+                                    <p className="mb-0 font-bold line-clamp-1">
+                                      <a className="cursor-pointer	 text-ft-light hover:text-ft" 
+                                        onClick={() => downloadFile(promo.file3Id, promo.file3Name)}> 
+                                          {promo.file3Name}
+                                      </a>
+                                    </p>
+                                  </div>
+                                </div>
+                                <div>
+                                  <p className="mb-0 line-clamp-2">{promo.descriptionEnglish}</p>
+                                </div>
+                                
+                              </div>
+                            ))}
+                        </ul>
+                      </div>
+                    )}
                 </div>
               </div>
               <div className="md:flex md:flex-row md:space-x-2 ">
@@ -195,9 +407,21 @@ function LandingPage() {
                 <div className="margin titlebar h-12 absolute truncate mt-3">
                     <span className="bold h4 text-white">Document Center</span>
                   </div>
-                  <div className="bg rounded shadow-lg w-full mt-3 ">
-                      
-                  
+                  <div className="bg rounded shadow-lg w-full mt-3 p-3 flex">
+                      <div className="w-full my-2 mt-5 overflow-auto">
+                        <div>
+                          {isPin.length===0?<><div className="flex mt-48"><NoItem /></div></>:
+                          <ul className="" style={{ paddingLeft: '20px' ,listStyleType: 'circle'}}>
+                            {isPin.map((pin, index) => (
+                              <li key={index}>
+                                  <a onClick={()=> EditDocument(pin)} target="_blank" rel="noopener noreferrer" className="text-ft hover:text-ft-light text-lg line-clamp-1 cursor-pointer">
+                                    {new Date()>new Date(pin.effectiveDateTo)?"(Expired) ":""}{pin.titleEnglish}
+                                  </a>
+                              </li>
+                            ))}
+                          </ul>}
+                        </div>
+                        </div>
                   </div>
               </div>
             </div>
