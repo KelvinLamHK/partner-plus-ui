@@ -5,6 +5,7 @@ import Swal from "sweetalert2";
 const EditCampaignForm = (props) =>  {
 const [isMobileScreen, setIsMobileScreen] = useState((window.innerWidth <= 1250?true:false));
   const [IFACA, setIFACA] = useState(props.campaign.ifaCaIndicator);
+  const [template, setTemplate] = useState(props.campaign.template);
   const [thumbnailDocID,setThumbnailDocID] = useState(props.campaign.thumbnailDocID)
   const [values, setValues] = useState({
     campaignNameEng:props.campaign.campaignNameEng,
@@ -98,6 +99,10 @@ const [isMobileScreen, setIsMobileScreen] = useState((window.innerWidth <= 1250?
     setIFACA(event.target.value);
   };
 
+  const handleTemplateChange = (event) => {
+    setTemplate(event.target.value);
+  };
+
   const handleChange = (event) => {
     const { name, value } = event.target;
     setValues({ ...values, [name]: value });
@@ -158,7 +163,8 @@ const [isMobileScreen, setIsMobileScreen] = useState((window.innerWidth <= 1250?
                 remark: values.remark,
                 thumbnailDocID: (thumbnailDocID=== "" || thumbnailDocID === null?0:thumbnailDocID),
                 campaignStartDate: values.campaignStartDate,
-                campaignEndDate: values.campaignEndDate
+                campaignEndDate: values.campaignEndDate,
+                template:template
             }
         })
       });
@@ -298,6 +304,24 @@ const [isMobileScreen, setIsMobileScreen] = useState((window.innerWidth <= 1250?
                         <option value="CA">CA</option>
                     </select> 
                 </div>
+
+                
+            <div className="form-group w-1/2 flex justify-center">
+                <div className='w-11/12'>
+                    <label htmlFor="IFA/CA">Template <span className='text-red-600'>*</span></label>
+                    <select
+                        id="template"
+                        aria-label="Select template"
+                        className="w-full bg-white-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-ft-light focus:border-ft-light p-2.5"
+                        value={template}
+                        name="template"
+                        onChange={handleTemplateChange}
+                        >
+                        <option value="CEE - K Dollar">CEE - K Dollar</option>
+                        <option value="PDD - CI Conversion Campaign">PDD - CI Conversion Campaign</option>
+                    </select> 
+                </div>
+            </div>
             </div>
             <div className="form-row flex mx-3 my-5">  
             <div className='px-4 w-full'>
@@ -445,7 +469,18 @@ const [isMobileScreen, setIsMobileScreen] = useState((window.innerWidth <= 1250?
             </div>
             <div className="form-group w-1/2 flex justify-center">
                 <div className='w-11/12'>
-                
+                    <label htmlFor="IFA/CA">Template <span className='text-red-600'>*</span></label>
+                    <select
+                        id="template"
+                        aria-label="Select template"
+                        className="w-full bg-white-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-ft-light focus:border-ft-light p-2.5"
+                        value={template}
+                        name="template"
+                        onChange={handleTemplateChange}
+                        >
+                        <option value="CEE - K Dollar">CEE - K Dollar</option>
+                        <option value="PDD - CI Conversion Campaign">PDD - CI Conversion Campaign</option>
+                    </select> 
                 </div>
             </div>
         </div>

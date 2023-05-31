@@ -14,27 +14,46 @@ const LoginForm = () => {
     const [isSuccess, setIsSuccess] = useState(false);
     const [isRecord, setIsRecord] = useState(false);
     const [cookies, setCookies] = useState("");
+
     const handleSubmit = async (e) => {
   e.preventDefault();
   setIsLoading(true);
 
   try {
     const deviceId = await getCurrentBrowserFingerPrint();
-    const response = await fetch(`${API_BASE_URL}/login`, {
+    const response = await fetch(`${API_BASE_URL}/authentication/login`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify(
+      body: JSON.stringify({
+        header: {
+          send_sysname: "CLNT",
+          sender: "ICBC",
+          recv_sysname: "ECIF",
+          receiver: "CCDC",
+          msg_type: "ecif.301",
+          msg_id: "20150514M3123213321421",
+          send_time: "2021-09-06T12:34:56.789",
+          checksum: "A1B2D3F4E5A6C7D8E9F0A1A2C3F4B5E6D7C8A9F0",
+          signature: "BASE64Text",
+          exts: {}
+        },
+        bodys: {
+          body: [
             {
               username: username,
               password: password,
               otp_code: "LLL",
               login_type: "not-otp",
-              deviceId:deviceId
+              deviceId: deviceId,
             }
+          ]
+        } 
+      }
           
     )});
+
     const data = await response.text();
     setCookies(data)
     if (data === "Invalid") {
@@ -62,12 +81,12 @@ const LoginForm = () => {
         const token = Cookies.get("PLUSID");
         if (token) {
           try {
-            const response = await fetch(`${API_BASE_URL}/protected`, {
+            const response = await fetch(`${API_BASE_URL}/authentication/protected`, {
               mode:'no-cors',
               method: 'POST',
               headers: {
-                'Authorization': 'plus ' + token,
-                'DeviceId': deviceId
+                Authorization: 'plus ' + token,
+                deviceId: deviceId
               }
             });
             const data = await response.text();
@@ -411,8 +430,8 @@ return(
       </div>
     </div>
     <div className="px-6 py-4 bg-gray-100 flex justify-end">
-    <button onClick={handleAccept} type="button" className="text-white bg-ft hover:bg-ft-light rounded-md px-4 py-2 active:bg-white active:text-ft active:ring-1 active:ring-ft transition">I Agree</button>
-      <button onClick={handleDecline} type="button" className="text-red-500 ring-1 ring-red-500 bg-white hover:bg-red-700 hover:text-white rounded-md px-4 py-2 active:bg-white active:text-red-500 active:ring-1 active:ring-red-500 transition ml-2" data-dismiss="modal">I don't Agree</button>
+    <button onClick={handleAccept} type="button" className="text-white bg-ft hover:bg-ft-light rounded-md px-4 py-2 active:bg-white active:text-ft active:ring-1 active:ring-ft transition">Agree</button>
+      <button onClick={handleDecline} type="button" className="text-red-500 ring-1 ring-red-500 bg-white hover:bg-red-700 hover:text-white rounded-md px-4 py-2 active:bg-white active:text-red-500 active:ring-1 active:ring-red-500 transition ml-2" data-dismiss="modal">Disagree</button>
     </div>
   </div>
 </div>

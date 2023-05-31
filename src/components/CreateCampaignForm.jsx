@@ -5,7 +5,7 @@ import Swal from "sweetalert2";
 const CreateCampaignForm = () =>  {
   const [isMobileScreen, setIsMobileScreen] = useState((window.innerWidth <= 1250?true:false));
   const [IFACA, setIFACA] = useState("IFA/CA");
-  const [template, setTemplate] = useState("PDD");
+  const [template, setTemplate] = useState("PDD - CI Conversion Campaign");
   const [thumbnailId, setThumbnailId] = useState("");
   const [values, setValues] = useState({
     campaignNameEng: '',
@@ -131,7 +131,8 @@ const CreateCampaignForm = () =>  {
                 remark: values.remark,
                 thumbnailDocID: thumbnailId,
                 campaignStartDate: values.campaignStartDate,
-                campaignEndDate: values.campaignEndDate
+                campaignEndDate: values.campaignEndDate,
+                template:template
             }
         })
       });
@@ -427,8 +428,8 @@ const CreateCampaignForm = () =>  {
                         name="template"
                         onChange={handleTemplateChange}
                         >
-                        <option value="CEE">CEE - K Dollar</option>
-                        <option value="PDD">PDD - CI Conversion Campaign</option>
+                        <option value="CEE - K Dollar">CEE - K Dollar</option>
+                        <option value="PDD - CI Conversion Campaign">PDD - CI Conversion Campaign</option>
                     </select> 
                 </div>
             </div>

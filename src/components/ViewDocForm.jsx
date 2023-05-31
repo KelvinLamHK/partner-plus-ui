@@ -2,7 +2,6 @@
 import React, { useState, useEffect} from 'react';
 import {API_BASE_URL} from "../api.config.js"
 import Swal from "sweetalert2";
-import { MultiSelect } from "react-multi-select-component";
 
 const ViewDocForm = (props) =>  {
   const [isMobileScreen, setIsMobileScreen] = useState((window.innerWidth <= 1250?true:false));
@@ -28,7 +27,6 @@ const ViewDocForm = (props) =>  {
   const [base1, setBase1] = useState("");
   const [base2, setBase2] = useState("");
   const [base3, setBase3] = useState("");
-  const [options, setOptions] = useState([]);
   const [selected, setSelected] = useState([]);
   const [mainCategories, setMainCategories] = useState([]);
   const [selectedMainCategory, setSelectedMainCategory] = useState(props.documentCenterList.level1CategoryId);
@@ -71,12 +69,8 @@ const ViewDocForm = (props) =>  {
               
               setSelected(formattedSelect)
 
-            const formattedOptions = data.map(broker => ({
-              label: `${broker.brokerName}(${broker.brokerCode})`,
-              value: broker.brokerCode
-            }));
+        
 
-            setOptions(formattedOptions);
           });
        
 
