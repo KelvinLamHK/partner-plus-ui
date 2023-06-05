@@ -225,6 +225,23 @@ function CampaignDetailList() {
     { label: "Agent Name", value: "servAgentName" },
   ];
 
+  const kdollarOptions = [
+    { label: "Party ID", value: "partyId" },
+    { label: "Policyowner name (TC)", value: "clientFullNameChi" },
+    { label: "Policyowner name (EN)", value: "clientFullNameEng" },
+    { label: "Reference Policy No.", value: "latestIssuedPolicy" },
+    { label: "K Dollar membership number", value: "kdollarMembership" },
+    { label: "Redemption Status ", value: "redemptionStatus" },
+  ];
+
+  const ciOptions = [
+    { label: "Policy Number ", value: "latestIssuedPolicy" },
+    { label: "Current Plan Code ", value: "currentPlanCode" },
+    { label: "Title", value: "title" },
+    { label: "Client Name", value: "clientFullNameEng" },
+    { label: "Existing Customer", value: "existingCustomer" },
+  ];
+
   const [selected, setSelected] = useState([]);
   const [inputs, setInputs] = useState(options.map((option) => ({ value: "" })));
   const [inputValue, setInputValue] = useState(options.map((option) => ({ value: "" })));
@@ -417,6 +434,11 @@ function CampaignDetailList() {
         servAgentCode:inputValue.servAgentCode,
         servAgentName:inputValue.servAgentName,
         trNameEng:inputValue.trNameEng,
+        kdollarMembership:inputValue.kdollarMembership,
+        redemptionStatus:inputValue.redemptionStatus,
+        currentPlanCode: inputValue.currentPlanCode,
+        title: inputValue.title,
+        existingCustomer: inputValue.existingCustomer,
       }
     });
   
@@ -778,7 +800,8 @@ function CampaignDetailList() {
         <div className="w-2/3 mr-5">
         <div>
       <MultiSelect
-        options={options}
+        options={PermcampaignTemplate==="PDD - CI Conversion Campaign"?ciOptions:PermcampaignTemplate==="CEE - K Dollar"?kdollarOptions:options}
+      
         value={selected}
         onChange={handleSelect}
         labelledBy={"Select"}
@@ -1028,6 +1051,132 @@ function CampaignDetailList() {
                     <td className=''>{campaign.trCode}</td>
                     <td className=''>{campaign.trNameEng}</td>
                     <td className=''>{campaign.servAgentEmail}</td>
+
+                    {/* <td className=''>
+                      <a href='/EditCampaign' onClick={()=> EditCampaign(campaign)}>
+                        <svg className='campaign h-8' fill="none"  viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                          <path  d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10"></path>
+                        </svg>
+                      </a>
+                    </td> */}
+                  </tr>
+                );
+              })}
+              
+              </tbody>
+        </table>:<></>}
+        {PermcampaignTemplate==="CEE - K Dollar"? <table className='table-fixed overflow-scroll w-full block'>
+            <thead>
+                <tr className='border border-slate-300 '>
+                <th className=' hover:text-ft-light cursor-pointer pl-5 h-8' onClick={()=> handleOrder("clientFullNameEng")}>
+                <div className='inline-block h-6 w-56'>
+                Party ID
+                <svg fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" className="inline-block w-4 h-4 ml-1">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 15L12 18.75 15.75 15m-7.5-6L12 5.25 15.75 9"></path>
+                </svg>
+                </div>
+              </th>
+          
+            <th className=' hover:text-ft-light cursor-pointer h-8 ' onClick={()=> handleOrder("dateOfBirth")}>
+            <div className='inline-block h-6 w-56'>
+              Policyowner name (TC) 
+              <svg fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" className="inline-block w-4 h-4 ml-1">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 15L12 18.75 15.75 15m-7.5-6L12 5.25 15.75 9"></path>
+              </svg>
+              </div>
+            </th>
+            <th className=' hover:text-ft-light cursor-pointer h-8' onClick={()=> handleOrder("firstPolicyIssueDate")}>
+            <div className='inline-block h-6 w-56'>
+              Policyowner name (EN) 
+              <svg fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" className="inline-block w-4 h-4 ml-1">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 15L12 18.75 15.75 15m-7.5-6L12 5.25 15.75 9"></path>
+              </svg>
+              </div>
+            </th>
+            <th className=' hover:text-ft-light cursor-pointer h-8' onClick={()=> handleOrder("latestIssuedPolicy")}>
+            <div className='inline-block h-6 w-56'>
+              Policyowner Email
+              <svg fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" className="inline-block w-4 h-4 ml-1">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 15L12 18.75 15.75 15m-7.5-6L12 5.25 15.75 9"></path>
+              </svg>
+              </div>
+            </th>
+            <th className=' hover:text-ft-light cursor-pointer h-8' onClick={()=> handleOrder("servAgentCode")}>
+            <div className='inline-block h-6 w-48'>
+            Policyowner Mobile
+              <svg fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" className="inline-block w-4 h-4 ml-1">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 15L12 18.75 15.75 15m-7.5-6L12 5.25 15.75 9"></path>
+              </svg>
+              </div>
+            </th>
+            <th className=' hover:text-ft-light cursor-pointer h-8' onClick={()=> handleOrder("servAgentName")}>
+            <div className='inline-block h-6 w-56'>
+            Customer Language Preference (TC/SC/EN) 
+              <svg fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" className="inline-block w-4 h-4 ml-1">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 15L12 18.75 15.75 15m-7.5-6L12 5.25 15.75 9"></path>
+              </svg>
+              </div>
+            </th>
+            <th className=' hover:text-ft-light cursor-pointer h-8' onClick={()=> handleOrder("trNameEng")}>
+            <div className='inline-block h-6 w-44'>
+            Reference Policy No
+              <svg fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" className="inline-block w-4 h-4 ml-1">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 15L12 18.75 15.75 15m-7.5-6L12 5.25 15.75 9"></path>
+              </svg>
+              </div>
+            </th>
+            <th className=' hover:text-ft-light cursor-pointer h-8' onClick={()=> handleOrder("trNameEng")}>
+            <div className='inline-block h-6 w-56'>
+            Customer communication (eDM/MMS) 
+              <svg fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" className="inline-block w-4 h-4 ml-1">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 15L12 18.75 15.75 15m-7.5-6L12 5.25 15.75 9"></path>
+              </svg>
+              </div>
+            </th>
+            <th className=' hover:text-ft-light cursor-pointer h-8' onClick={()=> handleOrder("trNameEng")}>
+            <div className='inline-block h-6 w-44'>
+            K Dollar 
+              <svg fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" className="inline-block w-4 h-4 ml-1">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 15L12 18.75 15.75 15m-7.5-6L12 5.25 15.75 9"></path>
+              </svg>
+              </div>
+            </th>
+            <th className=' hover:text-ft-light cursor-pointer h-8' onClick={()=> handleOrder("trNameEng")}>
+            <div className='inline-block h-6 w-64'>
+            K Dollar membership number 
+              <svg fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" className="inline-block w-4 h-4 ml-1">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 15L12 18.75 15.75 15m-7.5-6L12 5.25 15.75 9"></path>
+              </svg>
+              </div>
+            </th>
+            <th className=' hover:text-ft-light cursor-pointer h-8' onClick={()=> handleOrder("trNameEng")}>
+            <div className='inline-block h-6 w-44'>
+            Redemption Status 
+              <svg fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" className="inline-block w-4 h-4 ml-1">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 15L12 18.75 15.75 15m-7.5-6L12 5.25 15.75 9"></path>
+              </svg>
+              </div>
+            </th>
+          
+           
+                </tr>
+            </thead>
+            <tbody className='text-left '>
+            {campaigns.map((campaign) => {
+                return (
+                  <tr className="border border-slate-300 h-16" key={campaign.campaignDetailId}>
+                    <td className=''><div className='w-52 lineclamp2 pl-5 items-center'>{campaign.partyId}</div></td>
+                    <td className=''><div className=''>{campaign.clientFullNameChi}</div></td>
+                    <td className=''><div className='w-48 break-all  items-center align-middle' >{campaign.clientFullNameEng}</div></td>
+                    <td className=''>{campaign.email}</td>
+                    <td className=''>{campaign.mobile}</td>
+                    <td className=''>{campaign.languageForCommunication}</td>
+                    <td className=''>{campaign.latestIssuedPolicy}</td>
+                    <td className=''>{campaign.communicationChannel}</td>
+                    <td className=''>{campaign.kdollar}</td>
+                    <td className=''>{campaign.kdollarMembership}</td>
+                    <td className=''>{campaign.redemptionStatus}</td>
+
 
                     {/* <td className=''>
                       <a href='/EditCampaign' onClick={()=> EditCampaign(campaign)}>
