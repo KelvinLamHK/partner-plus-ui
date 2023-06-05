@@ -355,7 +355,13 @@ function CampaignDetailList() {
         latestIssuedPolicy:inputValue.latestIssuedPolicy,
         servAgentCode:inputValue.servAgentCode,
         servAgentName:inputValue.servAgentName,
-        trNameEng:inputValue.trNameEng
+        trNameEng:inputValue.trNameEng,
+        kdollarMembership:inputValue.kdollarMembership,
+        redemptionStatus:inputValue.redemptionStatus,
+        currentPlanCode: inputValue.currentPlanCode,
+        title: inputValue.title,
+        existingCustomer: inputValue.existingCustomer,
+        partyId: inputValue.partyId,
       }
     });
   
@@ -393,7 +399,13 @@ function CampaignDetailList() {
         latestIssuedPolicy:inputValue.latestIssuedPolicy,
         servAgentCode:inputValue.servAgentCode,
         servAgentName:inputValue.servAgentName,
-        trNameEng:inputValue.trNameEng
+        trNameEng:inputValue.trNameEng,
+        kdollarMembership:inputValue.kdollarMembership,
+        redemptionStatus:inputValue.redemptionStatus,
+        currentPlanCode: inputValue.currentPlanCode,
+        title: inputValue.title,
+        existingCustomer: inputValue.existingCustomer,
+        partyId: inputValue.partyId,
       }
     });
   
@@ -402,7 +414,7 @@ function CampaignDetailList() {
   const handleCampaignChange = (campaignheaderId,campaignName) => {
     localStorage.setItem('campaignheaderId', campaignheaderId);
     localStorage.setItem('campaignName', campaignName);
-
+    localStorage.setItem('campaignTemplate', PermcampaignTemplate)
     setDetailData({
       userParameter: {
         loginName: "IFA-0413518-00012",
@@ -439,6 +451,7 @@ function CampaignDetailList() {
         currentPlanCode: inputValue.currentPlanCode,
         title: inputValue.title,
         existingCustomer: inputValue.existingCustomer,
+        partyId: inputValue.partyId,
       }
     });
   
@@ -568,7 +581,13 @@ function CampaignDetailList() {
           latestIssuedPolicy:latestIssuedPolicy,
           servAgentCode:servAgentCode,
           servAgentName:servAgentName,
-          trNameEng:trNameEng
+          trNameEng:trNameEng,
+          kdollarMembership:inputValue.kdollarMembership,
+          redemptionStatus:inputValue.redemptionStatus,
+          currentPlanCode: inputValue.currentPlanCode,
+          title: inputValue.title,
+          existingCustomer: inputValue.existingCustomer,
+          partyId: inputValue.partyId,
         }
       })
     }else{
@@ -603,7 +622,13 @@ function CampaignDetailList() {
           latestIssuedPolicy:latestIssuedPolicy,
           servAgentCode:servAgentCode,
           servAgentName:servAgentName,
-          trNameEng:trNameEng
+          trNameEng:trNameEng,
+          kdollarMembership:inputValue.kdollarMembership,
+          redemptionStatus:inputValue.redemptionStatus,
+          currentPlanCode: inputValue.currentPlanCode,
+          title: inputValue.title,
+          existingCustomer: inputValue.existingCustomer,
+          partyId: inputValue.partyId,
         }
       })
     }
@@ -626,12 +651,12 @@ function CampaignDetailList() {
           </div>
        
           <div className='flex mt-4'>
-            <a href="#PleaseEnableJavascript.html" onClick={() => handleCampaignChange()} className="text-center w-full bg-ft-light text-white py-3 rounded hover:bg-ft active:bg-white active:text-ft active:ring-1 active:ring-ft">
+            <a onClick={() => handleCampaignChange()} className="text-center w-full bg-ft-light text-white py-3 rounded hover:bg-ft active:bg-white active:text-ft active:ring-1 active:ring-ft">
               Search
             </a>
           </div>
           <div className='flex mt-3'>
-            <a href='#PleaseEnableJavascript.html' onClick={()=>handleResetChange()} className="text-center w-full bg-white text-ft-light ring-ft-light ring-1 py-3 rounded hover:bg-ft hover:text-white active:bg-ft-light active:ring-1 active:ring-ft">
+            <a onClick={()=>handleResetChange()} className="text-center w-full bg-white text-ft-light ring-ft-light ring-1 py-3 rounded hover:bg-ft hover:text-white active:bg-ft-light active:ring-1 active:ring-ft">
               Reset
             </a>
           </div>
@@ -801,7 +826,6 @@ function CampaignDetailList() {
         <div>
       <MultiSelect
         options={PermcampaignTemplate==="PDD - CI Conversion Campaign"?ciOptions:PermcampaignTemplate==="CEE - K Dollar"?kdollarOptions:options}
-      
         value={selected}
         onChange={handleSelect}
         labelledBy={"Select"}
