@@ -261,21 +261,20 @@ function CampaignDetailList() {
   };
 
   const handleInputChange = debounce((option, value) => {
+    const templateOption = (PermcampaignTemplate==="PDD - CI Conversion Campaign"?ciOptions:PermcampaignTemplate==="CEE - K Dollar"?kdollarOptions:options)
     const newInputs = [...inputs];
-    const index = options.findIndex((o) => o.value === option.value);
+    const index = templateOption.findIndex((o) => o.value === option.value);
     newInputs[index].value = value;
     setInputs(newInputs);
 
-    const inputValue = options.reduce((acc, cur) => {
-      const inputIndex = options.findIndex((o) => o.value === cur.value);
+    const inputValue = templateOption.reduce((acc, cur) => {
+      const inputIndex = templateOption.findIndex((o) => o.value === cur.value);
       acc[cur.value] = newInputs[inputIndex].value.trim() === "" ? "" : newInputs[inputIndex].value || null;
       return acc;
     }, {});
 
     setInputValue(inputValue);
   }, 500);
-  
-
  
   const [selectedValue, setSelectedValue] = useState();
   const [Page, setPage] = useState();
@@ -284,6 +283,12 @@ function CampaignDetailList() {
   const [campaigns, setCampaigns] = useState([]);
   const [clientFullNameEng] = useState("");
   const [clientFullNameChi] = useState("");
+  const [partyId] = useState("");
+  const [redemptionStatus] = useState("");
+  const [kdollarMembership] = useState("");
+  const [currentPlanCode] = useState("");
+  const [title] = useState("");
+  const [existingCustomer] = useState("");
   const [dateOfBirth] = useState("");
   const [firstPolicyIssueDate] = useState("");
   const [latestIssuedPolicy] = useState("");
@@ -411,10 +416,11 @@ function CampaignDetailList() {
   
   };
 
-  const handleCampaignChange = (campaignheaderId,campaignName) => {
+  const handleCampaignChange = (campaignheaderId,campaignName, template) => {
     localStorage.setItem('campaignheaderId', campaignheaderId);
     localStorage.setItem('campaignName', campaignName);
-    localStorage.setItem('campaignTemplate', PermcampaignTemplate)
+    localStorage.setItem('campaignTemplate', template)
+    
     setDetailData({
       userParameter: {
         loginName: "IFA-0413518-00012",
@@ -438,20 +444,19 @@ function CampaignDetailList() {
       },
       campaignDetailParameter: {
         campaignHeaderId: campaignheaderId,
-        clientFullNameEng:inputValue.clientFullNameEng,
-        clientFullNameChi:inputValue.clientFullNameChi,
-        dateOfBirth:inputValue.dateOfBirth,
-        firstPolicyIssueDate:inputValue.firstPolicyIssueDate,
-        latestIssuedPolicy:inputValue.latestIssuedPolicy,
-        servAgentCode:inputValue.servAgentCode,
-        servAgentName:inputValue.servAgentName,
-        trNameEng:inputValue.trNameEng,
-        kdollarMembership:inputValue.kdollarMembership,
-        redemptionStatus:inputValue.redemptionStatus,
-        currentPlanCode: inputValue.currentPlanCode,
-        title: inputValue.title,
-        existingCustomer: inputValue.existingCustomer,
-        partyId: inputValue.partyId,
+        ...(inputValue.clientFullNameEng && { clientFullNameEng: inputValue.clientFullNameEng }),
+        ...(inputValue.clientFullNameChi && { clientFullNameChi: inputValue.clientFullNameChi }),
+        ...(inputValue.dateOfBirth && { dateOfBirth: inputValue.dateOfBirth }),
+        ...(inputValue.firstPolicyIssueDate && { firstPolicyIssueDate: inputValue.firstPolicyIssueDate }),
+        ...(inputValue.latestIssuedPolicy && { latestIssuedPolicy: inputValue.latestIssuedPolicy }),
+        ...(inputValue.servAgentCode && { servAgentCode: inputValue.servAgentCode }),
+        ...(inputValue.servAgentName && { servAgentName: inputValue.servAgentName }),
+        ...(inputValue.kdollarMembership !== undefined && inputValue.kdollarMembership !== null && { kdollarMembership: inputValue.kdollarMembership }),
+        ...(inputValue.redemptionStatus !== undefined && inputValue.redemptionStatus !== null && { redemptionStatus: inputValue.redemptionStatus }),
+        ...(inputValue.currentPlanCode && { currentPlanCode: inputValue.currentPlanCode }),
+        ...(inputValue.title && { title: inputValue.title }),
+        ...(inputValue.existingCustomer && { existingCustomer: inputValue.existingCustomer }),
+        ...(inputValue.partyId && { partyId: inputValue.partyId })
       }
     });
   
@@ -488,6 +493,7 @@ function CampaignDetailList() {
   };
 
   useEffect(() => {
+    console.log(detailData)
     fetch(`${API_BASE_URL}/v1/campaign/details`, {
       method: 'POST',
       headers: {
@@ -497,6 +503,8 @@ function CampaignDetailList() {
     })
       .then(response => response.json())
       .then(data => {
+        console.log(data)
+
         setCampaigns(data.campaignDetailList);
         setPagination(data.pagination);
         if (data.pagination.pageNumber === 0) {
@@ -582,12 +590,12 @@ function CampaignDetailList() {
           servAgentCode:servAgentCode,
           servAgentName:servAgentName,
           trNameEng:trNameEng,
-          kdollarMembership:inputValue.kdollarMembership,
-          redemptionStatus:inputValue.redemptionStatus,
-          currentPlanCode: inputValue.currentPlanCode,
-          title: inputValue.title,
-          existingCustomer: inputValue.existingCustomer,
-          partyId: inputValue.partyId,
+          kdollarMembership:kdollarMembership,
+          redemptionStatus:redemptionStatus,
+          currentPlanCode: currentPlanCode,
+          title: title,
+          existingCustomer: existingCustomer,
+          partyId:partyId,
         }
       })
     }else{
@@ -623,12 +631,12 @@ function CampaignDetailList() {
           servAgentCode:servAgentCode,
           servAgentName:servAgentName,
           trNameEng:trNameEng,
-          kdollarMembership:inputValue.kdollarMembership,
-          redemptionStatus:inputValue.redemptionStatus,
-          currentPlanCode: inputValue.currentPlanCode,
-          title: inputValue.title,
-          existingCustomer: inputValue.existingCustomer,
-          partyId: inputValue.partyId,
+          kdollarMembership:kdollarMembership,
+          redemptionStatus:redemptionStatus,
+          currentPlanCode: currentPlanCode,
+          title: title,
+          existingCustomer: existingCustomer,
+          partyId:partyId,
         }
       })
     }
@@ -857,12 +865,12 @@ function CampaignDetailList() {
         
           <div className='h-1/2 flex'> 
           <div className='mr-5'>
-            <a href="#PleaseEnableJavascript.html" onClick={() => handleCampaignChange(PermcampaignHeaderId,PermcampaignHeaderName)} className="bg-ft-light text-white px-3 py-2 rounded hover:bg-ft active:bg-white active:text-ft active:ring-1 active:ring-ft">
+            <a onClick={() => handleCampaignChange(PermcampaignHeaderId,PermcampaignHeaderName, PermcampaignTemplate)} className="bg-ft-light text-white px-3 py-2 rounded hover:bg-ft active:bg-white active:text-ft active:ring-1 active:ring-ft">
               Search
             </a>
           </div>
           <div className=''>
-            <a href='#PleaseEnableJavascript.html' onClick={()=>handleResetChange(PermcampaignHeaderId,PermcampaignHeaderName)} className="bg-white text-ft-light ring-ft-light ring-1 px-3 py-2 rounded hover:bg-ft hover:text-white active:bg-ft-light active:ring-1 active:ring-ft">
+            <a onClick={()=>handleResetChange(PermcampaignHeaderId,PermcampaignHeaderName, PermcampaignTemplate)} className="bg-white text-ft-light ring-ft-light ring-1 px-3 py-2 rounded hover:bg-ft hover:text-white active:bg-ft-light active:ring-1 active:ring-ft">
               Reset
             </a>
           </div>
