@@ -10,8 +10,8 @@ module.exports = {
       md: "1250px",
       sm:"705px",
     }, fontFamily: {
-      sans: ['Graphik', 'sans-serif'],
-      serif: ['Merriweather', 'serif'],
+      sans: ['Arial', 'sans-serif'],
+      serif: ['Arial', 'sans-serif'],
     },
     extend: {
       colors: {
@@ -26,7 +26,11 @@ module.exports = {
         'linkRes':'525px',
         'linkEdit':'50px',
         'date':"200px",
-        'comAns':"175px"
+        'comAns':"175px",
+        'categories':"380px",
+      },
+      height:{
+        'tableCommunication':"420px",
       }
     },
   },

@@ -10,7 +10,7 @@ const Searchbar = () => {
             className="block w-full px-4 py-2 text-ft bg-white border rounded-full focus:border-ft focus:ring-ft focus:outline-none focus:ring focus:ring-opacity-40"
             placeholder="Search..."
         />
-        <button className="px-4 text-white bg-ft rounded-full hover:bg-ft-light active:text-ft active:bg-white active:ring-ft active:ring-2">
+        <button className="px-4 text-white bg-ft-light rounded-full hover:bg-ft-light active:text-ft active:bg-white active:ring-ft active:ring-2">
             <svg
                 xmlns="http://www.w3.org/2000/svg"
                 className="w-5 h-5"

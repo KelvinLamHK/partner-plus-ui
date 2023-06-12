@@ -4,7 +4,9 @@ import Swal from "sweetalert2";
 
 const EditCampaignForm = (props) =>  {
 const [isMobileScreen, setIsMobileScreen] = useState((window.innerWidth <= 1250?true:false));
-  const [IFACA, setIFACA] = useState("IFA/CA");
+  const [IFACA, setIFACA] = useState(props.campaign.ifaCaIndicator);
+  const [template, setTemplate] = useState(props.campaign.template);
+  const [thumbnailDocID,setThumbnailDocID] = useState(props.campaign.thumbnailDocID)
   const [values, setValues] = useState({
     campaignNameEng:props.campaign.campaignNameEng,
     campaignCode: props.campaign.campaignCode,
@@ -14,35 +16,91 @@ const [isMobileScreen, setIsMobileScreen] = useState((window.innerWidth <= 1250?
     campaignEndDate: props.campaign.campaignEndDate.slice(0, 10),
     remark:props.campaign.remark,
     file:props.campaign.file,
+    thumbnailDocID:props.campaign.thumbnailDocID
   });
-  const [postImage, setPostImage] = useState({
-    myFile: "",
-  });
+//   const [uploadedFile, setUploadedFile] = useState(null);
+  const [uploadedFileName, setUploadedFileName] = useState("");
 
+  useEffect(() => {
+    if(props.campaign.thumbnailDocID!==0){
+    fetch(`${API_BASE_URL}/v1/document/download`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          documentParameter: {
+            documentId: props.campaign.thumbnailDocID
+          }
+        })
+      })
+      .then(response => response.json())
+      .then(data => {
+        if(data.documentName){
+          setUploadedFileName(data.documentName)
+        //   setUploadedFile(data.documentBase64String)
+        }
+      })
+      .catch(error => console.error(error));
+    }
+  }, [props.campaign.thumbnailDocID]);
 
-  const convertToBase64 = (file) => {
-    return new Promise((resolve, reject) => {
-      const fileReader = new FileReader();
-      fileReader.readAsDataURL(file);
-      fileReader.onload = () => {
-        resolve(fileReader.result);
-      };
-      fileReader.onerror = (error) => {
-        reject(error);
-      };
-    });
-  };
+  const handleFileInputChange = (e) => {
+        const file = e.target.files[0];
 
-  const handleFileInputChange = async (e) => {
-    const file = e.target.files[0];
-    const base64 = await convertToBase64(file);
-    setPostImage({ ...postImage, myFile: base64 });
-  };
+        if (file) {
+        const reader = new FileReader();
+        reader.onload = (event) => {
+            const base64String = event.target.result.split(",")[1];
+            fetch(`${API_BASE_URL}/v1/document/upload`, {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    userParameter: {
+                        loginName: "IFA-0317543-00006",
+                        name: "XXXXXXXX Wong",
+                        companyID: "IFA",
+                        email: "xxxxxxxxxxxx@iamlegacy.com",
+                        brokerCode: "0328693;0317543;0328693;0328693",
+                        ifaIdentity: "USER",
+                        pibaNumber: "PIBA-0433-022049",
+                        ifaCaNameEng: "XXXX Ip Wun",
+                        ifa_ca_name_oth: "XXX",
+                        ifaCaNameOther: "IA9205",
+                        companyName: null,
+                        ifaCaLicenseNumber: "TR1234",
+                        role: "internal-admin"
+                    },
+                    documentParameter: {
+                        documentName: file.name,
+                        base64FileString: base64String,
+                        documentCategory: "campaign",
+                        documentType: "thumbnail"
+
+                      }
+
+            })
+              })
+                .then(response => response.json())
+                .then(data => {
+                  setThumbnailDocID(data.referenceId)
+                });
+        };
+        reader.readAsDataURL(file);
+        }
+    }
+
 
 
 
   const handleIFACAChange = (event) => {
     setIFACA(event.target.value);
+  };
+
+  const handleTemplateChange = (event) => {
+    setTemplate(event.target.value);
   };
 
   const handleChange = (event) => {
@@ -71,6 +129,7 @@ const [isMobileScreen, setIsMobileScreen] = useState((window.innerWidth <= 1250?
     if(values.file === undefined || values.file === null){
         values.file=""
     }
+
     e.preventDefault();
     try {
       const response = await fetch(`${API_BASE_URL}/v1/campaign/header`, {
@@ -95,15 +154,17 @@ const [isMobileScreen, setIsMobileScreen] = useState((window.innerWidth <= 1250?
                 role: "internal-admin"
             },
             campaignHeaderParameter: {
+                campaignHeaderId: props.campaign.campaignHeaderId,
                 campaignCode: values.campaignCode,
                 campaignNameEng: values.campaignNameEng,
                 campaignNameZHTW: values.campaignNameZHTW,
                 campaignNameZHCN:values.campaignNameZHCN,
                 ifaCaIndicator: IFACA,
                 remark: values.remark,
-                thumbnailDocID: null,
+                thumbnailDocID: (thumbnailDocID=== "" || thumbnailDocID === null?0:thumbnailDocID),
                 campaignStartDate: values.campaignStartDate,
-                campaignEndDate: values.campaignEndDate
+                campaignEndDate: values.campaignEndDate,
+                template:template
             }
         })
       });
@@ -174,14 +235,15 @@ const [isMobileScreen, setIsMobileScreen] = useState((window.innerWidth <= 1250?
             </div>
             <div className="form-row flex mx-3 my-5">  
             <div className='px-4 w-full'>
-            <label htmlFor="campaignNameZHCN">Campaign Name(Simp Chi)</label>
+            <label htmlFor="campaignStartDate">Start Date<span className='text-red-600'>*</span></label>
                     <input
-                        type="text"
+                        type="date"
                         className="form-control ring-0 hover:border-ft-light active:border-ft-light focus:border-ft-light"
-                        id="campaignNameZHCN"
-                        name="campaignNameZHCN"
-                        value={values.campaignNameZHCN}
+                        id="campaignStartDate"
+                        name="campaignStartDate"
+                        value={values.campaignStartDate}
                         onChange={handleChange}
+                        required
                     />
                 </div>
             </div>
@@ -201,15 +263,14 @@ const [isMobileScreen, setIsMobileScreen] = useState((window.innerWidth <= 1250?
             </div>
             <div className="form-row flex mx-3 my-5">  
             <div className='px-4 w-full'>
-            <label htmlFor="campaignStartDate">Start Date<span className='text-red-600'>*</span></label>
+            <label htmlFor="campaignNameZHCN">Campaign Name(Simp Chi)</label>
                     <input
-                        type="date"
+                        type="text"
                         className="form-control ring-0 hover:border-ft-light active:border-ft-light focus:border-ft-light"
-                        id="campaignStartDate"
-                        name="campaignStartDate"
-                        value={values.campaignStartDate}
+                        id="campaignNameZHCN"
+                        name="campaignNameZHCN"
+                        value={values.campaignNameZHCN}
                         onChange={handleChange}
-                        required
                     />
                 </div>
             </div>
@@ -243,6 +304,24 @@ const [isMobileScreen, setIsMobileScreen] = useState((window.innerWidth <= 1250?
                         <option value="CA">CA</option>
                     </select> 
                 </div>
+
+                
+            <div className="form-group w-1/2 flex justify-center">
+                <div className='w-11/12'>
+                    <label htmlFor="IFA/CA">Template <span className='text-red-600'>*</span></label>
+                    <select
+                        id="template"
+                        aria-label="Select template"
+                        className="w-full bg-white-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-ft-light focus:border-ft-light p-2.5"
+                        value={template}
+                        name="template"
+                        onChange={handleTemplateChange}
+                        >
+                        <option value="CEE - K Dollar">CEE - K Dollar</option>
+                        <option value="PDD - CI Conversion Campaign">PDD - CI Conversion Campaign</option>
+                    </select> 
+                </div>
+            </div>
             </div>
             <div className="form-row flex mx-3 my-5">  
             <div className='px-4 w-full'>
@@ -326,8 +405,8 @@ const [isMobileScreen, setIsMobileScreen] = useState((window.innerWidth <= 1250?
                 </div>
             </div>
             <div className="form-group w-1/2 flex justify-center">
-                <div className='w-11/12'>
-                    <label htmlFor="campaignStartDate">Start Date<span className='text-red-600'>*</span></label>
+            <div className='w-11/12'>
+            <label htmlFor="campaignStartDate">Start Date<span className='text-red-600'>*</span></label>
                     <input
                         type="date"
                         className="form-control ring-0 hover:border-ft-light active:border-ft-light focus:border-ft-light"
@@ -337,13 +416,14 @@ const [isMobileScreen, setIsMobileScreen] = useState((window.innerWidth <= 1250?
                         onChange={handleChange}
                         required
                     />
+                   
                 </div>
             </div>
         </div>
         <div className="form-row flex mx-3 my-5">
             <div className="form-group w-1/2 flex justify-center">
-                <div className='w-11/12'>
-                    <label htmlFor="campaignNameZHCN">Campaign Name(Simp Chi)</label>
+            <div className='w-11/12'>
+            <label htmlFor="campaignNameZHCN">Campaign Name(Simp Chi)</label>
                     <input
                         type="text"
                         className="form-control ring-0 hover:border-ft-light active:border-ft-light focus:border-ft-light"
@@ -389,7 +469,18 @@ const [isMobileScreen, setIsMobileScreen] = useState((window.innerWidth <= 1250?
             </div>
             <div className="form-group w-1/2 flex justify-center">
                 <div className='w-11/12'>
-                
+                    <label htmlFor="IFA/CA">Template <span className='text-red-600'>*</span></label>
+                    <select
+                        id="template"
+                        aria-label="Select template"
+                        className="w-full bg-white-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-ft-light focus:border-ft-light p-2.5"
+                        value={template}
+                        name="template"
+                        onChange={handleTemplateChange}
+                        >
+                        <option value="CEE - K Dollar">CEE - K Dollar</option>
+                        <option value="PDD - CI Conversion Campaign">PDD - CI Conversion Campaign</option>
+                    </select> 
                 </div>
             </div>
         </div>
@@ -407,10 +498,14 @@ const [isMobileScreen, setIsMobileScreen] = useState((window.innerWidth <= 1250?
                     
                 </div>
             </div>
-            <div className="form-row flex m-3">  
-                <div className='px-4 w-full'>
+            
+            <div className="flex-col form-row flex m-3">  
+            <div className='px-4 font-bold'>
+                Current file: {uploadedFileName===""?"No uploaded file":uploadedFileName}
+            </div>
+                <div className='px-4 w-full mt-2'>
                     <label htmlFor="file-upload" className="upload-label mr-3">
-                        Browse to upload
+                        {uploadedFileName===""?"Browse to upload":"Browse to replace"}
                     </label>
                     <input
                         id="file-upload"

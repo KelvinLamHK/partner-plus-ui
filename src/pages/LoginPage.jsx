@@ -4,7 +4,7 @@ import LoginForm from "../components/LoginForm";
 function LoginPage() {
   return (
     <>
-      <div className="bg-ft h-screen flex items-center justify-center">
+      <div className="bg-ft-light h-screen flex items-center justify-center">
         <LoginForm />
       </div>
     </>

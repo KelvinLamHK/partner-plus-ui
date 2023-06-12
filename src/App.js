@@ -9,8 +9,12 @@ import EventCalendarPage from "../src/pages/CMS/EventCalendarPage.jsx"
 import QuickLinksPage from "../src/pages/CMS/QuickLinksPage.jsx"
 import CreateCampaignPage from "../src/pages/CreateCampaignPage.jsx"
 import EditCampaignPage from "../src/pages/EditCampaignPage.jsx"
+import EditDocumentPage from "../src/pages/EditDocumentPage.jsx"
+import ViewDocumentPage from "../src/pages/ViewDocumentPage.jsx"
 import CampaignDetailPage from "../src/pages/CampaignDetailPage.jsx"
 import CreateDocCenterPage from "../src/pages/CreateDocCenterPage.jsx"
+import SubCategoriesPage from "../src/pages/CMS/SubCategoriesPage.jsx"
+import TestPage from "../src/pages/TestPage.jsx"
 
 function App() {
   return (
@@ -24,12 +28,16 @@ function App() {
         <Route path="/DocCenter" element={<DocCenterPage />} />
         <Route path="/BrokerCom" element={<BrokerComPage />} />
         <Route path="/Categories" element={<CategoriesPage />} />
+        <Route path="/SubCategories" element={<SubCategoriesPage />} />
         <Route path="/EventCalendar" element={<EventCalendarPage />} />
         <Route path="/QuickLinks" element={<QuickLinksPage />} />
         <Route path="/CreateCampaign" element={<CreateCampaignPage />} />
         <Route path="/CreateDoc" element={<CreateDocCenterPage />} />
         <Route path="/EditCampaign" element={<EditCampaignPage />} />
+        <Route path="/EditDocument" element={<EditDocumentPage />} />
+        <Route path="/ViewDocument" element={<ViewDocumentPage />} />
         <Route path="/CampaignDetail" element={<CampaignDetailPage />} />
+        <Route path="/Test" element={<TestPage />} />
       </Routes>
     </Router>
   );

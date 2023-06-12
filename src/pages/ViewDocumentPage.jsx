@@ -1,17 +1,20 @@
 import React, { useState, useEffect } from "react";
 import Cookies from "js-cookie";
-import PlusNavbar from "../../components/PlusNavbar";
-import LoadingScreen from "../../components/LoadingScreen";
+import PlusNavbar from "../components/PlusNavbar";
+import LoadingScreen from "../components/LoadingScreen";
 import "bootstrap/dist/css/bootstrap.css";
 import { getCurrentBrowserFingerPrint } from "@rajesh896/broprint.js";
-import {API_BASE_URL} from '../../api.config.js';
-import Categories from "../../components/Categories";
+import {API_BASE_URL} from '../api.config.js';
+import ViewDocForm from "../components/ViewDocForm";
+import {useLocation} from 'react-router-dom';
 
-function CategoriesPage() {
+
+
+function ViewDocumentPage() {
   const [username, setUsername] = useState("");
   const [isLoading, setIsLoading] = useState(true);
   const token = Cookies.get("PLUSID");
-
+  const location = useLocation();
 
   useEffect(() => {
     async function fetchData() {
@@ -48,22 +51,27 @@ function CategoriesPage() {
     fetchData();
   }, [token]);
 
+
   return (
     <>
       {isLoading ? (
         <LoadingScreen />
       ) : (
         <>
-        <PlusNavbar username={username}/>
-        <div className="md:flex md:justify-center">
-            <div className="p-3 md:flex md:flex-row">
-              <Categories />
+          <PlusNavbar username={username}/>
+          <div className="md:flex md:justify-center">
+            <div className="p-3 md:w-deflaut md:flex">
+                <div className="w-full">
+                    <a href="/home"><h1 className="my-4 text-ft-light hover:text-ft hover:underline">{location.state.event.titleEnglish}</h1></a>
+                    <ViewDocForm documentCenterList={(location.state!==null)?location.state.event:""}/>
+
+                </div>
             </div>
-          </div>
+        </div>
         </>
       )}
     </>
   );
 }
 
-export default CategoriesPage;
+export default ViewDocumentPage;

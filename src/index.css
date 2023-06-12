@@ -2,3 +2,8 @@
 @import "tailwindcss/components";
 @import "tailwindcss/utilities";
 
+@layer base {
+    html {
+      font-family:  Arial, sans-serif;
+    }
+  }

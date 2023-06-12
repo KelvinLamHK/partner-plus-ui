@@ -23,24 +23,25 @@ function EditCampaignPage() {
         window.location.href = "/login";
       } else {
         try {
-          const response = await fetch(`${API_BASE_URL}/protected`, {
+          fetch(`${API_BASE_URL}/authentication/protected`, {
             method: "POST",
             headers: {
               Authorization: 'plus ' + token,
               DeviceId: deviceId,
             },
-          });
-  
-          const data = await response.text();
-          if (data === "Invalid") { // check if response is "Invalid"
-            Cookies.remove('PLUSID');
-            window.location.href = "/login";
-          } else {
-            const jsonData = JSON.parse(data); // parse response as JSON
-            setUsername(jsonData.username);
+          }).then(response => response.json())
+          .then(data => {
+            if(data==="Invalid"){
+              Cookies.remove('PLUSID');
+              window.location.href = "/login";
+            }
+            setUsername(data.username);
             setIsLoading(false);
-          }
+          })
+
+
         } catch (error) {
+          Cookies.remove('PLUSID');
           console.error(error);
           setIsLoading(false);
         }
@@ -61,7 +62,7 @@ function EditCampaignPage() {
           <div className="md:flex md:justify-center">
             <div className="p-3 md:w-deflaut md:flex">
                 <div className="w-full">
-                    <a href="/Campaign"><h1 className="my-4 text-ft-light hover:text-ft hover:underline">New Campaign</h1></a>
+                    <a href="/Campaign"><h1 className="my-4 text-ft-light hover:text-ft hover:underline">{location.state.event.campaignNameEng}</h1></a>
                     <EditCampaignForm campaign={(location.state!==null)?location.state.event:""}/>
 
                 </div>

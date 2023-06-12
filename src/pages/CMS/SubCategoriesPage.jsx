@@ -5,14 +5,14 @@ import LoadingScreen from "../../components/LoadingScreen";
 import "bootstrap/dist/css/bootstrap.css";
 import { getCurrentBrowserFingerPrint } from "@rajesh896/broprint.js";
 import {API_BASE_URL} from '../../api.config.js';
-import Categories from "../../components/Categories";
+import SubCategories from "../../components/SubCategories";
 
-function CategoriesPage() {
+
+const SubCategoriesPage=()=> {
   const [username, setUsername] = useState("");
   const [isLoading, setIsLoading] = useState(true);
   const token = Cookies.get("PLUSID");
-
-
+  
   useEffect(() => {
     async function fetchData() {
       const deviceId = await getCurrentBrowserFingerPrint();
@@ -57,7 +57,7 @@ function CategoriesPage() {
         <PlusNavbar username={username}/>
         <div className="md:flex md:justify-center">
             <div className="p-3 md:flex md:flex-row">
-              <Categories />
+                <SubCategories />
             </div>
           </div>
         </>
@@ -66,4 +66,4 @@ function CategoriesPage() {
   );
 }
 
-export default CategoriesPage;
+export default SubCategoriesPage;
