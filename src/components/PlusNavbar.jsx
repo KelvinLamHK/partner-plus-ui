@@ -3,12 +3,13 @@ import Dropdown from "react-bootstrap/Dropdown";
 import NWL_bilingual from "../img/NWL_bilingual.png";
 import "../css/Navbarcss.css";
 import { useLocation } from "react-router-dom";
-import React, { useState, useRef, useEffect } from "react";
-import user from "../img/user.png";
+import React, { useState, useRef, useEffect,useContext } from "react";
+import userIcon from "../img/userIcon.png";
 import Cookies from "js-cookie";
-
+import { UserContext } from "../UserContext";
 
 const PlusNavbar = (props) => {
+  const { user } = useContext(UserContext);
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [selectedLanguage, setSelectedLanguage] = useState('中IEN');
 
@@ -181,10 +182,10 @@ const PlusNavbar = (props) => {
                 <hr className="w-px h-6 bg-slate-400 mx-3 " />
                 <img
                       className="w-8 h-8 rounded-full"
-                      src={user}
+                      src={userIcon}
                       width="32"
                       height="32"
-                      alt="User"
+                      alt="userIcon"
                     />
                 <Dropdown>
                   <Dropdown.Toggle  id="dropdown-basic">

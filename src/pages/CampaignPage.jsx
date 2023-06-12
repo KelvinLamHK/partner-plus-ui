@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect ,useContext } from "react";
 import Cookies from "js-cookie";
 import PlusNavbar from "../components/PlusNavbar";
 import LoadingScreen from "../components/LoadingScreen";
@@ -6,9 +6,14 @@ import "bootstrap/dist/css/bootstrap.css";
 import { getCurrentBrowserFingerPrint } from "@rajesh896/broprint.js";
 import {API_BASE_URL} from '../api.config.js';
 import CampaignList from "../components/CampaignList";
+import { UserContext } from "../UserContext";
 
 
 function CampaignPage() {
+
+  const { user } = useContext(UserContext);
+
+
   const [username, setUsername] = useState("");
   const [isLoading, setIsLoading] = useState(true);
   const token = Cookies.get("PLUSID");
