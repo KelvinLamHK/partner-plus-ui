@@ -4,7 +4,17 @@
     <version>1.6.5</version>
 </dependency>
 
+<dependency>
+    <groupId>org.webjars</groupId>
+    <artifactId>swagger-ui</artifactId>
+    <version>3.52.2</version>
+</dependency>
 
+springdoc:
+  api-docs:
+    path: /v3/api-docs
+  swagger-ui:
+    path: /swagger-ui.html
 
 2/5-5/5
 (✓) Created two new apis for Event Calendar for create, edit, delete, and display data
