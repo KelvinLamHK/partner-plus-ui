@@ -14,7 +14,7 @@ import { useNavigate} from 'react-router-dom';
 
 function LandingPage() {
   const [username, setUsername] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const token = Cookies.get("PLUSID");
   const [links, setLinks] = useState([]);
   const [communications, setCommunications] = useState([]);
@@ -22,7 +22,40 @@ function LandingPage() {
   const [isPromo, setIsPromo] = useState([]);
 
 
- 
+  useEffect(() => {
+    async function fetchData() {
+      const deviceId = await getCurrentBrowserFingerPrint();
+      if (!token) {
+        window.location.href = "/login";
+      } else {
+        try {
+          fetch(`${API_BASE_URL}/authentication/protected`, {
+            method: "POST",
+            headers: {
+              Authorization: 'plus ' + token,
+              DeviceId: deviceId,
+            },
+          }).then(response => response.json())
+          .then(data => {
+            if(data==="Invalid"){
+              Cookies.remove('PLUSID');
+              window.location.href = "/login";
+            }
+            setUsername(data.username);
+            setIsLoading(false);
+          })
+
+
+        } catch (error) {
+          Cookies.remove('PLUSID');
+          console.error(error);
+          setIsLoading(false);
+        }
+      }
+    }
+  
+    fetchData();
+  }, [token]);
 
   useEffect(() => {
     fetch(`${API_BASE_URL}/v1/document-center/list`, {

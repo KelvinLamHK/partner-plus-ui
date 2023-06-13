@@ -1,0 +1,1173 @@
+{
+	"openapi": "3.0.3",
+	"info": {
+		"title": "Api Documentation",
+		"description": "Api Documentation",
+		"termsOfService": "urn:tos",
+		"contact": {},
+		"license": {
+			"name": "Apache 2.0",
+			"url": "http://www.apache.org/licenses/LICENSE-2.0"
+		},
+		"version": "1.0"
+	},
+	"servers": [
+		{
+			"url": "https://ebao-exp-api-uat-kdp-integration.apps.ocpuat.interconnect.systems:443",
+			"description": "Inferred Url"
+		}
+	],
+	"tags": [
+		{
+			"name": "e-bao-api-controller",
+			"description": "E Bao Api Controller"
+		},
+		{
+			"name": "keystore-util",
+			"description": "Keystore Util"
+		}
+	],
+	"paths": {
+		"/api/v1/kdp/points/deduct": {
+			"post": {
+				"tags": [
+					"e-bao-api-controller"
+				],
+				"summary": "deduct",
+				"operationId": "deductUsingPOST",
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/Deduct"
+							}
+						}
+					}
+				},
+				"responses": {
+					"200": {
+						"description": "normal",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/DeductResponse"
+								}
+							}
+						}
+					},
+					"201": {
+						"description": "Created"
+					},
+					"401": {
+						"description": "Unauthorized"
+					},
+					"403": {
+						"description": "Forbidden"
+					},
+					"404": {
+						"description": "Not Found"
+					}
+				}
+			}
+		},
+		"/api/v1/kdp/points/deduct_cancel": {
+			"post": {
+				"tags": [
+					"e-bao-api-controller"
+				],
+				"summary": "deduct_cancel",
+				"operationId": "cancelUsingPOST",
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/DeductCancel"
+							}
+						}
+					}
+				},
+				"responses": {
+					"200": {
+						"description": "normal",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/DeductCancelResponse"
+								}
+							}
+						}
+					},
+					"201": {
+						"description": "Created"
+					},
+					"401": {
+						"description": "Unauthorized"
+					},
+					"403": {
+						"description": "Forbidden"
+					},
+					"404": {
+						"description": "Not Found"
+					}
+				}
+			}
+		},
+		"/api/v1/kdp/points/order_status": {
+			"post": {
+				"tags": [
+					"e-bao-api-controller"
+				],
+				"summary": "order_status",
+				"operationId": "orderStatusUsingPOST",
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/OrderStatus"
+							}
+						}
+					}
+				},
+				"responses": {
+					"200": {
+						"description": "normal",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/OrderStatusResponse"
+								}
+							}
+						}
+					},
+					"201": {
+						"description": "Created"
+					},
+					"401": {
+						"description": "Unauthorized"
+					},
+					"403": {
+						"description": "Forbidden"
+					},
+					"404": {
+						"description": "Not Found"
+					}
+				}
+			}
+		},
+		"/framework/ks/createKs": {
+			"post": {
+				"tags": [
+					"keystore-util"
+				],
+				"summary": "createKeystoreApi",
+				"operationId": "createKeystoreApiUsingPOST",
+				"parameters": [
+					{
+						"name": "ecK",
+						"in": "query",
+						"description": "ecK",
+						"required": false,
+						"style": "form",
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "OK",
+						"content": {
+							"*/*": {
+								"schema": {
+									"$ref": "#/components/schemas/FrameworkKeystoreProperties"
+								}
+							}
+						}
+					},
+					"201": {
+						"description": "Created"
+					},
+					"401": {
+						"description": "Unauthorized"
+					},
+					"403": {
+						"description": "Forbidden"
+					},
+					"404": {
+						"description": "Not Found"
+					}
+				}
+			}
+		},
+		"/framework/ks/enc": {
+			"post": {
+				"tags": [
+					"keystore-util"
+				],
+				"summary": "encApi",
+				"operationId": "encApiUsingPOST",
+				"parameters": [
+					{
+						"name": "kString",
+						"in": "query",
+						"description": "kString",
+						"required": false,
+						"style": "form",
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"name": "plainText",
+						"in": "query",
+						"description": "plainText",
+						"required": false,
+						"style": "form",
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "OK",
+						"content": {
+							"*/*": {
+								"schema": {
+									"type": "object",
+									"additionalProperties": {
+										"type": "string"
+									}
+								}
+							}
+						}
+					},
+					"201": {
+						"description": "Created"
+					},
+					"401": {
+						"description": "Unauthorized"
+					},
+					"403": {
+						"description": "Forbidden"
+					},
+					"404": {
+						"description": "Not Found"
+					}
+				}
+			}
+		}
+	},
+	"components": {
+		"schemas": {
+			"Deduct": {
+				"title": "Deduct",
+				"required": [
+					"deduct_type",
+					"kdp_member_number",
+					"partner_code",
+					"partner_order_number",
+					"partner_serial_number",
+					"transaction_at",
+					"transaction_desc",
+					"transaction_type"
+				],
+				"type": "object",
+				"properties": {
+					"deduct_type": {
+						"type": "integer",
+						"description": "Deduct type 1=>By QR code 2=>By freeze points 3=>Direct deduct ",
+						"format": "int32"
+					},
+					"deduct_value": {
+						"type": "string",
+						"description": "Deduct value,  -Deduct_type=1 use《Generate QRCode》API retrieve unique QR code  -Deduct_type=2 use《Freeze point》API retrieve kdp_serinal_number  -Deduct_type=3, this field empty "
+					},
+					"kdp_member_number": {
+						"type": "string",
+						"description": "KDP member number"
+					},
+					"partner_code": {
+						"type": "string",
+						"description": "Partner code"
+					},
+					"partner_member_number": {
+						"type": "string",
+						"description": "Partner member number"
+					},
+					"partner_member_tier_code": {
+						"type": "string",
+						"description": "Partner member tier"
+					},
+					"partner_order_number": {
+						"type": "string",
+						"description": "Partner order number（for display）If transaction_type= 1, this field mandatory. Other transaction_type can fill with \"000000\" values"
+					},
+					"partner_serial_number": {
+						"type": "string",
+						"description": "Partner serial number, must unique, unique in whole system"
+					},
+					"point_delta": {
+						"type": "integer",
+						"description": "Points, should be < 0, mandatory when deduct_type = 2 or 3, empty when deduct_type = 1 ",
+						"format": "int32"
+					},
+					"transaction_at": {
+						"type": "string",
+						"description": "Transaction datetime, format：YYYYMMDDHHMMSS"
+					},
+					"transaction_desc": {
+						"description": "Depends transaction_type with different transaction description content",
+						"$ref": "#/components/schemas/OneOfdeductTransactionDesc"
+					},
+					"transaction_type": {
+						"type": "string",
+						"description": "Transaction type, 1=>Points redemption 2=>Marketing promotion  3=>Manual adjustment 4=>Redemption "
+					}
+				}
+			},
+			"DeductCancel": {
+				"title": "DeductCancel",
+				"required": [
+					"kdp_member_number",
+					"partner_code",
+					"partner_order_number",
+					"partner_original_serial_number",
+					"partner_serial_number",
+					"transaction_at",
+					"transaction_desc",
+					"transaction_type"
+				],
+				"type": "object",
+				"properties": {
+					"kdp_member_number": {
+						"type": "string",
+						"description": "KDP member number"
+					},
+					"partner_code": {
+						"type": "string",
+						"description": "Partner code"
+					},
+					"partner_order_number": {
+						"type": "string",
+						"description": "Partner order number（for display） if transaction_type= 1, this field mandatory, Other transaction_type can pass \"000000\" value "
+					},
+					"partner_original_serial_number": {
+						"type": "string",
+						"description": "Partner original serial number"
+					},
+					"partner_serial_number": {
+						"type": "string",
+						"description": "Partner serial number, unique"
+					},
+					"point_delta": {
+						"type": "integer",
+						"description": "Point, point>=0, if point equal zero, only for keep record",
+						"format": "int32"
+					},
+					"transaction_at": {
+						"type": "string",
+						"description": "transaction datetime, format：YYYYMMDDHHMMSS"
+					},
+					"transaction_desc": {
+						"description": "Depends transaction_type with different transaction description （transaction_type= 1 transaction_desc is sales refund description) ",
+						"$ref": "#/components/schemas/OneOfdeductCancelTransactionDesc"
+					},
+					"transaction_type": {
+						"type": "string",
+						"description": "Transaction type 1=>Points redemption 2=>Marketing promotion 3=>Redemption "
+					}
+				}
+			},
+			"DeductCancelData": {
+				"title": "DeductCancelData",
+				"type": "object",
+				"properties": {
+					"amount_delta": {
+						"type": "string",
+						"description": "Amount，for reference CN：RMB currency HK：HKD currency "
+					},
+					"block_hash": {
+						"type": "string",
+						"description": "Block Hash"
+					},
+					"block_id": {
+						"type": "string",
+						"description": "Blokc ID"
+					},
+					"bu_signature": {
+						"type": "string",
+						"description": "Signature generated by the API proxy on openshift"
+					},
+					"created_at": {
+						"type": "string",
+						"description": "KDP create datetime, format：YYYYMMDDHHMMSS"
+					},
+					"kdp_member_number": {
+						"type": "string",
+						"description": "KDP member number"
+					},
+					"kdp_serial_number": {
+						"type": "string",
+						"description": "KDP serial number"
+					},
+					"kdp_signature": {
+						"type": "string",
+						"description": "Signature respond from the KDP from Aliyun"
+					},
+					"partner_order_number": {
+						"type": "string",
+						"description": "Partner order number"
+					},
+					"partner_serial_number": {
+						"type": "string",
+						"description": "Partner serial number"
+					},
+					"point_delta": {
+						"type": "integer",
+						"description": "Points, points>=0",
+						"format": "int32"
+					}
+				}
+			},
+			"DeductCancelResponse": {
+				"title": "DeductCancelResponse",
+				"type": "object",
+				"properties": {
+					"code": {
+						"type": "integer",
+						"description": "Error code (greater than 0 indicates return error, test system is as usual)",
+						"format": "int32"
+					},
+					"data": {
+						"$ref": "#/components/schemas/DeductCancelData"
+					},
+					"message": {
+						"type": "string",
+						"description": "Description of the information"
+					}
+				}
+			},
+			"DeductData": {
+				"title": "DeductData",
+				"type": "object",
+				"properties": {
+					"amount_delta": {
+						"type": "string",
+						"description": "积分抵现金额，只供参考 返回数据只保留2位小数，若结果超过2位小数，则直接舍去第2位之后的小数，不进位 內地系统：貨幣為人民幣 香港系统：貨幣為港幣 "
+					},
+					"block_hash": {
+						"type": "string",
+						"description": "区块Hash值"
+					},
+					"block_id": {
+						"type": "string",
+						"description": "区块 ID"
+					},
+					"bu_signature": {
+						"type": "string",
+						"description": "Signature generated by the API proxy on openshift"
+					},
+					"created_at": {
+						"type": "string",
+						"description": "KDP创建时间，格式：YYYYMMDDHHMMSS，年月日时分秒"
+					},
+					"kdp_member_number": {
+						"type": "string",
+						"description": "KDP会员号"
+					},
+					"kdp_serial_number": {
+						"type": "string",
+						"description": "KDP处理积分变动流水号"
+					},
+					"kdp_signature": {
+						"type": "string",
+						"description": "Signature respond from the KDP from Aliyun"
+					},
+					"partner_order_number": {
+						"type": "string",
+						"description": "合作伙伴交易单号"
+					},
+					"partner_serial_number": {
+						"type": "string",
+						"description": "合作伙伴交易扣分流水号"
+					},
+					"point_delta": {
+						"type": "integer",
+						"description": "本次处理的积分，且小于0",
+						"format": "int32"
+					}
+				}
+			},
+			"DeductResponse": {
+				"title": "DeductResponse",
+				"type": "object",
+				"properties": {
+					"code": {
+						"type": "integer",
+						"description": "Error code (greater than 0 indicates return error, test system is as usual)",
+						"format": "int32"
+					},
+					"data": {
+						"$ref": "#/components/schemas/DeductData"
+					},
+					"message": {
+						"type": "string",
+						"description": "Description of the information"
+					}
+				}
+			},
+			"FrameworkKeystoreProperties": {
+				"title": "FrameworkKeystoreProperties",
+				"type": "object",
+				"properties": {
+					"bin": {
+						"type": "string"
+					},
+					"k": {
+						"type": "string"
+					},
+					"salt": {
+						"type": "string"
+					}
+				}
+			},
+			"ManualAdjustment": {
+				"title": "ManualAdjustment",
+				"properties": {
+					"adjustment_reason": {
+						"type": "string",
+						"description": "Adjustment reason"
+					},
+					"description": {
+						"$ref": "#/components/schemas/ManualAdjustmentDescription"
+					},
+					"staff_contact_no": {
+						"type": "string",
+						"description": "Staff contact number, if no contact number can fill with \"0\""
+					},
+					"staff_id": {
+						"type": "string",
+						"description": "Staff ID"
+					},
+					"staff_name": {
+						"type": "string",
+						"description": "Staff name"
+					}
+				},
+				"allOf": [
+					{
+						"$ref": "#/components/schemas/OneOfdeductTransactionDesc"
+					},
+					{
+						"title": "ManualAdjustment",
+						"required": [
+							"staff_contact_no",
+							"staff_id",
+							"staff_name"
+						],
+						"type": "object",
+						"properties": {
+							"adjustment_reason": {
+								"type": "string",
+								"description": "Adjustment reason"
+							},
+							"description": {
+								"$ref": "#/components/schemas/ManualAdjustmentDescription"
+							},
+							"staff_contact_no": {
+								"type": "string",
+								"description": "Staff contact number, if no contact number can fill with \"0\""
+							},
+							"staff_id": {
+								"type": "string",
+								"description": "Staff ID"
+							},
+							"staff_name": {
+								"type": "string",
+								"description": "Staff name"
+							}
+						}
+					}
+				]
+			},
+			"ManualAdjustmentDescription": {
+				"title": "ManualAdjustmentDescription",
+				"type": "object",
+				"properties": {
+					"en": {
+						"type": "string",
+						"description": "英文描述说明"
+					},
+					"zh-CN": {
+						"type": "string",
+						"description": "繁體中文描述说明"
+					},
+					"zh-HK": {
+						"type": "string",
+						"description": "簡體中文描述说明"
+					}
+				}
+			},
+			"MarketingPromotion": {
+				"title": "MarketingPromotion",
+				"properties": {
+					"description": {
+						"$ref": "#/components/schemas/PointRedemptionDescription"
+					},
+					"partner_campaign_code": {
+						"type": "string",
+						"description": "Partner campaign code"
+					},
+					"partner_campaign_type": {
+						"type": "string",
+						"description": "Partner campaign type 1=>Online 2=>Offline 3=>Online and offline "
+					}
+				},
+				"allOf": [
+					{
+						"$ref": "#/components/schemas/OneOfdeductTransactionDesc"
+					},
+					{
+						"title": "MarketingPromotion",
+						"required": [
+							"partner_campaign_code",
+							"partner_campaign_type"
+						],
+						"type": "object",
+						"properties": {
+							"description": {
+								"$ref": "#/components/schemas/PointRedemptionDescription"
+							},
+							"partner_campaign_code": {
+								"type": "string",
+								"description": "Partner campaign code"
+							},
+							"partner_campaign_type": {
+								"type": "string",
+								"description": "Partner campaign type 1=>Online 2=>Offline 3=>Online and offline "
+							}
+						}
+					}
+				]
+			},
+			"OneOfdeductCancelTransactionDesc": {
+				"title": "OneOfdeductCancelTransactionDesc",
+				"type": "object"
+			},
+			"OneOfdeductTransactionDesc": {
+				"title": "OneOfdeductTransactionDesc",
+				"type": "object"
+			},
+			"OrderStatus": {
+				"title": "OrderStatus",
+				"required": [
+					"partner_code",
+					"partner_serial_number",
+					"transaction_at"
+				],
+				"type": "object",
+				"properties": {
+					"partner_code": {
+						"type": "string",
+						"description": "Partner code"
+					},
+					"partner_serial_number": {
+						"type": "string",
+						"description": "Partner serial number"
+					},
+					"transaction_at": {
+						"type": "string",
+						"description": "transaction datetime, format：YYYYMMDDHHMMSS"
+					}
+				}
+			},
+			"OrderStatusData": {
+				"title": "OrderStatusData",
+				"type": "object",
+				"properties": {
+					"block_hash": {
+						"type": "string",
+						"description": "Block Hash value"
+					},
+					"block_id": {
+						"type": "string",
+						"description": "Block ID"
+					},
+					"bu_signature": {
+						"type": "string",
+						"description": "Signature generated by the API proxy on openshift"
+					},
+					"created_at": {
+						"type": "string",
+						"description": "KDP create datetime，format：YYYYMMDDHHMMSS"
+					},
+					"description": {
+						"type": "string",
+						"description": "Description"
+					},
+					"expiry_date": {
+						"type": "string",
+						"description": "Expiry date，format：YYYYMMDD"
+					},
+					"kdp_member_number": {
+						"type": "string",
+						"description": "KDP member number"
+					},
+					"kdp_serial_number": {
+						"type": "string",
+						"description": "KDP serial number"
+					},
+					"kdp_signature": {
+						"type": "string",
+						"description": "Signature respond from the KDP from Aliyun"
+					},
+					"partner_order_number": {
+						"type": "string",
+						"description": "Partner order number号"
+					},
+					"partner_serial_number": {
+						"type": "string",
+						"description": "Partner serial number"
+					},
+					"point_delta": {
+						"type": "integer",
+						"description": "Points for process，Positive for earn, negative for burn, zero for record transaction only",
+						"format": "int32"
+					},
+					"status": {
+						"type": "integer",
+						"description": "Process status, 1=>Process complete, 2=>Process failure, 3=>Waiting for proess",
+						"format": "int32"
+					},
+					"transaction_at": {
+						"type": "string",
+						"description": "Transaction datetime，format：YYYYMMDDHHMMSS"
+					},
+					"transcation_type": {
+						"type": "integer",
+						"description": "Transaction type type = 1 (Add), value as below 1=>Sales Earn points 2=>Points conversion 3=>Manual adjustment add points 4=>Marketing promotion type = 2 (Add cancel), value as below 1=>Sales refund deduct points 2=>Marketing promotion cancel type = 3 (Burn), value as below 1=>Points redemption 2=>Marketing promotion deduct points 3=>Manual adjustment deduct points type = 4 (Burn cancel), value as below 1=>Points redeem cancel 2=>Marketing promotion cancel (add points) type = 5 /6 , no parameter ",
+						"format": "int32"
+					},
+					"type": {
+						"type": "integer",
+						"description": "Points process type 1=>Add 2=>Add cancel 3=>Burn 4=>Burn cancel 5=>adjust expiry date 6=>Redeem freeze points ",
+						"format": "int32"
+					}
+				}
+			},
+			"OrderStatusResponse": {
+				"title": "OrderStatusResponse",
+				"type": "object",
+				"properties": {
+					"code": {
+						"type": "integer",
+						"description": "Error code (greater than 0 indicates return error, test system is as usual)",
+						"format": "int32"
+					},
+					"data": {
+						"$ref": "#/components/schemas/OrderStatusData"
+					},
+					"message": {
+						"type": "string",
+						"description": "Description of the information"
+					}
+				}
+			},
+			"PointRedemption": {
+				"title": "PointRedemption",
+				"properties": {
+					"amount": {
+						"type": "string",
+						"description": "Amount, should be the amount after discount and any point as cash amount"
+					},
+					"currency": {
+						"type": "string",
+						"description": "Currency, 1=>HKD, 2=>RMB",
+						"enum": [
+							"1",
+							"2"
+						]
+					},
+					"description": {
+						"$ref": "#/components/schemas/PointRedemptionDescription"
+					},
+					"partner_campaign_code": {
+						"type": "string",
+						"description": "Partner campaign code"
+					},
+					"partner_store_code": {
+						"type": "string",
+						"description": "Partner store code"
+					},
+					"partner_store_name": {
+						"$ref": "#/components/schemas/PointRedemptionPartnerStoreName"
+					},
+					"payment": {
+						"type": "array",
+						"items": {
+							"$ref": "#/components/schemas/PointRedemptionPayment"
+						}
+					},
+					"skus": {
+						"type": "array",
+						"items": {
+							"$ref": "#/components/schemas/PointRedemptionSkus"
+						}
+					}
+				},
+				"allOf": [
+					{
+						"$ref": "#/components/schemas/OneOfdeductTransactionDesc"
+					},
+					{
+						"title": "PointRedemption",
+						"required": [
+							"amount",
+							"currency",
+							"partner_store_code",
+							"payment",
+							"skus"
+						],
+						"type": "object",
+						"properties": {
+							"amount": {
+								"type": "string",
+								"description": "Amount, should be the amount after discount and any point as cash amount"
+							},
+							"currency": {
+								"type": "string",
+								"description": "Currency, 1=>HKD, 2=>RMB",
+								"enum": [
+									"1",
+									"2"
+								]
+							},
+							"description": {
+								"$ref": "#/components/schemas/PointRedemptionDescription"
+							},
+							"partner_campaign_code": {
+								"type": "string",
+								"description": "Partner campaign code"
+							},
+							"partner_store_code": {
+								"type": "string",
+								"description": "Partner store code"
+							},
+							"partner_store_name": {
+								"$ref": "#/components/schemas/PointRedemptionPartnerStoreName"
+							},
+							"payment": {
+								"type": "array",
+								"items": {
+									"$ref": "#/components/schemas/PointRedemptionPayment"
+								}
+							},
+							"skus": {
+								"type": "array",
+								"items": {
+									"$ref": "#/components/schemas/PointRedemptionSkus"
+								}
+							}
+						}
+					}
+				]
+			},
+			"PointRedemptionDescription": {
+				"title": "PointRedemptionDescription",
+				"type": "object",
+				"properties": {
+					"en": {
+						"type": "string",
+						"description": "Description (English)"
+					},
+					"zh-CN": {
+						"type": "string",
+						"description": "Description (Traditional chinese)"
+					},
+					"zh-HK": {
+						"type": "string",
+						"description": "Description (Simpify chinese)"
+					}
+				}
+			},
+			"PointRedemptionPartnerStoreName": {
+				"title": "PointRedemptionPartnerStoreName",
+				"type": "object",
+				"properties": {
+					"en": {
+						"type": "string",
+						"description": "Partner store name(English)"
+					},
+					"zh-CN": {
+						"type": "string",
+						"description": "Partner store name ( Simpify chinese)"
+					},
+					"zh-HK": {
+						"type": "string",
+						"description": "Partner store name (Traditional chinese)"
+					}
+				}
+			},
+			"PointRedemptionPayment": {
+				"title": "PointRedemptionPayment",
+				"required": [
+					"amount",
+					"method"
+				],
+				"type": "object",
+				"properties": {
+					"amount": {
+						"type": "string",
+						"description": "Payment amount"
+					},
+					"method": {
+						"type": "string",
+						"description": "Payment method"
+					}
+				}
+			},
+			"PointRedemptionSkus": {
+				"title": "PointRedemptionSkus",
+				"required": [
+					"actual_unit_price",
+					"list_unit_price",
+					"quantity",
+					"sku_code"
+				],
+				"type": "object",
+				"properties": {
+					"actual_unit_price": {
+						"type": "string",
+						"description": "SKU actual price if no SKU, can fill with \"0\""
+					},
+					"additional_info": {
+						"type": "object",
+						"description": "商品额外信息，如果没有该信息可不传该字段。"
+					},
+					"list_unit_price": {
+						"type": "string",
+						"description": "SKU list price, if no SKU, can fill with \"0\""
+					},
+					"quantity": {
+						"type": "integer",
+						"description": "SKU quantity, if no SKU, can fill with \"0\"",
+						"format": "int32"
+					},
+					"sku_brand": {
+						"type": "string",
+						"description": "SKU brand"
+					},
+					"sku_category": {
+						"type": "string",
+						"description": "SKU category"
+					},
+					"sku_code": {
+						"type": "string",
+						"description": "SKU code, if no SKU, can fill with \"0\""
+					},
+					"sku_name": {
+						"type": "string",
+						"description": "SKU name"
+					},
+					"sku_tag": {
+						"type": "string",
+						"description": "SKU tag"
+					}
+				}
+			},
+			"Redemption": {
+				"title": "Redemption",
+				"properties": {
+					"amount": {
+						"type": "string",
+						"description": "交易总金额，应传输扣除折扣及积分抵现部分的交易金额"
+					},
+					"currency": {
+						"type": "integer",
+						"description": "币种, 1=>港币, 2=>人民币",
+						"format": "int32"
+					},
+					"description": {
+						"$ref": "#/components/schemas/RedemptionDescription"
+					},
+					"partner_campaign_code": {
+						"type": "string",
+						"description": "合作伙伴营销编号"
+					},
+					"partner_store_code": {
+						"type": "string",
+						"description": "合作伙伴店铺编号"
+					},
+					"partner_store_name": {
+						"$ref": "#/components/schemas/RedemptionPartnerStoreName"
+					},
+					"payment": {
+						"type": "array",
+						"items": {
+							"$ref": "#/components/schemas/RedemptionPayment"
+						}
+					},
+					"skus": {
+						"type": "array",
+						"items": {
+							"$ref": "#/components/schemas/RedemptionSkus"
+						}
+					}
+				},
+				"allOf": [
+					{
+						"$ref": "#/components/schemas/OneOfdeductTransactionDesc"
+					},
+					{
+						"title": "Redemption",
+						"required": [
+							"partner_store_code",
+							"partner_store_name"
+						],
+						"type": "object",
+						"properties": {
+							"amount": {
+								"type": "string",
+								"description": "交易总金额，应传输扣除折扣及积分抵现部分的交易金额"
+							},
+							"currency": {
+								"type": "integer",
+								"description": "币种, 1=>港币, 2=>人民币",
+								"format": "int32"
+							},
+							"description": {
+								"$ref": "#/components/schemas/RedemptionDescription"
+							},
+							"partner_campaign_code": {
+								"type": "string",
+								"description": "合作伙伴营销编号"
+							},
+							"partner_store_code": {
+								"type": "string",
+								"description": "合作伙伴店铺编号"
+							},
+							"partner_store_name": {
+								"$ref": "#/components/schemas/RedemptionPartnerStoreName"
+							},
+							"payment": {
+								"type": "array",
+								"items": {
+									"$ref": "#/components/schemas/RedemptionPayment"
+								}
+							},
+							"skus": {
+								"type": "array",
+								"items": {
+									"$ref": "#/components/schemas/RedemptionSkus"
+								}
+							}
+						}
+					}
+				]
+			},
+			"RedemptionDescription": {
+				"title": "RedemptionDescription",
+				"type": "object",
+				"properties": {
+					"en": {
+						"type": "string",
+						"description": "英文描述说明 *用于向会员展示"
+					},
+					"zh-CN": {
+						"type": "string",
+						"description": "繁體中文描述说明 *用于向会员展示"
+					},
+					"zh-HK": {
+						"type": "string",
+						"description": "簡體中文描述说明 *用于向会员展示"
+					}
+				}
+			},
+			"RedemptionPartnerStoreName": {
+				"title": "RedemptionPartnerStoreName",
+				"required": [
+					"en",
+					"zh-CN",
+					"zh-HK"
+				],
+				"type": "object",
+				"properties": {
+					"en": {
+						"type": "string",
+						"description": "合作伙伴店铺英文名称"
+					},
+					"zh-CN": {
+						"type": "string",
+						"description": "合作伙伴店铺简体中文名称"
+					},
+					"zh-HK": {
+						"type": "string",
+						"description": "合作伙伴店铺繁体中文名称"
+					}
+				}
+			},
+			"RedemptionPayment": {
+				"title": "RedemptionPayment",
+				"type": "object",
+				"properties": {
+					"amount": {
+						"type": "string",
+						"description": "支付金额"
+					},
+					"method": {
+						"type": "string",
+						"description": "支付方式"
+					}
+				}
+			},
+			"RedemptionSkus": {
+				"title": "RedemptionSkus",
+				"required": [
+					"quantity",
+					"sku_code"
+				],
+				"type": "object",
+				"properties": {
+					"actual_unit_price": {
+						"type": "string",
+						"description": "商品实际单价"
+					},
+					"additional_info": {
+						"type": "object",
+						"description": "商品额外信息，如果没有该信息可不传该字段。"
+					},
+					"list_unit_price": {
+						"type": "string",
+						"description": "商品标牌单价"
+					},
+					"quantity": {
+						"type": "integer",
+						"description": "商品数量",
+						"format": "int32"
+					},
+					"sku_brand": {
+						"type": "string",
+						"description": "商品品牌"
+					},
+					"sku_category": {
+						"type": "string",
+						"description": "商品类别"
+					},
+					"sku_code": {
+						"type": "string",
+						"description": "商品编号"
+					},
+					"sku_name": {
+						"type": "string",
+						"description": "商品名称"
+					},
+					"sku_tag": {
+						"type": "string",
+						"description": "商品标签"
+					}
+				}
+			}
+		}
+	}
+}

@@ -19,7 +19,7 @@ import { UserContext } from "./UserContext.js";
 import React, { useEffect, useContext} from "react";
 import { getCurrentBrowserFingerPrint } from "@rajesh896/broprint.js";
 import Cookies from "js-cookie";
-import { API_BASE_URL } from "./api.config.js";
+import {API_BASE_URL} from '../api.config.js';
 
 function App() {
 

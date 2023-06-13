@@ -1,5 +1,5 @@
 import React from 'react';
-import ReactDOM from 'react-dom/client';
+import ReactDOM from 'react-dom';
 import './index.css';
 import './tailwind.css';
 import App from './App';
@@ -34,9 +34,7 @@ i18n
     },
   });
 
-  const root = ReactDOM.createRoot(document.getElementById("root"));
-
-root.render(
+ReactDOM.render(
   <React.StrictMode>
     <UserProvider>
       <div className='font-sans'>
@@ -44,6 +42,7 @@ root.render(
       </div>
     </UserProvider>
   </React.StrictMode>,
+  document.getElementById('root')
 );
 
 reportWebVitals();
