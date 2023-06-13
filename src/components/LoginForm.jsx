@@ -449,7 +449,7 @@ return(
             />
             <h1 className="mt-4 text-center text-title ">
                 <span className="text-2xl font-semibold">Partner+ FTL </span>
-                <span className="text-2xl font-semibold">Admin</span>
+               {/*  <span className="text-2xl font-semibold">Admin</span>*/}
             </h1>
             <div className="user-box h-10 mb-3">
                 <input 
