@@ -1,5 +1,5 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+import ReactDOM from 'react-dom/client';
 import './index.css';
 import './tailwind.css';
 import App from './App';
@@ -10,7 +10,9 @@ import LanguageDetector from 'i18next-browser-languagedetector';
 import enTranslations from './locales/en.json';
 import zhTranslations from './locales/zh.json';
 import simTranslations from './locales/sim.json';
-import { UserProvider } from './UserContext';
+
+
+const root = ReactDOM.createRoot(document.getElementById('root'));
 
 i18n
   .use(initReactI18next)
@@ -34,15 +36,16 @@ i18n
     },
   });
 
-ReactDOM.render(
+
+root.render(
   <React.StrictMode>
-    <UserProvider>
-      <div className='font-sans'>
-        <App />
-      </div>
-    </UserProvider>
-  </React.StrictMode>,
-  document.getElementById('root')
+    <div className='font-sans'>
+      <App />
+    </div>
+  </React.StrictMode>
 );
 
+// If you want to start measuring performance in your app, pass a function
+// to log results (for example: reportWebVitals(console.log))
+// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
 reportWebVitals();

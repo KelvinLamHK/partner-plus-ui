@@ -15,55 +15,8 @@ import CampaignDetailPage from "../src/pages/CampaignDetailPage.jsx"
 import CreateDocCenterPage from "../src/pages/CreateDocCenterPage.jsx"
 import SubCategoriesPage from "../src/pages/CMS/SubCategoriesPage.jsx"
 import TestPage from "../src/pages/TestPage.jsx"
-import { UserContext } from "./UserContext.js";
-import React, { useEffect, useContext} from "react";
-import { getCurrentBrowserFingerPrint } from "@rajesh896/broprint.js";
-import Cookies from "js-cookie";
-import {API_BASE_URL} from '../api.config.js';
 
 function App() {
-
-  const { user, setUser } = useContext(UserContext);
-  const token = Cookies.get("PLUSID");
-
-  useEffect(() => {
-    // Fetch and set the user information
-    async function fetchData() {
-      const deviceId = await getCurrentBrowserFingerPrint();
-      if (!token) {
-        window.location.href = "/login";
-      } else {
-        try {
-          fetch(`${API_BASE_URL}/authentication/protected`, {
-            method: "POST",
-            headers: {
-              Authorization: 'plus ' + token,
-              DeviceId: deviceId,
-            },
-          }).then(response => response.json())
-          .then(data => {
-            if(data==="Invalid"){
-              Cookies.remove('PLUSID');
-              window.location.href = "/login";
-            }
-            setUser(data);
-          })
-
-
-        } catch (error) {
-          Cookies.remove('PLUSID');
-          console.error(error);
-        }
-      }
-    }
-  
-    fetchData();
-  }, [token, setUser]);
-
-  if (!user) {
-    return <div>Loading...</div>; // or a loading spinner
-  }
-
   return (
     <Router>
       <Routes>
