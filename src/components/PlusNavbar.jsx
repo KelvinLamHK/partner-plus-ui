@@ -192,7 +192,7 @@ const PlusNavbar = (props) => {
                   
                 
                       <span className="truncate text-sm font-medium group-hover:text-slate-800">
-                        {props.username}
+                        {user.username}
                       </span>
               
                   </Dropdown.Toggle>

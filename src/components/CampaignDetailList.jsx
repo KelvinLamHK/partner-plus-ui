@@ -459,7 +459,6 @@ function CampaignDetailList() {
         ...(inputValue.partyId && { partyId: inputValue.partyId })
       }
     });
-  
   };
 
   const handleResetChange = () => {

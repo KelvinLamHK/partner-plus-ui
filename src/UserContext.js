@@ -12,7 +12,6 @@ export const UserProvider = ({ children }) => {
     async function checkCookies() {
       const token = Cookies.get("PLUSID");
       if (!token) {
-        window.location.href = "/login";
       } else {
         const deviceId = await getCurrentBrowserFingerPrint();
         try {
